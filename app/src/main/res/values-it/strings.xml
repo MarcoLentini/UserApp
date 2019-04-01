@@ -2,8 +2,8 @@
     <string name="app_name">UserApp</string>
     <string name="default_user_name">Inserisci username</string>
     <string name="default_user_email">Inserisci email</string>
-    <string name="default_user_description">Inserisci una descrizione</string>
-    <string name="default_user_phone_number">Inserisci numero di telefono</string>
+    <string name="default_user_description">Inserisci  descrizione</string>
+    <string name="default_user_phone_number">Inserisci telefono</string>
     <string name="name_field_id">user_name</string>
     <string name="email_field_id">user_email</string>
     <string name="pwd_field_id">user_password</string>
@@ -22,9 +22,9 @@
     <string name="different_password">Le due password sono diverse</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">ANNULLA</string>
-    <string name="insert_username">Type your username</string>
-    <string name="insert_email">Type your email address</string>
-    <string name="insert_phone_number">Type your phone number</string>
-    <string name="insert_description">Type a short description about you</string>
+    <string name="insert_username">Inserisci il tuo username</string>
+    <string name="insert_email">Inserisci la tua address</string>
+    <string name="insert_phone_number">Inserisci il tuo numero di telefono</string>
+    <string name="insert_description">Descrivi te stesso</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -154,11 +155,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "user_password":
                     userPassword = data.getExtras().getString("value");
-                    if(!userDescription.equals("")) {
+                    if(!userPassword.equals("")) {
                         editor.putString("userPassword", userPassword);
                         editor.commit();
-
                     }
+
                     break;
             }
         }

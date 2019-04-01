@@ -58,35 +58,43 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 title=getString(R.string.email_title);
                 getSupportActionBar().setTitle(title);
                 tvInfoMessage.setText(R.string.insert_email);
+
                 etEditInfo.setText(fieldValue);
                 etEditInfo.setHint("example@domain.com");
                 etEditInfo.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                etEditInfo.selectAll();
                 break;
             case "user_phone_number":
                 title=getString(R.string.phone_number_title);
                 getSupportActionBar().setTitle(title);
+
                 tvInfoMessage.setText(R.string.insert_phone_number);
                 etEditInfo.setText(fieldValue);
                 etEditInfo.setInputType(InputType.TYPE_CLASS_PHONE);
+                etEditInfo.selectAll();
                 break;
             case "user_description":
                 title=getString(R.string.description_title);
                 getSupportActionBar().setTitle(title);
                 tvInfoMessage.setText(R.string.insert_description);
+                etEditInfo.setLines(5);
+                etEditInfo.setMinLines(3);
+                etEditInfo.setMaxLines(7);
                 etEditInfo.setText(fieldValue);
-                etEditInfo.setInputType(InputType.TYPE_CLASS_TEXT);
+                etEditInfo.setMaxEms(20);
+                etEditInfo.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
                 etEditInfo.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 etEditInfo.setInputType(InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE);
                 etEditInfo.setRawInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                etEditInfo.setMinLines(3);
+                etEditInfo.selectAll();
                 break;
             case "user_password":
                 title=getString(R.string.password_title);
                 getSupportActionBar().setTitle(title);
                 tvInfoMessage.setText(R.string.insert_old_password);
                 etEditInfo.setText("");
-                etEditInfo.setInputType(InputType.TYPE_CLASS_TEXT);
-                etEditInfo.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                etEditInfo.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
 
 
                 break;
@@ -115,11 +123,13 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 Intent retIntent;
                 Bundle bn;
                 if(fieldName.equals("user_password")) {
+                    Log.d("password", "onClick:old "+fieldValue + " new= "+etEditInfo.getText().toString());
                     if(fieldValue.equals(etEditInfo.getText().toString())){
                     retIntent = new Intent(getApplicationContext(), ChangePwdActivity.class);
                     bn = new Bundle();
 
                     bn.putString("field", fieldName);
+
                     retIntent.putExtras(bn);
                     startActivityForResult(retIntent, 1);
                     }else{
@@ -160,13 +170,15 @@ public class ModifyInfoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent receivedIntent = getIntent();
-        Bundle bn=receivedIntent.getExtras();
-        fieldName = receivedIntent.getExtras().getString("field");
-        String fieldValue = receivedIntent.getExtras().getString("value");
-        Log.d("marcole", "onActivityResult: "+ fieldName + "  "+ fieldValue);
-        bn.putString("field", fieldName);
-        bn.putString("value", fieldName);
+
+        Bundle bn = new Bundle();
+
+        fieldName = data.getExtras().getString("field");
+        String fieldValue = data.getExtras().getString("value");
+
+       bn.putString("field", fieldName);
+       bn.putString("value", fieldValue);
+
         Intent retIntent = new Intent(getApplicationContext(), MainActivity.class);
         retIntent.putExtras(bn);
         setResult(1, retIntent);
