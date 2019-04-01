@@ -92,7 +92,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                     Toast mioToast = Toast.makeText(ChangePwdActivity.this,
                             getString(R.string.different_password),
                             Toast.LENGTH_LONG);
-                    mioToast.setGravity(Gravity.BOTTOM, 0, 0);
+                    mioToast.setGravity(Gravity.BOTTOM, 0, 64);
                     InputMethodManager imm = (InputMethodManager)
                             getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(etEditPwd2, InputMethodManager.SHOW_IMPLICIT);
