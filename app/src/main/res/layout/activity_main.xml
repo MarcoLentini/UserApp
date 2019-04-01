@@ -4,101 +4,174 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     tools:context=".MainActivity">
 
-
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            tools:layout_editor_absoluteX="141dp"
-            tools:layout_editor_absoluteY="90dp"
-            tools:srcCompat="@tools:sample/avatars[11]" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></LinearLayout>
     <TextView
-        android:id="@+id/textView_UserInfo_nameLabel"
+        android:id="@+id/textViewUserPhoneNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_account_cellphone"
+        android:drawableLeft="@drawable/ic_account_cellphone"
+        android:drawablePadding="12dp"
+        android:maxEms="10"
+        android:maxLines="1"
+        android:text="@string/default_user_phone_number"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserEmail" />
 
+    <TextView
+        android:id="@+id/textViewUserDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_account_description"
+        android:drawableLeft="@drawable/ic_account_description"
+        android:drawablePadding="12dp"
+        android:maxEms="20"
+        android:maxLines="1"
+        android:text="@string/default_user_description"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserPhoneNumber" />
+
+    <TextView
+        android:id="@+id/textViewUserEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_account_email"
+        android:drawableLeft="@drawable/ic_account_email"
+        android:drawablePadding="12dp"
+        android:maxEms="10"
+        android:maxLines="1"
+        android:text="@string/default_user_email"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserName" />
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="24dp"
-        android:text="Nome"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/textViewUserName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_account_name"
+        android:drawableLeft="@drawable/ic_account_name"
+        android:drawablePadding="12dp"
+        android:maxEms="10"
+        android:maxLines="1"
+        android:text="@string/default_user_name"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/textView_UserInfo_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_UserInfo_nameLabel" />
-
-    <TextView
-        android:id="@+id/textView_UserInfo_mailLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_UserInfo_name" />
-
-    <TextView
-        android:id="@+id/textView_UserInfo_phoneLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Numero di telefono"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_UserInfo_email" />
-
-    <TextView
-        android:id="@+id/textView_UserInfo_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+    <View
+        android:id="@+id/divider"
+        android:layout_width="395dp"
+        android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintBottom_toTopOf="@+id/textViewUserPhoneNumber"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_UserInfo_mailLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserEmail" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="395dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintBottom_toTopOf="@+id/textViewUserDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserPhoneNumber" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="395dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintBottom_toTopOf="@+id/textViewUserEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserName" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="395dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintBottom_toTopOf="@+id/textViewChangePassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserDescription" />
 
     <TextView
-        android:id="@+id/textView_UserInfo_phone"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewChangePassword"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_account_password"
+        android:drawableLeft="@drawable/ic_account_password"
+        android:drawablePadding="12dp"
+        android:maxEms="20"
+        android:maxLines="1"
+        android:text="@string/password_title"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_UserInfo_phoneLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserDescription" />
 
-    <Button
-        android:id="@+id/button_UserInfo_changePass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Cambia password"
-        app:layout_constraintTop_toBottomOf="@+id/textView_UserInfo_phone"
-        tools:layout_editor_absoluteX="32dp" />
-    />
+
 </android.support.constraint.ConstraintLayout>
