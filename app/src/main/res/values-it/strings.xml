@@ -23,8 +23,18 @@
     <string name="ok_button">OK</string>
     <string name="cancel_button">ANNULLA</string>
     <string name="insert_username">Inserisci il tuo username</string>
-    <string name="insert_email">Inserisci la tua address</string>
+    <string name="insert_email">Inserisci la tua email</string>
     <string name="insert_phone_number">Inserisci il tuo numero di telefono</string>
     <string name="insert_description">Descrivi te stesso</string>
+    <string name="take_a_picture">Scatta una foto</string>
+    <string name="pick_from_gallery">Usa foto dalla Galleria</string>
+    <string name="select_photo">Seleziona una foto</string>
+    <string name="perm_needed">Permesso Necessario</string>
+    <string name="ok_string">Ok</string>
+    <string name="cancel_string">Annulla</string>
+    <string name="perm_why_2">Questo permesso è necessario per scattare una foto</string>
+    <string name="perm_why_1">Questo permesso è necessario per prendere una foto dalla Galleria</string>
+    <string name="perm_denied">Permesso Negato</string>
+    <string name="image_disappear">L\'immagine selezionata non è più disponibile</string>
 
 </resources>

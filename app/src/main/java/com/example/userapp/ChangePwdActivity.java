@@ -53,59 +53,48 @@ public class ChangePwdActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
 
-        etEditPwd2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                btnOk.performClick();
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(etEditPwd2, InputMethodManager.SHOW_IMPLICIT);
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                }
-
-                return false;
+        etEditPwd2.setOnEditorActionListener((v, actionId, event) -> {
+            boolean handled = false;
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+            btnOk.performClick();
+                InputMethodManager imm1 = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm1.showSoftInput(etEditPwd2, InputMethodManager.SHOW_IMPLICIT);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
             }
+
+            return false;
         });
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(etEditPwd1.getText().toString().equals(etEditPwd2.getText().toString())) {
-                    Intent retIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    Bundle bn = new Bundle();
-                    String fieldValue= etEditPwd1.getText().toString();
-                    bn.putString("field", fieldName);
-                    bn.putString("value",fieldValue);
-                    retIntent.putExtras(bn);
-                    Log.d("password1", "onClick:old "+fieldValue);
-                    setResult(1, retIntent);
-                    finish();
-
-                }else{
-                    Toast mioToast = Toast.makeText(ChangePwdActivity.this,
-                            getString(R.string.different_password),
-                            Toast.LENGTH_LONG);
-                    mioToast.setGravity(Gravity.BOTTOM, 0, 64);
-                    etEditPwd2.requestFocus();
-                    InputMethodManager imm = (InputMethodManager)
-                            getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(etEditPwd2, InputMethodManager.SHOW_IMPLICIT);
-                    mioToast.show();
-
-                    etEditPwd2.selectAll();
-
-                }
-
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnOk.setOnClickListener(v -> {
+            if(etEditPwd1.getText().toString().equals(etEditPwd2.getText().toString())) {
+                Intent retIntent = new Intent(getApplicationContext(), MainActivity.class);
+                Bundle bn = new Bundle();
+                String fieldValue= etEditPwd1.getText().toString();
+                bn.putString("field", fieldName);
+                bn.putString("value",fieldValue);
+                retIntent.putExtras(bn);
+                Log.d("password1", "onClick:old "+fieldValue);
+                setResult(RESULT_OK, retIntent);
                 finish();
+
+            }else{
+                Toast mioToast = Toast.makeText(ChangePwdActivity.this,
+                        getString(R.string.different_password),
+                        Toast.LENGTH_LONG);
+                mioToast.setGravity(Gravity.BOTTOM, 0, 64);
+                etEditPwd2.requestFocus();
+                InputMethodManager imm12 = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm12.showSoftInput(etEditPwd2, InputMethodManager.SHOW_IMPLICIT);
+                mioToast.show();
+
+                etEditPwd2.selectAll();
+
             }
+
         });
+
+        btnCancel.setOnClickListener(v -> finish());
     }
 
     @Override

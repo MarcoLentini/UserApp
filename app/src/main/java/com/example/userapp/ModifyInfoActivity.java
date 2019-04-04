@@ -1,5 +1,6 @@
 package com.example.userapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -93,10 +94,8 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(title);
                 tvInfoMessage.setText(R.string.insert_old_password);
                 etEditInfo.setText("");
-                etEditInfo.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-
-
+                // https://stackoverflow.com/questions/9892617/programmatically-change-input-type-of-the-edittext-from-password-to-normal-vic
+                etEditInfo.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 break;
         }
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -153,18 +152,13 @@ public class ModifyInfoActivity extends AppCompatActivity {
                     bn.putString("field", fieldName);
                     bn.putString("value", etEditInfo.getText().toString());
                     retIntent.putExtras(bn);
-                    setResult(1, retIntent);
+                    setResult(RESULT_OK, retIntent);
                     finish();
                 }
             }
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btnCancel.setOnClickListener(v -> finish());
     }
 
     @Override
@@ -172,18 +166,18 @@ public class ModifyInfoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         Bundle bn = new Bundle();
+        if(resultCode == RESULT_OK) {
+            fieldName = data.getExtras().getString("field");
+            String fieldValue = data.getExtras().getString("value");
 
-        fieldName = data.getExtras().getString("field");
-        String fieldValue = data.getExtras().getString("value");
+            bn.putString("field", fieldName);
+            bn.putString("value", fieldValue);
 
-       bn.putString("field", fieldName);
-       bn.putString("value", fieldValue);
-
-        Intent retIntent = new Intent(getApplicationContext(), MainActivity.class);
-        retIntent.putExtras(bn);
-        setResult(1, retIntent);
-        finish();
-
+            Intent retIntent = new Intent(getApplicationContext(), MainActivity.class);
+            retIntent.putExtras(bn);
+            setResult(Activity.RESULT_OK, retIntent);
+            finish();
+        }
     }
     @Override
     public boolean onSupportNavigateUp() {
