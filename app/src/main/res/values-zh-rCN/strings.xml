@@ -44,4 +44,16 @@
     <string name="perm_why_2">请求拍摄照片的权限</string>
     <string name="ok_string">确认</string>
     <string name="perm_denied">没有权限</string>
+
+    <!-- Menu title-->
+    <string name="action_search">搜索</string>
+    <string name="action_settings">个人信息</string>
+    <string name="action_setting">设置</string>
+    <!-- Navigation title -->
+    <string name="home_title">主页</string>
+    <string name="order_title">订单</string>
+    <string name="account_title">我的</string>
+
+    <!-- for future development-->
+    <string name="futureDevelopment">等待开发......</string>
 </resources>

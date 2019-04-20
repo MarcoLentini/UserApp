@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">UserApp</string>
+
     <string name="InfoTitle">Information</string>
 
     <!-- Main Activity (Empty) -->
@@ -34,7 +35,7 @@
 
     <!-- Generic -->
     <string name="ok_button">OK</string>
-    <string name="cancel_button">CANCEL</string>
+    <string name="cancel_button">Cancle</string>
 
 
     <!-- Image Profile -->
@@ -48,7 +49,18 @@
     <string name="perm_needed">Permission needed</string>
     <string name="perm_why_1">This permission is needed to pick a photo from gallery</string>
     <string name="perm_why_2">This permission is needed to take photo</string>
-    <string name="ok_string">Ok</string>
+    <string name="ok_string">OK</string>
     <string name="perm_denied">Permission Denied</string>
 
+    <!-- Menu title-->
+    <string name="action_search">search</string>
+    <string name="action_settings">Information</string>
+    <string name="action_setting">setting</string>
+    <!-- Navigation title -->
+    <string name="home_title">Home</string>
+    <string name="order_title">Order</string>
+    <string name="account_title">Mine</string>
+
+    <!-- for future development-->
+    <string name="futureDevelopment">Future development</string>
 </resources>

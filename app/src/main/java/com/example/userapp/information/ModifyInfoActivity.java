@@ -1,4 +1,4 @@
-package com.example.userapp;
+package com.example.userapp.information;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.userapp.MainActivity;
+import com.example.userapp.R;
 
 public class ModifyInfoActivity extends AppCompatActivity {
 
