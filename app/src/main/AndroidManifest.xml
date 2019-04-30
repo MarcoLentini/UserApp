@@ -9,7 +9,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/user_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/user_logo"
         android:supportsRtl="true"
@@ -25,7 +25,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
-        <activity android:name=".UserInformationActivity"/>
+        <activity android:name=".information.UserInformationActivity"/>
         <activity android:name=".information.ChangePwdActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".information.ModifyInfoActivity"
@@ -39,6 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".information.LoginActivity"/>
+        <activity android:name=".information.ResetPasswordActivity"/>
+        <activity android:name=".information.SignupActivity"/>
     </application>
 
 </manifest>

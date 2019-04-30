@@ -1,4 +1,4 @@
-package com.example.userapp;
+package com.example.userapp.information;
 
 import android.Manifest;
 import android.content.Context;
@@ -23,8 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.userapp.information.ChangePwdActivity;
-import com.example.userapp.information.ModifyInfoActivity;
+import com.example.userapp.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

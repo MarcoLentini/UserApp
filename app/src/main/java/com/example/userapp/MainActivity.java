@@ -1,68 +1,77 @@
 package com.example.userapp;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.example.userapp.account.Account_f;
-import com.example.userapp.home.Home_f;
-import com.example.userapp.order.Orders_f;
+import com.example.userapp.home.MyRestaurants;
+import com.example.userapp.information.LoginActivity;
+import com.example.userapp.home.Restaurant;
+import com.example.userapp.information.UserInformationActivity;
 
+//import com.google.firebase.auth.FirebaseAuth;
+import java.util.ArrayList;
+import java.util.HashMap;
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
 
-public class MainActivity extends AppCompatActivity {
-
-    private ActionBar toolbar;
+    public static ArrayList<Restaurant> restaurantsData;
+    /*for adding firebase */
+    //private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //adding toolbar to the activity
-        Toolbar toolbar1 =  findViewById(R.id.toolbar_main);
-        toolbar1.setTitle(R.string.home_title);
+        //adding toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //adding drawerLayout and  navigationView
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
 
-         setSupportActionBar(toolbar1);
-         toolbar = getSupportActionBar();
+        // Insert the fragment by replacing any existing fragment
+        Fragment fragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.mainFragment, fragment).commit();
 
-        //adding bottom navigation to the activity
-        BottomNavigationView navigation = findViewById(R.id.navigation_categories);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
-        loadFragment(new Home_f());
+        //initialize the date of restaurants
+        restaurantsData = new ArrayList<>();
+        // fillWithStaticData() is used to put data into the previous ArrayLists and the HashMap
+        fillWithStaticData();
 
     }
 
     @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         //Inflate the menu,this adds items to the action bar if it is present
-      getMenuInflater().inflate(R.menu.menu_main,menu);
+      getMenuInflater().inflate(R.menu.main,menu);
       return  true;
     }
 
@@ -70,59 +79,52 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            Toast.makeText(this,"Action setting",Toast.LENGTH_SHORT).show();
+            /*
             Intent information = new Intent(this, UserInformationActivity.class);
-            startActivity(information);
-        }
-        if(id == android.R.id.home){
-            onBackPressed();
-            //getSupportFragmentManager().popBackStack();
+            startActivity(information);*/
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //Bottom Menu
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-        Fragment fragment;
-        switch (item.getItemId()) {
-            case R.id.navigation_home:
-                toolbar.setTitle(R.string.home_title);
-                fragment = new Home_f();
-                loadFragment(fragment);
-                return true;
-            case R.id.navigation_order:
-                toolbar.setTitle(R.string.order_title);
-                fragment = new Orders_f();
-                loadFragment(fragment);
-                return true;
-
-            case R.id.navigation_account:
-                toolbar.setTitle(R.string.account_title);
-               fragment = new Account_f();
-               loadFragment(fragment);
-                return true;
-        }
-        return false;
-    };
-
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container_main, fragment);
-        transaction.commit();
+    /*implement actions for NavigationItemSelect*/
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        //handle navigation view item clicks here
+        //TODO : adding the corresponding action for each item click
+        int id = menuItem.getItemId();
+        if (id == R.id.nav_account){
+            //go to the login activity
+            Intent intent = new Intent(this, UserInformationActivity.class);
+            startActivity(intent);
+            Toast.makeText(this,"Account",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_setting){
+            Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_help){
+            Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_orders){
+            Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_star){
+            Toast.makeText(this,"Star",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_logout){
+            Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_home){
+            // Insert the fragment by replacing any existing fragment
+            Fragment fragment = new HomeFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.mainFragment, fragment).commit();
+         }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            super.onBackPressed();
+
+    public void fillWithStaticData(){
+        for(int i = 0; i< MyRestaurants.restaurants.length; i++)
+        {
+            restaurantsData.add(new Restaurant(MyRestaurants.restaurants[i]));
         }
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }
