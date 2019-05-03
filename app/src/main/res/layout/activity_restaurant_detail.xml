@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -11,114 +12,53 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
-
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsingRestaurantDetails"
+            android:id="@+id/collapsingToolBarRestaurantDetails"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp"
-            app:layout_scrollFlags="scroll|snap"
-            />
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarRestaurantDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:theme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            style="@style/ToolBarWithNavigationBack"
-            />
-
-        <RelativeLayout
-            android:id="@+id/titleContainerRestaurantDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:orientation="vertical"
-            android:paddingTop="8dp"
-            android:gravity="center"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
-
+            android:layout_height="300dp"
+            app:title="@string/str_tvRestaurantName"
+            app:expandedTitleMarginBottom="94dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:expandedTitleTextAppearance="@style/CollapsingTextAppearance.Inverse"
+            app:contentScrim="?colorPrimary"
+            >
             <ImageView
                 android:id="@+id/ivRestaurantLogo"
-                android:layout_width="@dimen/dp96"
-                android:layout_height="@dimen/dp96"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="@dimen/dp16"
-                android:layout_marginLeft="@dimen/dp16"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="@dimen/dp16"
-                android:contentDescription="@string/cd_logoimageview"
-                android:src="@drawable/img_profile_2" />
-
-            <TextView
-                android:id="@+id/tvRestaurantName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="@dimen/dp16"
-                android:layout_marginLeft="@dimen/dp16"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="@dimen/dp16"
-                android:layout_marginRight="@dimen/dp16"
-                android:layout_toEndOf="@+id/ivRestaurantLogo"
-                android:layout_toRightOf="@+id/ivRestaurantLogo"
-                android:text="@string/str_tvRestaurantName"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_profile_2"
+                android:tint="#BB3E50B4"
+                android:contentDescription="@string/cd_logoimageview" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarRestaurantDetails"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@null"
+                app:layout_collapseMode="pin"
+                style="@style/ToolBarWithNavigationBack"
                 />
-
-            <TextView
-                android:id="@+id/tvMonthlySales"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                 android:layout_below="@+id/tvRestaurantName"
-                android:layout_marginStart="@dimen/dp16"
-                android:layout_marginLeft="@dimen/dp16"
-                 android:layout_marginEnd="@dimen/dp16"
-                android:layout_marginRight="@dimen/dp16"
-                android:layout_toEndOf="@+id/ivRestaurantLogo"
-                android:layout_toRightOf="@+id/ivRestaurantLogo"
-                android:text="@string/str_txt_month_sales"
-                  />
-
-            <TextView
-                android:id="@+id/tvDeliveryInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                android:layout_below="@+id/tvMonthlySales"
-                android:layout_marginStart="@dimen/dp16"
-                android:layout_marginLeft="@dimen/dp16"
-                android:layout_marginEnd="@dimen/dp16"
-                android:layout_marginRight="@dimen/dp16"
-                android:layout_toEndOf="@+id/ivRestaurantLogo"
-                android:layout_toRightOf="@+id/ivRestaurantLogo"
-                android:text="@string/str_txt_content"
-                 />
-        </RelativeLayout>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabsRestaurantDetails"
-            android:layout_width="fill_parent"
-            android:layout_height="?attr/actionBarSize"
-            style="@style/AppTabLayout"
-
-            />
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    ​<android.support.v4.view.ViewPager
-        android:id="@+id/viewpagerRestaurantDetails"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+        android:background="#ffffff"
+        app:behavior_overlapTop="78dp"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabRestaurantDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:elevation="8dp"
+        android:src="@drawable/ic_shop_open"
+        app:layout_anchor="@id/view_pager"
+        app:layout_anchorGravity="top|right|end"
+        tools:ignore="RtlHardcoded"
         />
+
 </android.support.design.widget.CoordinatorLayout>

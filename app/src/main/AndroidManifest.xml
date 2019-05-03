@@ -43,7 +43,7 @@
         <activity android:name=".information.LoginActivity"/>
         <activity android:name=".information.ResetPasswordActivity"/>
         <activity android:name=".information.SignupActivity"/>
-        <activity android:name=".home.RestaurantDetailsActivity" />
+        <activity android:name=".home.RestaurantDetailsActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

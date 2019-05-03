@@ -10,7 +10,6 @@ import com.example.userapp.MainActivity;
 
 public class RestaurantMenuListAdapter {
 
-
     public RestaurantMenuListAdapter(){
     }
 
