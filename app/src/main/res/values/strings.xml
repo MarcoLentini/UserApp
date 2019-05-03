@@ -113,6 +113,13 @@
     <string name="menu_star">Starred</string>
     <string name="menu_logout">Logout</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-     <string name="menu_orders">Orders</string>
+    <string name="menu_orders">Orders</string>
+    <string name="str_txt_content">起送 ￥25 配送费 ￥1 平均45分钟</string>
+    <string name="str_txt_month_sales">月售23份</string>
+    <string name="str_tvRestaurantName">必胜宅急送（锦秋店）</string>
+
+    <!--Tab labels in the Restaurant Detail Page -->
+    <string name="menu_label">Menu</string>
+    <string name="comments_label">Comments</string>
+    <string name="information_label">Information</string>
 </resources>

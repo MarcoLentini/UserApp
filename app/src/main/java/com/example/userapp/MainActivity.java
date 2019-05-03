@@ -15,19 +15,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.userapp.home.MyRestaurants;
+import com.example.userapp.home.MyRestaurantsData;
+import com.example.userapp.home.RestaurantModel;
 import com.example.userapp.information.LoginActivity;
-import com.example.userapp.home.Restaurant;
 import com.example.userapp.information.UserInformationActivity;
 
 //import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
 
-    public static ArrayList<Restaurant> restaurantsData;
+    public static ArrayList<RestaurantModel> restaurantsData;
     /*for adding firebase */
     //private FirebaseAuth auth;
 
@@ -47,15 +47,15 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        //initialize the date of restaurants
+        restaurantsData = new ArrayList<>();
+        // fillWithStaticData() is used to put data into the previous ArrayLists and the HashMap
+        fillWithStaticData();
         // Insert the fragment by replacing any existing fragment
         Fragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.mainFragment, fragment).commit();
 
-        //initialize the date of restaurants
-        restaurantsData = new ArrayList<>();
-        // fillWithStaticData() is used to put data into the previous ArrayLists and the HashMap
-        fillWithStaticData();
 
     }
 
@@ -83,6 +83,10 @@ public class MainActivity extends AppCompatActivity
             /*
             Intent information = new Intent(this, UserInformationActivity.class);
             startActivity(information);*/
+        }
+        if(id == android.R.id.home){
+            onBackPressed();
+            //getSupportFragmentManager().popBackStack();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -121,9 +125,11 @@ public class MainActivity extends AppCompatActivity
 
 
     public void fillWithStaticData(){
-        for(int i = 0; i< MyRestaurants.restaurants.length; i++)
+        for(int i = 0; i< MyRestaurantsData.id.length; i++)
         {
-            restaurantsData.add(new Restaurant(MyRestaurants.restaurants[i]));
+            RestaurantModel restaurantModel = new RestaurantModel(MyRestaurantsData.id[i],MyRestaurantsData.restaurantLogo[i],
+                    MyRestaurantsData.name[i],MyRestaurantsData.deliveryFee[i],MyRestaurantsData.minSpend[i],MyRestaurantsData.monthlySales[i]);
+            restaurantsData.add(restaurantModel);
         }
 
     }

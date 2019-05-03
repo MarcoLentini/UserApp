@@ -1,7 +1,5 @@
 package com.example.userapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,18 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.userapp.R;
-import com.example.userapp.home.Restaurant;
+import com.example.userapp.home.RestaurantModel;
 import com.example.userapp.home.RestaurantsListAdapter;
 
 import java.util.ArrayList;
-
-
 public class HomeFragment extends Fragment {
 
     private final static String TAG ="HomeFragment";
     private RecyclerView.Adapter restaurantsAdapter;
-    private ArrayList<Restaurant> restaurantsList;
+    private ArrayList<RestaurantModel> restaurantsList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
