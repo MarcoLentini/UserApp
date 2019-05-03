@@ -1,4 +1,4 @@
-package com.example.userapp.home;
+package com.example.userapp.restaurant;
 
 import android.content.Context;
 import android.content.Intent;

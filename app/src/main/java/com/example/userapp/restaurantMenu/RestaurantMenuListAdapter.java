@@ -1,4 +1,4 @@
-package com.example.userapp.home;
+package com.example.userapp.restaurantMenu;
 
 import android.content.Context;
 import android.view.LayoutInflater;

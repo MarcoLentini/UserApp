@@ -1,6 +1,6 @@
-package com.example.userapp.home;
+package com.example.userapp.restaurantMenu;
 
-public class RestaurantMenuModel {
+public class RestaurantMenuItemModel {
     /*Things should be showed in the cardView of restaurant menus*/
     private int id;
     private String name;
@@ -12,7 +12,7 @@ public class RestaurantMenuModel {
     private String state;
 
 
-    public RestaurantMenuModel(int id, String name, String category, double price, int quantity, int image, String state, String description) {
+    public RestaurantMenuItemModel(int id, String name, String category, double price, int quantity, int image, String state, String description) {
         this.id = id;
         this.name = name;
         this.category=category;

@@ -1,4 +1,4 @@
-package com.example.userapp.home;
+package com.example.userapp.restaurant;
 
 public class RestaurantModel {
     /*Things should be showed in the cardView of restaurant

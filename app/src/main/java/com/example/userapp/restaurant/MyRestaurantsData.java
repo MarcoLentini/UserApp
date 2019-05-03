@@ -1,4 +1,4 @@
-package com.example.userapp.home;
+package com.example.userapp.restaurant;
 
 import com.example.userapp.R;
 

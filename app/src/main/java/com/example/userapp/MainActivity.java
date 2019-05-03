@@ -3,22 +3,21 @@ package com.example.userapp;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.userapp.home.MyRestaurantsData;
-import com.example.userapp.home.RestaurantModel;
-import com.example.userapp.information.LoginActivity;
+import com.example.userapp.restaurant.MyRestaurantsData;
+import com.example.userapp.restaurant.RestaurantModel;
+import com.example.userapp.restaurant.RestaurantsListAdapter;
 import com.example.userapp.information.UserInformationActivity;
 
 //import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "MainActivity";
 
     public static ArrayList<RestaurantModel> restaurantsData;
+    private RecyclerView.Adapter restaurantsAdapter;
     /*for adding firebase */
     //private FirebaseAuth auth;
 
@@ -36,31 +36,34 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //adding toolbar
 
+        //adding toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //adding drawerLayout and  navigationView
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        //configure toolbar
-
-        //initialize the date of restaurants
         restaurantsData = new ArrayList<>();
-        // fillWithStaticData() is used to put data into the previous ArrayLists and the HashMap
-        fillWithStaticData();
-        // Insert the fragment by replacing any existing fragment
-        Fragment fragment = new HomeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.mainFragment, fragment).commit();
+        fillWithData(); // fillWithData() is used to put data into the previous ArrayList
 
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        // specify an Adapter
+        restaurantsAdapter = new RestaurantsListAdapter(this, restaurantsData);
+        recyclerView.setAdapter(restaurantsAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -112,10 +115,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_logout){
             Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_home){
-            // Insert the fragment by replacing any existing fragment
-            Fragment fragment = new HomeFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.mainFragment, fragment).commit();
+            // TODO return to MainActivity
          }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void fillWithStaticData(){
+    public void fillWithData(){
         for(int i = 0; i< MyRestaurantsData.id.length; i++)
         {
             RestaurantModel restaurantModel = new RestaurantModel(MyRestaurantsData.id[i],MyRestaurantsData.restaurantLogo[i],
