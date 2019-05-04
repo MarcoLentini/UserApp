@@ -47,7 +47,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
         // TODO put data in restaurantMenuData
         restaurantMenuData = new ArrayList<>();
-        fillWithData();
+        //fillWithData();
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurantMenu);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -83,7 +83,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         c.startActivity(new Intent(c, RestaurantMenuActivity.class));
     }
 
-    private void fillWithData() {
+    /*private void fillWithData() {
         RestaurantMenuHeaderModel h1m = new RestaurantMenuHeaderModel("Category1");
         HeaderOrMenuItem h1 = HeaderOrMenuItem.onCreateHeader(h1m);
         RestaurantMenuHeaderModel h2m = new RestaurantMenuHeaderModel("Category2");
@@ -105,7 +105,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         restaurantMenuData.add(h1);     restaurantMenuData.add(m1);      restaurantMenuData.add(m2);
         restaurantMenuData.add(h2);     restaurantMenuData.add(m3);      restaurantMenuData.add(m4);
         restaurantMenuData.add(h3);     restaurantMenuData.add(m5);      restaurantMenuData.add(m6);
-    }
+    }*/
 }
 
 
