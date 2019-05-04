@@ -19,6 +19,8 @@ import com.example.userapp.restaurant.MyRestaurantsData;
 import com.example.userapp.restaurant.RestaurantModel;
 import com.example.userapp.restaurant.RestaurantsListAdapter;
 import com.example.userapp.information.UserInformationActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 //import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
@@ -28,13 +30,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static ArrayList<RestaurantModel> restaurantsData;
     private RecyclerView.Adapter restaurantsAdapter;
-    /*for adding firebase */
-    //private FirebaseAuth auth;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
+
+        //Get Firestore instance
+        db = FirebaseFirestore.getInstance();
 
         //adding toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -2,21 +2,28 @@ package com.example.userapp.restaurantMenu;
 
 public class RestaurantMenuItemModel {
 
-    /*Things should be showed in the cardView of restaurant menus*/
-    //private int id;
+    private String category;
     private String name;
-    //private String category;
-    private double price;
-    //private int quantity;
     private String description;
+    private double price;
+    private int quantity;
     private int image;
-    //private String state;
 
-    public RestaurantMenuItemModel(String name, double price, String description, int image) {
+    public RestaurantMenuItemModel(String category, String name, String description, double price, int quantity, int image) {
+        this.category = category;
         this.name = name;
-        this.price = price;
         this.description = description;
+        this.price = price;
+        this.quantity = quantity;
         this.image = image;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {
@@ -27,12 +34,28 @@ public class RestaurantMenuItemModel {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getImage() {
@@ -42,14 +65,4 @@ public class RestaurantMenuItemModel {
     public void setImage(int image) {
         this.image = image;
     }
-
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 }
