@@ -28,17 +28,18 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
     @Override
     public RestaurantsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = mInflater.inflate(R.layout.cardview_restaurant,viewGroup,false);
+        RestaurantsViewHolder holder = new RestaurantsViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //to do show new activity related to this page get Restaurant name get detail infomation
 
-                Intent intent = new Intent(context,RestaurantDetailsActivity.class);
+                Intent intent = new Intent(context, RestaurantMenuActivity.class);
                 context.startActivity(intent);
              }
         });
 
-        return new RestaurantsViewHolder(view);
+        return holder;
     }
 
     @Override

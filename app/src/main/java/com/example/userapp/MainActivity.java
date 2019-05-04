@@ -23,8 +23,7 @@ import com.example.userapp.information.UserInformationActivity;
 //import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
 
     public static ArrayList<RestaurantModel> restaurantsData;
