@@ -12,11 +12,12 @@ import android.widget.Toast;
 
 import com.example.userapp.MainActivity;
 import com.example.userapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
-    //private FirebaseAuth auth;
+    private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
 
@@ -25,13 +26,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //Get Firebase auth instance
-       /* auth = FirebaseAuth.getInstance();
+       auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
-      */
+
         // set the view now
         setContentView(R.layout.activity_login);
 
@@ -41,9 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup = findViewById(R.id.btn_signup);
         btnLogin = findViewById(R.id.btn_login);
         btnReset = findViewById(R.id.btn_reset_password);
-
-        //Get Firebase auth instance
-       // auth = FirebaseAuth.getInstance();
 
         btnSignup.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
 
@@ -68,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             //authenticate user
-            /*
+
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(LoginActivity.this, task -> {
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -83,11 +81,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(newIntent);
                             finish();
                         }
-                    });*/
+                    });
         });
     }
 }

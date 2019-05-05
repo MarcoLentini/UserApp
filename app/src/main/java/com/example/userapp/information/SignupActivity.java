@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.userapp.MainActivity;
 import com.example.userapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -23,7 +25,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword, inputUser;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
-    //private FirebaseAuth auth;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         //Get Firebase auth instance
-        //auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         btnSignIn = findViewById(R.id.sign_in_button);
         btnSignUp = findViewById(R.id.sign_up_button);
@@ -73,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
             //create user
-            /*
+
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(SignupActivity.this, task -> {
                         Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
@@ -99,7 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                                     })
                                     .addOnFailureListener(e -> Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(), Toast.LENGTH_SHORT).show());
                         }
-                    });*/
+                    });
 
         });
     }

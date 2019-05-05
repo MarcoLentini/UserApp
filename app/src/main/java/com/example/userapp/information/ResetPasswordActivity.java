@@ -10,13 +10,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.userapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseAuth;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
     private EditText inputEmail;
     private Button btnReset, btnBack;
-    //private FirebaseAuth auth;
+    private FirebaseAuth auth;
     private ProgressBar progressBar;
 
     @Override
@@ -29,7 +30,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         progressBar = findViewById(R.id.progressBar);
 
-       // auth = FirebaseAuth.getInstance();
+       auth = FirebaseAuth.getInstance();
 
         btnBack.setOnClickListener(v -> finish());
 
@@ -43,7 +44,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             }
 
             progressBar.setVisibility(View.VISIBLE);
-            /*
+
             auth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -53,7 +54,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         }
 
                         progressBar.setVisibility(View.GONE);
-                    });*/
+                    });
         });
     }
 

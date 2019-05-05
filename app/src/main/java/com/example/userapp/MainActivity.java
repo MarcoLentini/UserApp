@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //Get Firebase auth instance
-        /*auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
         }
 
         //Get Firestore instance
-        db = FirebaseFirestore.getInstance();*/
+        db = FirebaseFirestore.getInstance();
 
         //adding toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);

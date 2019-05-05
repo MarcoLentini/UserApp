@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -30,9 +32,7 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".information.ModifyInfoActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppThemeCurrentInfo">
-
+        <activity android:name=".information.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +40,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".information.LoginActivity"/>
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppThemeCurrentInfo"/>
         <activity android:name=".information.ResetPasswordActivity"/>
         <activity android:name=".information.SignupActivity"/>
         <activity android:name=".restaurant.RestaurantMenuActivity" android:theme="@style/AppTheme.NoActionBar"/>

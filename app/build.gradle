@@ -7,6 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
+        multiDexEnabled true
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -37,11 +38,10 @@ dependencies {
 
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     implementation 'android.arch.navigation:navigation-ui:1.0.0'
+
+    // Firebase
     implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.firebase:firebase-firestore:18.2.0'
-    // Firebase
-    //implementation 'com.google.firebase:firebase-auth:16.2.1'
-    // implementation 'com.google.firebase:firebase-firestore:18.2.0'
 }
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 

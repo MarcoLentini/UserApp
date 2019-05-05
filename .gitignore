@@ -7,7 +7,10 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/.idea/encodings.xml
+/grandle/wrapper/grandle-wrapper
 .DS_Store
 /build
 /captures
 .externalNativeBuild
+*/google-services.json
