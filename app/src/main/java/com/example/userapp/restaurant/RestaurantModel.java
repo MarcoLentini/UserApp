@@ -1,41 +1,22 @@
 package com.example.userapp.restaurant;
 
 public class RestaurantModel {
-    /*Things should be showed in the cardView of restaurant
-    * */
-    int id;
-    private int restaurantLogo;
-    private int monthlySales;
-    private double deliveryFee;
-    private double minSpend;
+
+    private String id;
     private String name;
-    /*
-    private String emial;
-    private String phone;
-    private String description;
+    private double deliveryFee;
     private String address;
-    private String openingHours;
-    private String deliveryInfo;
-    private String notification;
-   */
+    private String description;
+    private String restaurantLogo;
 
 
-    public RestaurantModel(int id,int restaurantLogo,String name,double deliveryFee,double minSpend,int monthlySales) {
+    public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo) {
         this.id = id;
-        this.restaurantLogo = restaurantLogo;
         this.name = name;
         this.deliveryFee = deliveryFee;
-        this.minSpend = minSpend;
-        this.monthlySales = monthlySales;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.address = address;
+        this.description = description;
+        this.restaurantLogo = restaurantLogo;
     }
 
     public String getName() {
@@ -53,27 +34,36 @@ public class RestaurantModel {
     public void setDeliveryFee(double deliveryFee) {
         this.deliveryFee = deliveryFee;
     }
-    public double getMinSpend() {
-        return minSpend;
+
+    public String getAddress() {
+        return address;
     }
 
-    public void setMinSpend(double minSpend) {
-        this.minSpend = minSpend;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public int getRestaurantLogo() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRestaurantLogo() {
         return restaurantLogo;
     }
 
-    public void setRestaurantLogo(int restaurantLogo) {
+    public void setRestaurantLogo(String restaurantLogo) {
         this.restaurantLogo = restaurantLogo;
     }
-    public int  getMonthlySales() {
-        return monthlySales;
+
+    public String getId() {
+        return id;
     }
 
-    public void setMonthlySales(int monthlySales) {
-        this.monthlySales = monthlySales;
+    public void setId(String id) {
+        this.id = id;
     }
-
 }

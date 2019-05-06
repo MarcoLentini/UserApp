@@ -1,36 +1,36 @@
 package com.example.userapp;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.userapp.restaurant.MyRestaurantsData;
+import com.example.userapp.information.UserInformationActivity;
 import com.example.userapp.restaurant.RestaurantModel;
 import com.example.userapp.restaurant.RestaurantsListAdapter;
-import com.example.userapp.information.UserInformationActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
-//import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "MainActivity";
 
+    private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
     private RecyclerView.Adapter restaurantsAdapter;
-    private FirebaseAuth auth;
     private FirebaseFirestore db;
 
     @Override
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
         }
@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         restaurantsData = new ArrayList<>();
-        fillWithData(); // fillWithData() is used to put data into the previous ArrayList
-
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -74,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        getDataAndUpdateArrayList();
 
     }
 
@@ -141,13 +140,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void fillWithData(){
-        for(int i = 0; i< MyRestaurantsData.id.length; i++)
-        {
-            RestaurantModel restaurantModel = new RestaurantModel(MyRestaurantsData.id[i],MyRestaurantsData.restaurantLogo[i],
-                    MyRestaurantsData.name[i],MyRestaurantsData.deliveryFee[i],MyRestaurantsData.minSpend[i],MyRestaurantsData.monthlySales[i]);
-            restaurantsData.add(restaurantModel);
-        }
+    public void getDataAndUpdateArrayList() {
+
+        db.collection("restaurant").get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot document = task.getResult();
+                        if (!document.isEmpty()) {
+                            for(DocumentSnapshot doc : document){
+                                restaurantsData.add(new RestaurantModel(
+                                        doc.getId(),
+                                        (String) doc.get("rest_name"),
+                                        (Double) doc.get("delivery_fee"),
+                                        (String) doc.get("rest_address"),
+                                        (String) doc.get("rest_descr"),
+                                        (String) doc.get("rest_image")));
+                            }
+                            restaurantsAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("QueryRestaurants", "No such document");
+                        }
+                    } else {
+                        Log.d("QueryRestaurants", "get failed with ", task.getException());
+                    }
+                });
 
     }
 }
