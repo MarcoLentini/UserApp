@@ -46,6 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:background="#FFFFFA"
+        app:behavior_overlapTop="78dp"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -54,8 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="32dp"
         android:elevation="8dp"
-        android:src="@drawable/ic_shop_open"
-        app:layout_anchor="@id/ivRestaurantLogo"
+        android:src="@drawable/ic_like"
+        app:layout_anchor="@id/recyclerViewRestaurantMenu"
         app:layout_anchorGravity="top|right|end"
         tools:ignore="RtlHardcoded"
         />

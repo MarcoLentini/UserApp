@@ -105,4 +105,10 @@
     <string name="menu_label">Menu</string>
     <string name="comments_label">Comments</string>
     <string name="information_label">Information</string>
+    <string name="title_activity_favorites">Favorites</string>
+    <string name="title_activity_orders">Orders</string>
+    <string name="title_search_history_order">search your history order by input restaurant name or dish name</string>
+    <string name="str_account_details">Account Details</string>
+    <string name="str_payment_method">Payment Method</string>
+    <string name="str_adding_address">Adding Address</string>
 </resources>

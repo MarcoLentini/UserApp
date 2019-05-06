@@ -109,24 +109,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //handle navigation view item clicks here
         //TODO : adding the corresponding action for each item click
         int id = menuItem.getItemId();
-        if (id == R.id.nav_account){
+        /*if (id == R.id.nav_account){
             //go to the login activity
             Intent intent = new Intent(this, UserInformationActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Account",Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.nav_setting){
+        }else
+         */
+        if (id == R.id.nav_setting){
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
             Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_help){
             Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_orders){
+            Intent intent = new Intent(MainActivity.this, OrdersActivity.class);
+            startActivity(intent);
             Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_star){
-            Toast.makeText(this,"Star",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+            startActivity(intent);
+            Toast.makeText(this,"Favorite",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
             Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_home){
-            // TODO return to MainActivity
-         }
+
+        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -14,6 +14,7 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/colorDivider</item>
     </style>
+
     <style name="ButtonOk">
         <item name="android:background">@color/colorAccent</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
@@ -26,8 +27,8 @@
     </style>
 
     <style name="Button">
-    <item name="android:background">@color/colorPrimary</item>
-    <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
@@ -42,7 +43,8 @@
     </style>
     <!-- for text -->
     <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
         <item name="textAllCaps">true</item>
     </style>
 
@@ -64,13 +66,13 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-
     <style name="ToolBarWithNavigationBack">
         <item name="navigationIcon">@drawable/abc_ic_ab_back_material</item>
     </style>
 
-    <style name="CollapsingTextAppearance" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title"/>
-    <style name="CollapsingTextAppearance.Inverse" >
+    <style name="CollapsingTextAppearance" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title" />
+
+    <style name="CollapsingTextAppearance.Inverse">
         <item name="android:textSize">30sp</item>
     </style>
 

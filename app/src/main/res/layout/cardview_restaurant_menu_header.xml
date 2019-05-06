@@ -10,6 +10,8 @@
         android:id="@+id/textViewHeaderName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
 </LinearLayout>

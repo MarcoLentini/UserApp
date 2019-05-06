@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrdersActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@null"
+            style="@style/ToolBarWithNavigationBack"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+        android:orientation="vertical">
+
+        <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:padding="@dimen/dp16"
+           android:text="@string/str_account_details"
+           style="@style/TextAppearance.AppCompat.Headline"
+            android:background="@drawable/text_view_border"/>
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorDivider" />
+
+        <TextView
+            android:id="@+id/tvSettingAccountInfo"
+            android:padding="@dimen/dp16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_account"
+            android:drawableStart="@drawable/ic_account"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:text="@string/menu_account"
+            android:layout_gravity="end"
+            android:textAlignment="viewEnd"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:background="@drawable/text_view_border"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+        <TextView
+            android:id="@+id/tvSettingChangePwd"
+            android:padding="@dimen/dp16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_password"
+            android:background="@drawable/text_view_border"
+            android:drawableStart="@drawable/ic_account_password"
+            android:drawableLeft="@drawable/ic_account_password"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:layout_gravity="end"
+            android:textAlignment="viewEnd"
+            style="@style/TextAppearance.AppCompat.Body1"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+        <TextView
+            android:id="@+id/tvSettingPayment"
+            android:padding="@dimen/dp16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_payment_method"
+            android:background="@drawable/text_view_border"
+            android:drawableStart="@drawable/ic_credit_card"
+            android:drawableLeft="@drawable/ic_credit_card"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:layout_gravity="end"
+            android:textAlignment="viewEnd"
+            style="@style/TextAppearance.AppCompat.Body1"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+        <TextView
+            android:id="@+id/tvSettingAddress"
+            android:padding="@dimen/dp16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_adding_address"
+            android:background="@drawable/text_view_border"
+            android:drawableStart="@drawable/ic_account_address"
+            android:drawableLeft="@drawable/ic_account_address"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:layout_gravity="end"
+            android:textAlignment="viewEnd"
+            style="@style/TextAppearance.AppCompat.Body1"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorDivider" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -110,7 +110,7 @@
     <string name="cd_logoimageview">contentDescription logo ImageView</string>
     <string name="menu_home">Home</string>
     <string name="menu_account">Account Info</string>
-    <string name="menu_star">Starred</string>
+    <string name="menu_star">Favorite</string>
     <string name="menu_logout">Logout</string>
 
     <string name="menu_orders">Orders</string>
@@ -118,8 +118,12 @@
     <string name="str_txt_month_sales">月售23份</string>
     <string name="str_tvRestaurantName">必胜宅急送（锦秋店）</string>
 
-    <!--Tab labels in the Restaurant Detail Page -->
-    <string name="menu_label">Menu</string>
     <string name="comments_label">Comments</string>
     <string name="information_label">Information</string>
-</resources>
+    <string name="title_activity_orders">Orders</string>
+    <string name="title_activity_favorites">Favorites</string>
+    <string name="title_search_history_order">search your history order by input restaurant name or dish name</string>
+    <string name="str_account_details">Account Details</string>
+    <string name="str_payment_method">Payment Method</string>
+    <string name="str_adding_address">Adding Address</string>
+ </resources>
