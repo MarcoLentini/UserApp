@@ -110,8 +110,7 @@
     <string name="str_tvRestaurantName">必胜宅急送（锦秋店）</string>
 
     <!--Tab labels in the Restaurant Detail Page -->
-    <string name="menu_label">菜单</string>
-    <string name="comments_label">Comments</string>
+     <string name="comments_label">Comments</string>
     <string name="information_label">Information</string>
     <string name="title_activity_orders">Orders</string>
     <string name="title_activity_favorites">Favorites</string>
@@ -119,4 +118,7 @@
     <string name="str_account_details">账户详情</string>
     <string name="str_payment_method">支付方式</string>
     <string name="str_adding_address">添加地址</string>
+    <string name="ContentDescription">TODO-content description of pics</string>
+    <string name="str_total_pay">￥0.00</string>
+    <string name="title_basket">Basket</string>
 </resources>

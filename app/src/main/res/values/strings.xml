@@ -126,4 +126,7 @@
     <string name="str_account_details">Account Details</string>
     <string name="str_payment_method">Payment Method</string>
     <string name="str_adding_address">Adding Address</string>
- </resources>
+    <string name="ContentDescription">TODO-content description of pics</string>
+    <string name="str_total_pay">￥0.00</string>
+    <string name="title_basket">Basket</string>
+</resources>
