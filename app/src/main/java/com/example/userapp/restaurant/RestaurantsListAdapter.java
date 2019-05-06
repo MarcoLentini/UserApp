@@ -2,6 +2,7 @@ package com.example.userapp.restaurant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.example.userapp.R;
 
 import java.util.ArrayList;
@@ -33,7 +36,6 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
             @Override
             public void onClick(View v) {
                 //to do show new activity related to this page get Restaurant name get detail infomation
-
                 Intent intent = new Intent(context, RestaurantMenuActivity.class);
                 context.startActivity(intent);
              }
@@ -45,17 +47,18 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
     @Override
     public void onBindViewHolder(@NonNull RestaurantsViewHolder restaurantsViewHolder, int position) {
 
-        ImageView imageViewRestaurantLogo = restaurantsViewHolder.imageViewRestaurantLogo;
-        TextView textViewRestaurantName = restaurantsViewHolder.textViewRestaurantName;
-        TextView textViewMonthlySales = restaurantsViewHolder.textViewMonthlySales;
-        TextView textViewDeliveryInfo = restaurantsViewHolder.textViewDeliveryInfo;
+        ImageView imageViewLogo = restaurantsViewHolder.imageViewLogo;
+        TextView textViewName = restaurantsViewHolder.textViewName;
+        TextView textViewAddress = restaurantsViewHolder.textViewAddress;
+        TextView textViewDescription = restaurantsViewHolder.textViewDescription;
 
-        RestaurantModel tmpRM = dataSet.get(position);
+        RestaurantModel restaurantModel = dataSet.get(position);
 
-        imageViewRestaurantLogo.setImageResource(tmpRM.getRestaurantLogo());
-        textViewRestaurantName.setText(tmpRM.getName());
-        textViewMonthlySales.setText("Monthly sales"+tmpRM.getMonthlySales());
-        textViewDeliveryInfo.setText("Delivery Only Min Spend :"+tmpRM.getMinSpend()+"Delivery fee:"+tmpRM.getDeliveryFee());
+        Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
+        Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
+        textViewName.setText(restaurantModel.getName());
+        textViewAddress.setText(restaurantModel.getAddress());
+        textViewDescription.setText(restaurantModel.getDescription());
 
     }
 
@@ -66,17 +69,17 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
 
     static class RestaurantsViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageViewRestaurantLogo;
-        TextView textViewRestaurantName;
-        TextView textViewMonthlySales;
-        TextView textViewDeliveryInfo;
+        TextView textViewName;
+        TextView textViewAddress;
+        TextView textViewDescription;
+        ImageView imageViewLogo;
 
         RestaurantsViewHolder(View itemView) {
             super(itemView);
-            this.imageViewRestaurantLogo = itemView.findViewById(R.id.ivRestaurantLogo);
-            this.textViewRestaurantName = itemView.findViewById(R.id.tvRestaurantName);
-            this.textViewMonthlySales = itemView.findViewById(R.id.tvMonthlySales);
-            this.textViewDeliveryInfo = itemView.findViewById(R.id.tvDeliveryInfo);
+            this.textViewName = itemView.findViewById(R.id.tvRestaurantName);
+            this.textViewAddress = itemView.findViewById(R.id.tvAddress);
+            this.textViewDescription = itemView.findViewById(R.id.tvDescription);
+            this.imageViewLogo = itemView.findViewById(R.id.ivRestaurantLogo);
         }
     }
 }
