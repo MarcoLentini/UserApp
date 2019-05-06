@@ -1,6 +1,7 @@
 package com.example.userapp.restaurantMenu;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,15 +13,19 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.bumptech.glide.Glide;
 import com.example.userapp.MainActivity;
 import com.example.userapp.R;
 
 public class RestaurantMenuListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private Context context;
     private static ArrayList<HeaderOrMenuItem> dataSet;
     private LayoutInflater mInflater;
 
     public RestaurantMenuListAdapter(Context context, ArrayList<HeaderOrMenuItem> restaurantMenuData){
+        this.context = context;
         this.dataSet = restaurantMenuData;
         this.mInflater = LayoutInflater.from(context);
     }
@@ -54,6 +59,8 @@ public class RestaurantMenuListAdapter extends RecyclerView.Adapter<RecyclerView
             TextView textViewMenuItemPrice = menuItemViewHolder.textViewMenuItemPrice;
 
             RestaurantMenuItemModel menuItem = item.getMenuItem();
+            Uri tmpUri = Uri.parse(menuItem.getImage());
+            Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewMenuItemLogo);
             textViewMenuItemName.setText(menuItem.getName());
             textViewMenuItemDescription.setText(menuItem.getDescription());
             textViewMenuItemPrice.setText(String.valueOf(menuItem.getPrice()));

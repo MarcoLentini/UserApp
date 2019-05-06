@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.userapp.information.UserInformationActivity;
 import com.example.userapp.restaurant.RestaurantModel;
 import com.example.userapp.restaurant.RestaurantsListAdapter;
 import com.google.firebase.auth.FirebaseAuth;

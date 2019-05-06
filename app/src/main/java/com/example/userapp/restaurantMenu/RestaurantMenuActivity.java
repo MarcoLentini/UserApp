@@ -1,7 +1,5 @@
 package com.example.userapp.restaurantMenu;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -10,47 +8,59 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
-
 import com.example.userapp.R;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class RestaurantMenuActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
+
     private static final int PERCENTAGE_TO_SHOW_IMAGE = 20;
     private int mMaxScrollSize;
     private boolean mIsImageHidden;
     private View mFab;
     public static ArrayList<HeaderOrMenuItem> restaurantMenuData;
     private RecyclerView.Adapter restaurantMenuListAdapter;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_menu);
+
+        //Get Firestore instance
+        db = FirebaseFirestore.getInstance();
         //toolbar
-        Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbarRestaurantDetails);
+        Toolbar toolbar1 = findViewById(R.id.toolbarRestaurantDetails);
         toolbar1.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        AppBarLayout appbarLayout = (AppBarLayout) findViewById(R.id.appbarRestaurantDetails);
+        AppBarLayout appbarLayout = findViewById(R.id.appbarRestaurantDetails);
         appbarLayout.addOnOffsetChangedListener(this);
         mFab = findViewById(R.id.fabRestaurantDetails);
 
         // TODO put data in restaurantMenuData
         restaurantMenuData = new ArrayList<>();
-        //getDataAndUpdateArrayList();
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurantMenu);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        // specify an Adapter
         restaurantMenuListAdapter = new RestaurantMenuListAdapter(this, restaurantMenuData);
         recyclerView.setAdapter(restaurantMenuListAdapter);
      }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataAndUpdateArrayList();
+    }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
@@ -75,33 +85,60 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         }
 
     }
-    public static void start(Context c) {
-        c.startActivity(new Intent(c, RestaurantMenuActivity.class));
-    }
 
-    /*private void getDataAndUpdateArrayList() {
-        RestaurantMenuHeaderModel h1m = new RestaurantMenuHeaderModel("Category1");
-        HeaderOrMenuItem h1 = HeaderOrMenuItem.onCreateHeader(h1m);
-        RestaurantMenuHeaderModel h2m = new RestaurantMenuHeaderModel("Category2");
-        HeaderOrMenuItem h2 = HeaderOrMenuItem.onCreateHeader(h2m);
-        RestaurantMenuHeaderModel h3m = new RestaurantMenuHeaderModel("Category3");
-        HeaderOrMenuItem h3 = HeaderOrMenuItem.onCreateHeader(h3m);
-        RestaurantMenuItemModel m1m = new RestaurantMenuItemModel("Pizza1", 3, "Buona", MyRestaurantsData.restaurantLogo[0]);
-        RestaurantMenuItemModel m2m = new RestaurantMenuItemModel("Pizza2", 4, "Buona", MyRestaurantsData.restaurantLogo[0]);
-        RestaurantMenuItemModel m3m = new RestaurantMenuItemModel("Pizza3", 5, "Buona", MyRestaurantsData.restaurantLogo[0]);
-        RestaurantMenuItemModel m4m = new RestaurantMenuItemModel("Pizza4", 6, "Buona", MyRestaurantsData.restaurantLogo[0]);
-        RestaurantMenuItemModel m5m = new RestaurantMenuItemModel("Pizza5", 7, "Buona", MyRestaurantsData.restaurantLogo[0]);
-        RestaurantMenuItemModel m6m = new RestaurantMenuItemModel("Pizza6", 8, "Buona", MyRestaurantsData.restaurantLogo[0]);
-        HeaderOrMenuItem m1 = HeaderOrMenuItem.onCreateMenuItem(m1m);
-        HeaderOrMenuItem m2 = HeaderOrMenuItem.onCreateMenuItem(m2m);
-        HeaderOrMenuItem m3 = HeaderOrMenuItem.onCreateMenuItem(m3m);
-        HeaderOrMenuItem m4 = HeaderOrMenuItem.onCreateMenuItem(m4m);
-        HeaderOrMenuItem m5 = HeaderOrMenuItem.onCreateMenuItem(m5m);
-        HeaderOrMenuItem m6 = HeaderOrMenuItem.onCreateMenuItem(m6m);
-        restaurantMenuData.add(h1);     restaurantMenuData.add(m1);      restaurantMenuData.add(m2);
-        restaurantMenuData.add(h2);     restaurantMenuData.add(m3);      restaurantMenuData.add(m4);
-        restaurantMenuData.add(h3);     restaurantMenuData.add(m5);      restaurantMenuData.add(m6);
+    /*public static void start(Context c) {
+        c.startActivity(new Intent(c, RestaurantMenuActivity.class));
     }*/
+
+    private void getDataAndUpdateArrayList() {
+
+        db.collection("category").whereEqualTo("rest_id", "U6RltH7ED7bylM7TwyXa").get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot document = task.getResult();
+                        if (!document.isEmpty()) {
+                            for(DocumentSnapshot doc : document) {
+
+                                HeaderOrMenuItem tmpHeader = HeaderOrMenuItem.onCreateHeader(
+                                                                new RestaurantMenuHeaderModel(
+                                                            (String) doc.getId(),
+                                                            (String) doc.get("category_name")));
+
+
+                                doc.getReference().collection("dishes").whereEqualTo("state", true).get()
+                                        .addOnCompleteListener(task1 -> {
+
+                                            if (task1.isSuccessful()) {
+                                                QuerySnapshot document1 = task1.getResult();
+                                                if (!document1.isEmpty()) {
+                                                    restaurantMenuData.add(tmpHeader);
+                                                    for(DocumentSnapshot doc1 : document1) {
+                                                        HeaderOrMenuItem tmpMenuItem = HeaderOrMenuItem.onCreateMenuItem(
+                                                                new RestaurantMenuItemModel(
+                                                                        doc.getId(), (String) doc.get("category_name"),
+                                                                        doc1.getId(),
+                                                                        (String) doc1.get("name"), (String) doc1.get("description"),
+                                                                        (Double) doc1.get("price"), (String) doc1.get("image")));
+                                                        restaurantMenuData.add(tmpMenuItem);
+                                                    }
+
+                                                    restaurantMenuListAdapter.notifyDataSetChanged();
+                                                } else {
+                                                    Log.d("QueryRestaurantMenu", "No such document");
+                                                }
+                                            } else {
+                                                Log.d("QueryRestaurantMenu", "get failed with ", task.getException());
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d("QueryRestaurantMenu", "No such document");
+                        }
+                    } else {
+                        Log.d("QueryRestaurantMenu", "get failed with ", task.getException());
+                    }
+                });
+    }
 }
 
 

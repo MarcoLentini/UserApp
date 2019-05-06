@@ -2,28 +2,30 @@ package com.example.userapp.restaurantMenu;
 
 public class RestaurantMenuItemModel {
 
-    private String category;
+    private String categoryId;
+    private String categoryName;
+    private String id;
     private String name;
     private String description;
     private double price;
-    private int quantity;
-    private int image;
+    private String image;
 
-    public RestaurantMenuItemModel(String category, String name, String description, double price, int quantity, int image) {
-        this.category = category;
+    public RestaurantMenuItemModel(String categoryId, String categoryName, String id, String name, String description, double price, String image) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity;
         this.image = image;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getName() {
@@ -50,19 +52,27 @@ public class RestaurantMenuItemModel {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
