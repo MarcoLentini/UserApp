@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         getDataAndUpdateArrayList();
-
     }
 
     @Override
@@ -145,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         db.collection("restaurant").get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        restaurantsData.clear();
                         QuerySnapshot document = task.getResult();
                         if (!document.isEmpty()) {
                             for(DocumentSnapshot doc : document){

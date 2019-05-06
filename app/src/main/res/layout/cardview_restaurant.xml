@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <ImageView
-            android:id="@+id/ivRestaurantLogo"
+            android:id="@+id/tvRestaurantLogo"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="centerCrop"
@@ -23,7 +23,7 @@
             android:id="@+id/tvRestaurantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/ivRestaurantLogo"
+            android:layout_alignBottom="@+id/tvRestaurantLogo"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dp4"
             android:gravity="center"
@@ -33,7 +33,7 @@
             android:textStyle="bold" />
         <LinearLayout
             android:padding="@dimen/dp4"
-            android:layout_below="@+id/ivRestaurantLogo"
+            android:layout_below="@+id/tvRestaurantLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

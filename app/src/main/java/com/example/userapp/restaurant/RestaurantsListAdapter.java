@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.userapp.R;
+import com.example.userapp.restaurantMenu.RestaurantMenuActivity;
 
 import java.util.ArrayList;
 
@@ -49,16 +50,16 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
 
         ImageView imageViewLogo = restaurantsViewHolder.imageViewLogo;
         TextView textViewName = restaurantsViewHolder.textViewName;
-        TextView textViewAddress = restaurantsViewHolder.textViewAddress;
-        TextView textViewDescription = restaurantsViewHolder.textViewDescription;
+        TextView textViewDistance = restaurantsViewHolder.textViewDistance;
+        TextView textViewDescription = restaurantsViewHolder.textViewDeliveryFee;
 
         RestaurantModel restaurantModel = dataSet.get(position);
 
         Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
-        textViewAddress.setText(restaurantModel.getAddress());
-        textViewDescription.setText(restaurantModel.getDescription());
+        textViewDistance.setText(restaurantModel.getAddress());
+        textViewDescription.setText(String.valueOf(restaurantModel.getDeliveryFee()));
 
     }
 
@@ -69,17 +70,17 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
 
     static class RestaurantsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName;
-        TextView textViewAddress;
-        TextView textViewDescription;
         ImageView imageViewLogo;
+        TextView textViewName;
+        TextView textViewDistance;
+        TextView textViewDeliveryFee;
 
         RestaurantsViewHolder(View itemView) {
             super(itemView);
+            this.imageViewLogo = itemView.findViewById(R.id.tvRestaurantLogo);
             this.textViewName = itemView.findViewById(R.id.tvRestaurantName);
-            this.textViewAddress = itemView.findViewById(R.id.tvAddress);
-            this.textViewDescription = itemView.findViewById(R.id.tvDescription);
-            this.imageViewLogo = itemView.findViewById(R.id.ivRestaurantLogo);
+            this.textViewDistance = itemView.findViewById(R.id.tvDistanceRestaurant);
+            this.textViewDeliveryFee = itemView.findViewById(R.id.tvDeliveryFeeRestaurant);
         }
     }
 }

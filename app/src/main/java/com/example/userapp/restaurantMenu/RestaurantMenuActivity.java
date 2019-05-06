@@ -1,4 +1,4 @@
-package com.example.userapp.restaurant;
+package com.example.userapp.restaurantMenu;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +14,6 @@ import android.view.View;
 
 
 import com.example.userapp.R;
-import com.example.userapp.restaurantMenu.HeaderOrMenuItem;
-import com.example.userapp.restaurantMenu.RestaurantMenuHeaderModel;
-import com.example.userapp.restaurantMenu.RestaurantMenuItemModel;
-import com.example.userapp.restaurantMenu.RestaurantMenuListAdapter;
 
 import java.util.ArrayList;
 
