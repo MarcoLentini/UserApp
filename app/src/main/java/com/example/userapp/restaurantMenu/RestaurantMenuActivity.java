@@ -1,8 +1,11 @@
 package com.example.userapp.restaurantMenu;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.userapp.R;
+import com.example.userapp.restaurant.RestaurantModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,6 +39,18 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_menu);
+
+        Intent receivedIntent = getIntent();
+        RestaurantModel rm = (RestaurantModel)receivedIntent.getExtras().getSerializable("rest");
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolBarRestaurantDetails);
+        collapsingToolbarLayout.setTitle(rm.getName());
+        ImageView restaurantImageView = findViewById(R.id.tvRestaurantLogo);
+        Uri tmpUri = Uri.parse(rm.getRestaurantLogo());
+        Glide.with(this).load(tmpUri).placeholder(R.drawable.img_rest_1).into(restaurantImageView);
+        TextView tvDeliveryFee = findViewById(R.id.tvDeliveryFeeRestaurant);
+        tvDeliveryFee.setText(String.valueOf(rm.getDeliveryFee()));
+        TextView tvDistance = findViewById(R.id.tvDistanceRestaurant);
+        tvDistance.setText(rm.getAddress()); // TODO change with dinstance in lab4
 
         //Get Firestore instance
         db = FirebaseFirestore.getInstance();

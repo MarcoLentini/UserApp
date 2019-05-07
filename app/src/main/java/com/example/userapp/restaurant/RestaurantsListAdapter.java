@@ -3,6 +3,7 @@ package com.example.userapp.restaurant;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,6 +39,11 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
             public void onClick(View v) {
                 //to do show new activity related to this page get Restaurant name get detail infomation
                 Intent intent = new Intent(context, RestaurantMenuActivity.class);
+                int position = holder.getAdapterPosition();
+                RestaurantModel rm = dataSet.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("rest", rm);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
              }
         });

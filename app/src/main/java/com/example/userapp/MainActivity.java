@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.userapp.restaurant.RestaurantModel;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static ArrayList<RestaurantModel> restaurantsData;
     private RecyclerView.Adapter restaurantsAdapter;
     private FirebaseFirestore db;
+    private ProgressBar pbRestaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        pbRestaurants = findViewById(R.id.progress_bar_restaurants);
 
         restaurantsData = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
@@ -140,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void getDataAndUpdateArrayList() {
 
+        pbRestaurants.setVisibility(View.VISIBLE);
         db.collection("restaurant").get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -155,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         (String) doc.get("rest_descr"),
                                         (String) doc.get("rest_image")));
                             }
+                            pbRestaurants.setVisibility(View.GONE);
                             restaurantsAdapter.notifyDataSetChanged();
                         } else {
                             Log.d("QueryRestaurants", "No such document");
