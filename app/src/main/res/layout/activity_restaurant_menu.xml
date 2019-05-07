@@ -111,24 +111,5 @@
 </RelativeLayout>
 
     <include layout="@layout/bottom_shop_cart"/>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabRestaurantDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="32dp"
-        android:elevation="8dp"
-        android:src="@drawable/ic_like"
-        app:layout_anchor="@id/relativeLayoutRestaurantMenu"
-        app:layout_anchorGravity="top|right|end"
-        tools:ignore="RtlHardcoded"
-        />
-    <!--
-    <android.support.design.widget.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom">
-
-    </android.support.design.widget.BottomNavigationView>
-    -->
+  
 </android.support.design.widget.CoordinatorLayout>
