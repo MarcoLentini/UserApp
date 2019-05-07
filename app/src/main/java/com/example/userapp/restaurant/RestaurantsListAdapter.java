@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,15 +20,18 @@ import com.example.userapp.restaurantMenu.RestaurantMenuActivity;
 
 import java.util.ArrayList;
 
-public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.RestaurantsViewHolder>  {
+public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.RestaurantsViewHolder>
+    implements Filterable {
 
     private Context context;
     private LayoutInflater mInflater;
     private ArrayList<RestaurantModel> dataSet;
+    private ArrayList<RestaurantModel> dataSetFiltered;
 
     public RestaurantsListAdapter(Context context, ArrayList<RestaurantModel> restaurants){
         this.context = context;
         this.dataSet = restaurants;
+        this.dataSetFiltered = restaurants;
         this.mInflater = LayoutInflater.from(context);
     }
     @NonNull
@@ -37,10 +42,9 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //to do show new activity related to this page get Restaurant name get detail infomation
                 Intent intent = new Intent(context, RestaurantMenuActivity.class);
                 int position = holder.getAdapterPosition();
-                RestaurantModel rm = dataSet.get(position);
+                RestaurantModel rm = dataSetFiltered.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("rest", rm);
                 intent.putExtras(bundle);
@@ -59,7 +63,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         TextView textViewDistance = restaurantsViewHolder.textViewDistance;
         TextView textViewDescription = restaurantsViewHolder.textViewDeliveryFee;
 
-        RestaurantModel restaurantModel = dataSet.get(position);
+        RestaurantModel restaurantModel = dataSetFiltered.get(position);
 
         Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
@@ -71,7 +75,38 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
 
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return dataSetFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    dataSetFiltered = dataSet;
+                } else {
+                    ArrayList<RestaurantModel> filteredList = new ArrayList<>();
+                    for (RestaurantModel row : dataSet) {
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    dataSetFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = dataSetFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                dataSetFiltered = (ArrayList<RestaurantModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     static class RestaurantsViewHolder extends RecyclerView.ViewHolder {
