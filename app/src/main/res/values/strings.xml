@@ -127,6 +127,20 @@
     <string name="str_payment_method">Payment Method</string>
     <string name="str_adding_address">Adding Address</string>
     <string name="ContentDescription">TODO-content description of pics</string>
-    <string name="str_total_pay">￥0.00</string>
     <string name="title_basket">Basket</string>
+    <string name="title_total_cost">TOTAL COST :</string>
+    <string name="title_delivery_address">DELIVERY ADDRESS</string>
+    <string name="title_delivery_time">DELIVERY TIME</string>
+    <string name="title_as_soon_as_possible">AS SOON AS POSSIBLE</string>
+    <string name="title_confirm_order">CONFIRM ORDER</string>
+    <!-- nnt no need to translate -->
+    <string name="str_nnt_burgerking">BurgerKing</string>
+    <string name="str_nnt_product_name">product name</string>
+    <string name="str_nnt_price">price</string>
+    <string name="str_nnt_5">5</string>
+    <string name="str_nnt_please_addding_your_delivery_address_here">Please addding your delivery address here *</string>
+    <string name="str_total_pay">￥0.00</string>
+
+
+
 </resources>
