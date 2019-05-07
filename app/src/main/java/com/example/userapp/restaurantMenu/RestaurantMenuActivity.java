@@ -105,10 +105,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
     }
 
-    /*public static void start(Context c) {
-        c.startActivity(new Intent(c, RestaurantMenuActivity.class));
-    }*/
-
     private void getDataAndUpdateArrayList() {
 
         db.collection("category").whereEqualTo("rest_id", "U6RltH7ED7bylM7TwyXa").get()
