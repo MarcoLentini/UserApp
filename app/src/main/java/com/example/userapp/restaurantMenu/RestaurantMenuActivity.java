@@ -18,9 +18,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class RestaurantMenuActivity extends AppCompatActivity  {
+public class RestaurantMenuActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
-
+    private static final int PERCENTAGE_TO_SHOW_IMAGE = 20;
+    private int mMaxScrollSize;
+    private boolean mIsImageHidden;
+    private View mFab;
     public static ArrayList<HeaderOrMenuItem> restaurantMenuData;
     private RecyclerView.Adapter restaurantMenuListAdapter;
     private FirebaseFirestore db;
@@ -41,7 +44,8 @@ public class RestaurantMenuActivity extends AppCompatActivity  {
             }
         });
         AppBarLayout appbarLayout = findViewById(R.id.appbarRestaurantDetails);
-
+        appbarLayout.addOnOffsetChangedListener(this);
+        mFab = findViewById(R.id.fabRestaurantDetails);
 
         // TODO put data in restaurantMenuData
         restaurantMenuData = new ArrayList<>();
@@ -58,6 +62,33 @@ public class RestaurantMenuActivity extends AppCompatActivity  {
         getDataAndUpdateArrayList();
     }
 
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        if (mMaxScrollSize == 0)
+            mMaxScrollSize = appBarLayout.getTotalScrollRange();
+
+        int currentScrollPercentage = (Math.abs(i)) * 100
+                / mMaxScrollSize;
+
+        if (currentScrollPercentage >= PERCENTAGE_TO_SHOW_IMAGE) {
+            if (!mIsImageHidden) {
+                mIsImageHidden = true;
+                ViewCompat.animate(mFab).scaleY(0).scaleX(0).start();
+            }
+        }
+
+        if (currentScrollPercentage < PERCENTAGE_TO_SHOW_IMAGE) {
+            if (mIsImageHidden) {
+                mIsImageHidden = false;
+                ViewCompat.animate(mFab).scaleY(1).scaleX(1).start();
+            }
+        }
+
+    }
+
+    /*public static void start(Context c) {
+        c.startActivity(new Intent(c, RestaurantMenuActivity.class));
+    }*/
 
     private void getDataAndUpdateArrayList() {
 
