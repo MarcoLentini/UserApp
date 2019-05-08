@@ -31,23 +31,6 @@
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
-    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorAccent</item>
-        <item name="tabIndicatorHeight">3dp</item>
-        <item name="tabPaddingStart">6dp</item>
-        <item name="tabPaddingEnd">6dp</item>
-        <item name="tabBackground">?attr/selectableItemBackground</item>
-        <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/colorSecondaryText</item>
-        <item name="tabRippleColor">@color/colorAccent</item>
-    </style>
-    <!-- for text -->
-    <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
-        </item>
-        <item name="textAllCaps">true</item>
-    </style>
-
     <style name="AppThemeCurrentInfo" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
