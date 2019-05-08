@@ -14,6 +14,7 @@
         android:roundIcon="@drawable/user_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".restaurant.FilterRestaurantsActivity"></activity>
         <activity
             android:name=".OrdersActivity"
             android:label="@string/title_activity_orders"
@@ -32,12 +33,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.userapp.MainActivity" />
         </activity>
-        <activity android:name=".SettingsActivity"
+        <activity
+            android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppThemeCurrentInfo">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.userapp.MainActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.userapp.MainActivity" />
         </activity>
 
         <provider

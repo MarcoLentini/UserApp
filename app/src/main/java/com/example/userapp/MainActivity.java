@@ -1,8 +1,11 @@
 package com.example.userapp;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,8 +22,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.userapp.restaurant.FilterRestaurantsActivity;
 import com.example.userapp.restaurant.RestaurantModel;
 import com.example.userapp.restaurant.RestaurantsListAdapter;
+import com.example.userapp.restaurantMenu.RestaurantMenuActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,6 +35,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int FILTER_RESTAURANTS_ACTIVITY = 1;
     private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
     private RecyclerView.Adapter restaurantsAdapter;
@@ -42,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         //Get Firebase auth instance
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        /*FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
-        }
+        }*/
 
         //Get Firestore instance
         db = FirebaseFirestore.getInstance();
@@ -90,12 +96,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_search, menu);
         MenuItem mSearch = menu.findItem(R.id.action_search_restaurants);
 
         SearchView mSearchView = (SearchView) mSearch.getActionView();
-        mSearchView.setQueryHint("Search restaurants");
+        mSearchView.setQueryHint(getString(R.string.hint_search_restaurants));
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -116,10 +122,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == android.R.id.home){
-            onBackPressed();
-            //getSupportFragmentManager().popBackStack();
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.action_filter_restaurants:
+                Intent intent = new Intent(this, FilterRestaurantsActivity.class);
+                startActivityForResult(intent, FILTER_RESTAURANTS_ACTIVITY);
+                // Check if we're running on Android 5.0 or higher
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // Apply activity transition
+                    overridePendingTransition(R.anim.restaurants_filter_slide_in, R.anim.restaurants_filter_slide_out);
+                }
+                break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -161,6 +179,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+
+            if(requestCode == FILTER_RESTAURANTS_ACTIVITY) {
+                // TODO get selected checkboxes and apply filters on recyclerview
+            }
+        }
+    }
 
     public void getDataAndUpdateArrayList() {
 

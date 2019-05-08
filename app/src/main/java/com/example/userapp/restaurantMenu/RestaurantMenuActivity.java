@@ -34,6 +34,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     public static ArrayList<HeaderOrMenuItem> restaurantMenuData;
     private RecyclerView.Adapter restaurantMenuListAdapter;
     private FirebaseFirestore db;
+    private RestaurantModel rm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         setContentView(R.layout.activity_restaurant_menu);
 
         Intent receivedIntent = getIntent();
-        RestaurantModel rm = (RestaurantModel)receivedIntent.getExtras().getSerializable("rest");
+        rm = (RestaurantModel)receivedIntent.getExtras().getSerializable("rest");
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolBarRestaurantDetails);
         collapsingToolbarLayout.setTitle(rm.getName());
         ImageView restaurantImageView = findViewById(R.id.tvRestaurantLogo);
@@ -107,7 +108,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
     private void getDataAndUpdateArrayList() {
 
-        db.collection("category").whereEqualTo("rest_id", "U6RltH7ED7bylM7TwyXa").get()
+        db.collection("category").whereEqualTo("rest_id", rm.getId()).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         QuerySnapshot document = task.getResult();
