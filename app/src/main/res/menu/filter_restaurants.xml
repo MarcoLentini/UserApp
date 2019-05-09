@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.userapp.restaurant.FilterRestaurantsActivity">
 
+    <item android:id="@+id/action_clear_all_filter_restaurants"
+        android:icon="@drawable/ic_baseline_clear_all"
+        android:title="@string/restaurants_filter_clear_all"
+        app:iconTint="@color/white"
+        app:showAsAction="always" />
+
     <item android:id="@+id/action_confirm_filter_restaurants"
         android:icon="@drawable/ic_baseline_done"
         android:title="@string/restaurants_filter_done"

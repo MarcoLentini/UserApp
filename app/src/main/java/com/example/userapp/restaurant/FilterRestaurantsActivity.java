@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 public class FilterRestaurantsActivity extends AppCompatActivity {
 
+    private ArrayList<String> selectedFilters;
+    private LinearLayout linearLayoutCheckboxes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +30,24 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
         getSupportActionBar().setTitle("Select filters");
 
+        linearLayoutCheckboxes = findViewById(R.id.linearLayoutCheckBoxes);
 
-
+        Intent receivedIntent = getIntent();
+        ArrayList<String> receivedArrayList = receivedIntent.getStringArrayListExtra("selectedFilters");
+        if(receivedArrayList == null)
+            selectedFilters = new ArrayList<>();
+        else {
+            int count = linearLayoutCheckboxes.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View v = linearLayoutCheckboxes.getChildAt(i);
+                if (v instanceof CheckBox) {
+                    String currentCheckBoxText = ((CheckBox) v).getText().toString();
+                    if(receivedArrayList.contains(currentCheckBoxText))
+                        ((CheckBox) v).setChecked(true);
+                }
+            }
+            selectedFilters = receivedArrayList;
+        }
     }
 
     @Override
@@ -46,8 +65,7 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_confirm_filter_restaurants) {
-            ArrayList<String> selectedFilters = new ArrayList<>();
-            LinearLayout linearLayoutCheckboxes= (LinearLayout) findViewById(R.id.linearLayoutCheckBoxes);
+            selectedFilters.clear();
             int count = linearLayoutCheckboxes.getChildCount();
             for (int i = 0; i < count; i++) {
                 View v = linearLayoutCheckboxes.getChildAt(i);
@@ -62,6 +80,17 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
             retIntent.putExtras(bn);
             setResult(RESULT_OK, retIntent);
             finish();
+        }
+
+        if(item.getItemId() == R.id.action_clear_all_filter_restaurants) {
+            int count = linearLayoutCheckboxes.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View v = linearLayoutCheckboxes.getChildAt(i);
+                if (v instanceof CheckBox) {
+                    if(((CheckBox) v).isChecked())
+                        ((CheckBox) v).setChecked(false);
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item);

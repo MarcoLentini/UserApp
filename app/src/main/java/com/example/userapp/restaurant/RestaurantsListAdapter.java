@@ -19,6 +19,7 @@ import com.example.userapp.R;
 import com.example.userapp.restaurantMenu.RestaurantMenuActivity;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.RestaurantsViewHolder>
     implements Filterable {
@@ -26,13 +27,16 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
     private Context context;
     private LayoutInflater mInflater;
     private ArrayList<RestaurantModel> dataSet;
+    private ArrayList<RestaurantModel> dataSetActiveFilters;
     private ArrayList<RestaurantModel> dataSetFiltered;
+    private boolean activeFilters;
 
     public RestaurantsListAdapter(Context context, ArrayList<RestaurantModel> restaurants){
         this.context = context;
         this.dataSet = restaurants;
         this.dataSetFiltered = restaurants;
         this.mInflater = LayoutInflater.from(context);
+        this.activeFilters = false;
     }
     @NonNull
     @Override
@@ -85,12 +89,23 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charString = constraint.toString();
                 if (charString.isEmpty()) {
-                    dataSetFiltered = dataSet;
+                    if(!activeFilters)
+                        dataSetFiltered = dataSet;
+                    else
+                        dataSetFiltered = dataSetActiveFilters;
                 } else {
                     ArrayList<RestaurantModel> filteredList = new ArrayList<>();
-                    for (RestaurantModel row : dataSet) {
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row);
+                    if(!activeFilters) {
+                        for (RestaurantModel row : dataSet) {
+                            if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                                filteredList.add(row);
+                            }
+                        }
+                    } else {
+                        for (RestaurantModel row : dataSetActiveFilters) {
+                            if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                                filteredList.add(row);
+                            }
                         }
                     }
                     dataSetFiltered = filteredList;
@@ -107,6 +122,28 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public void setFilters(ArrayList<String> filters) {
+        dataSetActiveFilters = new ArrayList<>();
+        for (RestaurantModel row : dataSet) {
+            ArrayList<String> rowTags = row.getTags();
+            // TODO remove the code below when tags cannot be null
+            if(rowTags != null) {
+                for (String filterString : filters)
+                    if (rowTags.contains(filterString)) {
+                        dataSetActiveFilters.add(row);
+                        break;
+                    }
+            }
+        }
+        dataSetFiltered = dataSetActiveFilters;
+        activeFilters = true;
+    }
+
+    public void removeFilters() {
+        dataSetFiltered = dataSet;
+        activeFilters = false;
     }
 
     static class RestaurantsViewHolder extends RecyclerView.ViewHolder {
