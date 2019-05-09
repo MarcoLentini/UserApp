@@ -85,11 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(restaurantsAdapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getDataAndUpdateArrayList();
-    }
+
 
     @Override
     public void onBackPressed() {

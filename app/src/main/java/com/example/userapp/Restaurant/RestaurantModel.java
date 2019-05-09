@@ -1,4 +1,5 @@
-package com.example.userapp.restaurant;
+package com.example.userapp.Restaurant;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;

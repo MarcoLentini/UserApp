@@ -1,4 +1,4 @@
-package com.example.userapp.restaurant;
+package com.example.userapp.Restaurant;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
