@@ -1,11 +1,19 @@
 package com.example.userapp.restaurant;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
+import com.example.userapp.MainActivity;
 import com.example.userapp.R;
+
+import java.util.ArrayList;
 
 public class FilterRestaurantsActivity extends AppCompatActivity {
 
@@ -37,8 +45,24 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //if(item.getItemId() == R.id.action_confirm_filter_restaurants)
-            // TODO comunicare checkbox alle activity
+        if(item.getItemId() == R.id.action_confirm_filter_restaurants) {
+            ArrayList<String> selectedFilters = new ArrayList<>();
+            LinearLayout linearLayoutCheckboxes= (LinearLayout) findViewById(R.id.linearLayoutCheckBoxes);
+            int count = linearLayoutCheckboxes.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View v = linearLayoutCheckboxes.getChildAt(i);
+                if (v instanceof CheckBox) {
+                    if(((CheckBox) v).isChecked())
+                        selectedFilters.add(((CheckBox) v).getText().toString());
+                }
+            }
+            Intent retIntent = new Intent(getApplicationContext(), MainActivity.class);
+            Bundle bn = new Bundle();
+            bn.putStringArrayList("selectedFilters", selectedFilters);
+            retIntent.putExtras(bn);
+            setResult(RESULT_OK, retIntent);
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }

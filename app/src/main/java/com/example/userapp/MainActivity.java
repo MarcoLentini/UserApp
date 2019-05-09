@@ -1,6 +1,5 @@
 package com.example.userapp;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +24,6 @@ import android.widget.Toast;
 import com.example.userapp.restaurant.FilterRestaurantsActivity;
 import com.example.userapp.restaurant.RestaurantModel;
 import com.example.userapp.restaurant.RestaurantsListAdapter;
-import com.example.userapp.restaurantMenu.RestaurantMenuActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -201,7 +197,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(resultCode == RESULT_OK) {
 
             if(requestCode == FILTER_RESTAURANTS_ACTIVITY) {
-                // TODO get selected checkboxes and apply filters on recyclerview
+                // TODO apply filters on recyclerview
+                ArrayList<String> receivedFilters = data.getStringArrayListExtra("selectedFilters");
+                if(receivedFilters != null) {
+                    for(String filterString : receivedFilters)
+                        ((RestaurantsListAdapter)restaurantsAdapter).getFilter().filter(filterString);
+                }
             }
         }
     }
