@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.userapp.R;
 import com.example.userapp.restaurant.RestaurantModel;
+import com.example.userapp.shoppingCart.OrderItemModel;
+import com.example.userapp.shoppingCart.ShoppingCartActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RestaurantMenuActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
@@ -35,6 +39,14 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     private RecyclerView.Adapter restaurantMenuListAdapter;
     private FirebaseFirestore db;
     private RestaurantModel rm;
+
+    //for shopping cart   key->itemId value->OrderItemModel
+    private HashMap<String,OrderItemModel> selectedItemsHashMap;
+    private double totalMoney = 0.00;
+    // BottomSheetBehavior variable
+    private BottomSheetBehavior bottomSheetBehavior;
+    private TextView textViewTotalMoney;
+    private TextView Basket;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +86,88 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         recyclerView.setLayoutManager(layoutManager);
         restaurantMenuListAdapter = new RestaurantMenuListAdapter(this, restaurantMenuData);
         recyclerView.setAdapter(restaurantMenuListAdapter);
+
+
+        //for shopping cart
+        selectedItemsHashMap = new HashMap<>();
+        textViewTotalMoney = findViewById(R.id.tv_bottom_shop_cart_total_money);
+        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_shop_cart));
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        Basket = findViewById(R.id.tv_pay_for_order);
+        Basket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RestaurantMenuActivity.this, ShoppingCartActivity.class);
+                startActivity(intent);
+            }
+        });
      }
+
+    //following code for shoppingCart
+    //get the current count with the given name of a dish
+    public int getSelectedItemCountById(String name){
+        if (selectedItemsHashMap.size() < 1){
+            return 0;
+        }else {
+            if (!selectedItemsHashMap.containsKey(name)) {
+                return 0;
+            } else {
+                OrderItemModel temp = selectedItemsHashMap.get(name);
+                return temp.getCount();
+            }
+        }
+    }
+
+        public void handlerShoppingCarNum(int type, RestaurantMenuItemModel menuItem, boolean refreshGoodList){
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+            if (type == 0) {//reduce the count of one menuItem
+            OrderItemModel temp = selectedItemsHashMap.get(menuItem.getName());
+            if(temp!=null){
+                if(temp.getCount()<2){
+                    temp.setCount(0);
+                    selectedItemsHashMap.remove(menuItem.getName());
+
+                }else{
+                    int i =  temp.getCount();
+                    temp.setCount(--i);
+                }
+            }
+        } else if (type == 1) { //increase the count of one menuItem
+            if (selectedItemsHashMap.size() < 1){
+                OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1);
+                selectedItemsHashMap.put(temp.getName(), temp);
+            }else{
+                if (!selectedItemsHashMap.containsKey(menuItem.getName())){
+                    OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1);
+                    selectedItemsHashMap.put(temp.getName(), temp);
+                }else {
+                    OrderItemModel temp = selectedItemsHashMap.get(menuItem.getName());
+                    int i = temp.getCount();
+                    temp.setCount(++i);
+                }
+            }
+        }
+        update(refreshGoodList);
+    }
+
+        private void update(boolean refreshGoodList){
+            if (selectedItemsHashMap.size() >0) { //user select some items
+                for (OrderItemModel orderItem : selectedItemsHashMap.values()) {
+                    totalMoney += orderItem.getCount()*orderItem.getPrice();
+                }
+            }else{
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+            //set the total money in the bottom shopping cart
+            textViewTotalMoney.setText("€"+String.valueOf(totalMoney));
+            totalMoney = 0.00;
+
+            if(restaurantMenuListAdapter!=null){
+                restaurantMenuListAdapter.notifyDataSetChanged();
+            }
+
+        }
 
     @Override
     protected void onResume() {

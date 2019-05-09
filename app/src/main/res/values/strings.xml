@@ -140,6 +140,7 @@
     <string name="str_nnt_5">5</string>
     <string name="str_nnt_please_addding_your_delivery_address_here">Please addding your delivery address here *</string>
     <string name="str_total_pay">￥0.00</string>
+    <string name="button_save">Save</string>
     <string name="action_filter">Filter</string>
     <string name="hint_search_restaurants">Search restaurants</string>
     <string name="restaurants_filter_done">done</string>

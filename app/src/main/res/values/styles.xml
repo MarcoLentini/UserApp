@@ -30,6 +30,12 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
+    <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
+        <item name="android:buttonStyle">
+            @style/Widget.AppCompat.Button.Borderless.Colored
+        </item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/colorAccent</item>

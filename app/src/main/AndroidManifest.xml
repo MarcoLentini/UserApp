@@ -75,6 +75,8 @@
         <activity
             android:name=".restaurantMenu.RestaurantMenuActivity"
             android:theme="@style/AppThemeCurrentInfo" />
+        <activity android:name=".shoppingCart.ShoppingCartActivity"/>
+        <activity android:name=".shoppingCart.AddingAddressActivity"/>
     </application>
 
 </manifest>
