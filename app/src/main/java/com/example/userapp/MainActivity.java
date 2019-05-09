@@ -21,9 +21,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.userapp.restaurant.FilterRestaurantsActivity;
-import com.example.userapp.restaurant.RestaurantModel;
-import com.example.userapp.restaurant.RestaurantsListAdapter;
+import com.example.userapp.Information.LoginActivity;
+import com.example.userapp.Restaurant.FilterRestaurantsActivity;
+import com.example.userapp.Restaurant.RestaurantModel;
+import com.example.userapp.Restaurant.RestaurantsListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,17 +40,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.Adapter restaurantsAdapter;
     private FirebaseFirestore db;
     private ProgressBar pbRestaurants;
-
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //Get Firebase auth instance
-        /*FirebaseAuth auth = FirebaseAuth.getInstance();
+         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
-        }*/
+        }
 
         //Get Firestore instance
         db = FirebaseFirestore.getInstance();
@@ -77,11 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(restaurantsAdapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getDataAndUpdateArrayList();
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -234,6 +232,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Log.d("QueryRestaurants", "get failed with ", task.getException());
                     }
                 });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataAndUpdateArrayList();
+        if (auth.getCurrentUser() == null ) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+
+        }
 
     }
 }

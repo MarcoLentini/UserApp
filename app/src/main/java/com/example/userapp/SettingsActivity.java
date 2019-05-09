@@ -9,9 +9,9 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.example.userapp.information.ChangePwdActivity;
-import com.example.userapp.information.ResetPasswordActivity;
-import com.example.userapp.information.UserInformationActivity;
+import com.example.userapp.Information.ResetPasswordActivity;
+import com.example.userapp.Information.UserInformationActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView tvChangePwd;
     private TextView tvAddingAddress;
     private TextView tvPaymentMethod;
-
+private FirebaseAuth auth;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
+//Get Firebase auth instance
+         auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
         tvAccountInfo = findViewById(R.id.tvSettingAccountInfo);
         tvAccountInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,5 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    protected void onResume() {
+        super.onResume();
+        if (auth.getCurrentUser() == null) {
 
+            finish();
+
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.userapp.restaurantMenu;
+package com.example.userapp.RestaurantMenu;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -19,9 +19,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.userapp.R;
-import com.example.userapp.restaurant.RestaurantModel;
-import com.example.userapp.shoppingCart.OrderItemModel;
-import com.example.userapp.shoppingCart.ShoppingCartActivity;
+import com.example.userapp.Restaurant.RestaurantModel;
+import com.example.userapp.ShoppingCart.OrderItemModel;
+import com.example.userapp.ShoppingCart.ShoppingCartActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -40,6 +41,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     private FirebaseFirestore db;
     private RestaurantModel rm;
 
+
     //for shopping cart   key->itemId value->OrderItemModel
     private HashMap<String,OrderItemModel> selectedItemsHashMap;
     private double totalMoney = 0.00;
@@ -47,12 +49,17 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView textViewTotalMoney;
     private TextView Basket;
-
+private FirebaseAuth auth;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_menu);
 
+        //Get Firebase auth instance
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
         Intent receivedIntent = getIntent();
         rm = (RestaurantModel)receivedIntent.getExtras().getSerializable("rest");
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingToolBarRestaurantDetails);
@@ -169,11 +176,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
         }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getDataAndUpdateArrayList();
-    }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
@@ -247,6 +249,16 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                         Log.d("QueryRestaurantMenu", "get failed with ", task.getException());
                     }
                 });
+    }
+
+    protected void onResume() {
+        super.onResume();
+        if (auth.getCurrentUser() == null) {
+            getDataAndUpdateArrayList();
+
+            finish();
+
+        }
     }
 }
 

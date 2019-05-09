@@ -1,8 +1,6 @@
-package com.example.userapp.shoppingCart;
+package com.example.userapp.ShoppingCart;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.userapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
@@ -42,7 +40,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
-
+//Get Firebase auth instance
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
         //static data for orderItems
         orderItems = new ArrayList<>();
         initStaticData();

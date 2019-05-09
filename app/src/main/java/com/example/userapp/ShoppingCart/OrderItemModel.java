@@ -1,4 +1,4 @@
-package com.example.userapp.shoppingCart;
+package com.example.userapp.ShoppingCart;
 
 public class OrderItemModel {
     //for OrderItem we need the name,price,count

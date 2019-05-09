@@ -1,4 +1,4 @@
-package com.example.userapp.shoppingCart;
+package com.example.userapp.ShoppingCart;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.userapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AddingAddressActivity extends AppCompatActivity {
 
     private TextInputLayout textInputDeliveryAddress;
     private EditText etDeliveryAddress;
     private Button btnCancel, btnSave;
-
+private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +26,11 @@ public class AddingAddressActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
 
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
         textInputDeliveryAddress = findViewById(R.id.text_input_address);
         etDeliveryAddress = findViewById(R.id.edit_text_input_address);
         etDeliveryAddress.setHorizontallyScrolling(false);
@@ -48,5 +54,13 @@ public class AddingAddressActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+    protected void onResume() {
+        super.onResume();
+        if (auth.getCurrentUser() == null) {
+
+            finish();
+
+        }
     }
 }

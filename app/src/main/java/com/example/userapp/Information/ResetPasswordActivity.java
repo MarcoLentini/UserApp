@@ -1,4 +1,4 @@
-package com.example.userapp.information;
+package com.example.userapp.Information;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +28,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.email);
         btnReset = findViewById(R.id.btn_reset_password);
         btnBack = findViewById(R.id.btn_back);
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar2);
 
        auth = FirebaseAuth.getInstance();
 

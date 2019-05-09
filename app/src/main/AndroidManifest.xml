@@ -14,7 +14,7 @@
         android:roundIcon="@drawable/user_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".restaurant.FilterRestaurantsActivity"></activity>
+        <activity android:name=".Restaurant.FilterRestaurantsActivity"></activity>
         <activity
             android:name=".OrdersActivity"
             android:label="@string/title_activity_orders"
@@ -53,30 +53,32 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".information.UserInformationActivity" />
+        <activity android:name=".Information.UserInformationActivity" />
         <activity
-            android:name=".information.ChangePwdActivity"
+            android:name=".Information.ChangePwdActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".information.ModifyInfoActivity"
+            android:name=".Information.ModifyInfoActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppThemeCurrentInfo">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".information.LoginActivity" />
-        <activity android:name=".information.ResetPasswordActivity" />
-        <activity android:name=".information.SignupActivity" />
+        <activity android:name=".Information.LoginActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity android:name=".Information.ResetPasswordActivity" />
+        <activity android:name=".Information.SignupActivity" />
         <activity
-            android:name=".restaurantMenu.RestaurantMenuActivity"
+            android:name=".RestaurantMenu.RestaurantMenuActivity"
             android:theme="@style/AppThemeCurrentInfo" />
-        <activity android:name=".shoppingCart.ShoppingCartActivity"/>
-        <activity android:name=".shoppingCart.AddingAddressActivity"/>
+        <activity android:name=".ShoppingCart.ShoppingCartActivity"/>
+        <activity android:name=".ShoppingCart.AddingAddressActivity"/>
     </application>
 
 </manifest>

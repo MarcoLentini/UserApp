@@ -1,9 +1,8 @@
-package com.example.userapp.restaurant;
+package com.example.userapp.Restaurant;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,11 +11,12 @@ import android.widget.LinearLayout;
 
 import com.example.userapp.MainActivity;
 import com.example.userapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class FilterRestaurantsActivity extends AppCompatActivity {
-
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +27,11 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
         getSupportActionBar().setTitle("Select filters");
 
-
+//Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
 
     }
 
@@ -65,5 +69,15 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (auth.getCurrentUser() == null) {
+
+            finish();
+
+        }
     }
 }

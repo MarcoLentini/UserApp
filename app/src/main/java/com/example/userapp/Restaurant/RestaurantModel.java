@@ -1,4 +1,4 @@
-package com.example.userapp.restaurant;
+package com.example.userapp.Restaurant;
 
 import java.io.Serializable;
 
@@ -11,6 +11,13 @@ public class RestaurantModel implements Serializable {
     private String description;
     private String restaurantLogo;
 
+    public RestaurantModel(String id, String name, String address, String description, String restaurantLogo) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.restaurantLogo = restaurantLogo;
+    }
 
     public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo) {
         this.id = id;

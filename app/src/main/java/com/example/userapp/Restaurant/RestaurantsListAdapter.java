@@ -1,4 +1,4 @@
-package com.example.userapp.restaurant;
+package com.example.userapp.Restaurant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.userapp.R;
-import com.example.userapp.restaurantMenu.RestaurantMenuActivity;
+import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
 
 import java.util.ArrayList;
 

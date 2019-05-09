@@ -1,4 +1,4 @@
-package com.example.userapp.restaurantMenu;
+package com.example.userapp.RestaurantMenu;
 
 public class RestaurantMenuHeaderModel {
 
