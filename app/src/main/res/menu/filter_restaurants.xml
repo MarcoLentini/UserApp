@@ -7,6 +7,6 @@
     <item android:id="@+id/action_confirm_filter_restaurants"
         android:icon="@drawable/ic_baseline_done"
         android:title="@string/restaurants_filter_done"
-        android:iconTint="@color/colorAccent"
+        app:iconTint="@color/white"
         app:showAsAction="always" />
 </menu>

@@ -1,9 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".restaurant.FilterRestaurantsActivity"
+    android:id="@+id/scrollView5"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".restaurant.FilterRestaurantsActivity">
+    android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/checkBoxPizza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pizza"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxCinese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cinese"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxGiapponese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giapponese"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxIndiano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Indiano"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxItaliano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Italiano"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxHamburger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hamburger"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxPasta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pasta"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxGreca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Greca"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxPanini"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Panini"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxDolci"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dolci"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+        <CheckBox
+            android:id="@+id/checkBoxAmericano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Americano"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
