@@ -35,7 +35,7 @@
         android:gravity="start|center">
 
         <ImageView
-            android:id="@+id/iv_add"
+            android:id="@+id/tv_add"
             android:layout_width="29dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -53,12 +53,12 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_toStartOf="@+id/iv_add"
-            android:layout_toLeftOf="@+id/iv_add"
+            android:layout_toStartOf="@+id/tv_add"
+            android:layout_toLeftOf="@+id/tv_add"
             android:text="@string/str_nnt_5" />
 
         <ImageView
-            android:id="@+id/iv_remove"
+            android:id="@+id/tv_remove"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"

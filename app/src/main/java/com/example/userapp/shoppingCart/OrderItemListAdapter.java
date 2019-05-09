@@ -42,7 +42,7 @@ public class OrderItemListAdapter extends  RecyclerView.Adapter<OrderItemListAda
 
         textViewIemPrice.setText(String.valueOf(item.getPrice()));
         textViewItemName.setText(item.getName());
-        textViewItemCount.setText(item.getCount());
+        textViewItemCount.setText(String.valueOf(item.getCount()));
 /*
         imageViewItemAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +77,8 @@ public class OrderItemListAdapter extends  RecyclerView.Adapter<OrderItemListAda
             this.textViewItemName = itemView.findViewById(R.id.tv_name);
             this.textViewIemPrice = itemView.findViewById(R.id.tv_price);
             this.textViewItemCount = itemView.findViewById(R.id.tv_count);
-            this.imageViewItemAdd = itemView.findViewById(R.id.iv_add);
-            this.imageViewItemRemove = itemView.findViewById(R.id.iv_remove);
+            this.imageViewItemAdd = itemView.findViewById(R.id.tv_add);
+            this.imageViewItemRemove = itemView.findViewById(R.id.tv_remove);
         }
     }
 }
