@@ -1,6 +1,7 @@
-package com.example.userapp.Restaurant;
+package com.example.userapp.restaurant;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class RestaurantModel implements Serializable {
 
@@ -10,6 +11,8 @@ public class RestaurantModel implements Serializable {
     private String address;
     private String description;
     private String restaurantLogo;
+    private ArrayList<String> tags;
+
 
     public RestaurantModel(String id, String name, String address, String description, String restaurantLogo) {
         this.id = id;
@@ -19,13 +22,15 @@ public class RestaurantModel implements Serializable {
         this.restaurantLogo = restaurantLogo;
     }
 
-    public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo) {
+
+    public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo, ArrayList<String> tags) {
         this.id = id;
         this.name = name;
         this.deliveryFee = deliveryFee;
         this.address = address;
         this.description = description;
         this.restaurantLogo = restaurantLogo;
+        this.tags = tags;
     }
 
     public String getName() {
@@ -74,5 +79,13 @@ public class RestaurantModel implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
     }
 }

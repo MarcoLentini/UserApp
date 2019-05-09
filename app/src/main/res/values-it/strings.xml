@@ -128,5 +128,6 @@
     <string name="action_filter">Filter</string>
     <string name="hint_search_restaurants">Search restaurants</string>
     <string name="restaurants_filter_done">done</string>
+    <string name="restaurants_filter_clear_all">clear all</string>
 
 </resources>

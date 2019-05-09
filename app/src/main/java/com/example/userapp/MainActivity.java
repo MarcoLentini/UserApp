@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.userapp.Information.LoginActivity;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,8 +40,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
     private RecyclerView.Adapter restaurantsAdapter;
+    private ArrayList<String> receivedFilters;
     private FirebaseFirestore db;
     private ProgressBar pbRestaurants;
+    private TextView tvRestaurantsCountValue;
+    private TextView tvRestaurantsFiltersValue;
+
     private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +85,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(restaurantsAdapter);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataAndUpdateArrayList();
+    }
 
     @Override
     public void onBackPressed() {
@@ -139,6 +149,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.action_filter_restaurants:
                 Intent intent = new Intent(this, FilterRestaurantsActivity.class);
+                if(receivedFilters != null) {
+                    Bundle bn = new Bundle();
+                    bn.putStringArrayList("selectedFilters", receivedFilters);
+                    intent.putExtras(bn);
+                }
                 startActivityForResult(intent, FILTER_RESTAURANTS_ACTIVITY);
                 // Check if we're running on Android 5.0 or higher
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -195,11 +210,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(resultCode == RESULT_OK) {
 
             if(requestCode == FILTER_RESTAURANTS_ACTIVITY) {
-                // TODO apply filters on recyclerview
-                ArrayList<String> receivedFilters = data.getStringArrayListExtra("selectedFilters");
+                receivedFilters = data.getStringArrayListExtra("selectedFilters");
                 if(receivedFilters != null) {
-                    for(String filterString : receivedFilters)
-                        ((RestaurantsListAdapter)restaurantsAdapter).getFilter().filter(filterString);
+                    if(receivedFilters.isEmpty()) {
+                        ((RestaurantsListAdapter) restaurantsAdapter).removeFilters();
+                        tvRestaurantsFiltersValue.setText("0");
+                    }
+                    else {
+                        ((RestaurantsListAdapter) restaurantsAdapter).setFilters(receivedFilters);
+                        tvRestaurantsFiltersValue.setText(String.valueOf(receivedFilters.size()));
+                    }
                 }
             }
         }
@@ -215,15 +235,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         QuerySnapshot document = task.getResult();
                         if (!document.isEmpty()) {
                             for(DocumentSnapshot doc : document){
+                                // TODO remove the if when the tags will be compulsory
+                                Map<String, Boolean> receivedTags;
+                                ArrayList<String> tags = null;
+                                if(doc.get("tags") != null) {
+                                    receivedTags = (Map<String, Boolean>)doc.get("tags");
+                                    tags = new ArrayList<>(receivedTags.keySet());
+                                }
                                 restaurantsData.add(new RestaurantModel(
                                         doc.getId(),
                                         (String) doc.get("rest_name"),
                                         (Double) doc.get("delivery_fee"),
                                         (String) doc.get("rest_address"),
                                         (String) doc.get("rest_descr"),
-                                        (String) doc.get("rest_image")));
+                                        (String) doc.get("rest_image"),
+                                        tags));
                             }
                             pbRestaurants.setVisibility(View.GONE);
+                            tvRestaurantsCountValue.setText(String.valueOf(restaurantsData.size()));
                             restaurantsAdapter.notifyDataSetChanged();
                         } else {
                             Log.d("QueryRestaurants", "No such document");
