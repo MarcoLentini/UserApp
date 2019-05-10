@@ -8,10 +8,10 @@ public class OrderItemModel implements Serializable {
     private double dish_price;
     private int dish_qty;
 
-    public OrderItemModel(String name,double price,int count) {
-        this.dish_name = name;
-        this.dish_price = price;
-        this.dish_qty = count;
+    public OrderItemModel(String dish_name, double dish_price, int dish_qty) {
+        this.dish_name = dish_name;
+        this.dish_price = dish_price;
+        this.dish_qty = dish_qty;
     }
     public int getCount() {
         return dish_qty;

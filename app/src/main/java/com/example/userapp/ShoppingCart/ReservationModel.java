@@ -29,7 +29,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
 
     public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address) {
-        this.rs_id = null;
+        this.rs_id = Long.parseLong("55");
         this.rs_status = "PENDING";
         this.cust_id = cust_id;
         // Todo - change with booking time
