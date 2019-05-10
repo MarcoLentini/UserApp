@@ -49,14 +49,14 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView textViewTotalMoney;
     private TextView Basket;
-private FirebaseAuth auth;
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_menu);
 
         //Get Firebase auth instance
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
         }
@@ -86,7 +86,7 @@ private FirebaseAuth auth;
         appbarLayout.addOnOffsetChangedListener(this);
         mFab = findViewById(R.id.fabRestaurantDetails);
 
-        // TODO put data in restaurantMenuData
+        getDataAndUpdateArrayList();
         restaurantMenuData = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurantMenu);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
