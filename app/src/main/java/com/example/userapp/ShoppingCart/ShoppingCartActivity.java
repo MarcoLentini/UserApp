@@ -35,6 +35,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private FirebaseFirestore db ;
     private final static String TAG = "ShoppingCartActivity";
     private static final int ADD_ADDRESS_ACTIVITY = 1;
+    private static final int ADD_NOTES_ACTIVITY = 2;
     private RecyclerView.Adapter OrderItemListAdapter;
     //for shopping cart   key->itemId value->OrderItemModel
     private ArrayList<OrderItemModel> orderItems;
@@ -42,6 +43,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private double totalMoney = 0.00;
     private TextView textViewTotalMoney;
     private  TextView tvDeliveryAddress;
+    private  TextView tvNotes;
     private  TextView tvRestaurantName;
     private Button btnPayForOrder;
     private  TextView textViewtotalCount;
@@ -84,6 +86,15 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         tvRestaurantName = findViewById(R.id.tvRestaurantName);
         tvRestaurantName.setText(rm.getName());
+        tvNotes = findViewById(R.id.orderDetailInfoNotes);
+        tvNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"Add notes",Toast.LENGTH_SHORT).show();
+                //Invoke Address Activity
+                invokeAddNotesActivity(tvNotes.getText().toString());
+            }
+        });
         tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
         tvDeliveryAddress.setOnClickListener(v -> {
           Toast.makeText(v.getContext(),"Add address",Toast.LENGTH_SHORT).show();
@@ -172,15 +183,31 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         return true;
     }
-
+    //activity for adding  the notes
+    public void invokeAddNotesActivity(String notes){
+        Intent intent = new Intent(getApplicationContext(), AddingNotesActivity.class);
+        Bundle bundle = new Bundle();
+        if(notes.equals(getString(R.string.str_please_leave_your_notes_here_if_needed))){
+            notes = "";
+        }else{
+            notes = tvNotes.getText().toString();
+        }
+        bundle.putString("orderNotes", notes);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, ADD_NOTES_ACTIVITY);
+    }
 
 
     //activity for adding  the address
     public void invokeAddressActivity(String address){
         Intent intent = new Intent(getApplicationContext(), AddingAddressActivity.class);
         Bundle bundle = new Bundle();
-        if(address.equals(getString(R.string.str_nnt_please_addding_your_delivery_address_here)))
+        if(address.equals(getString(R.string.str_nnt_please_addding_your_delivery_address_here))){
             address = "";
+        }else{
+            address = tvDeliveryAddress.getText().toString();
+        }
+
         bundle.putString("address", address);
         intent.putExtras(bundle);
         startActivityForResult(intent, ADD_ADDRESS_ACTIVITY);
@@ -233,12 +260,19 @@ public class ShoppingCartActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == ADD_ADDRESS_ACTIVITY) {
-            String myAddress = data.getStringExtra("address");
-                 if (!myAddress.equals("")) {
+        if(resultCode == RESULT_OK) {
+            if (requestCode == ADD_ADDRESS_ACTIVITY) {
+                String myAddress = data.getStringExtra("address");
+                if (!myAddress.equals("")) {
                     tvDeliveryAddress.setText(myAddress);
-                 }
-         }
+                }
+            }else if (requestCode == ADD_NOTES_ACTIVITY){
+                String myNotes = data.getStringExtra("orderNotes");
+                if (!myNotes.equals("")) {
+                    tvNotes.setText(myNotes);
+                }
+            }
+        }
     }
 
     @Override

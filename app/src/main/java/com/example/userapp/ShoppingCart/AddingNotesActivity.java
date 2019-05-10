@@ -10,49 +10,47 @@ import android.widget.EditText;
 import com.example.userapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class AddingAddressActivity extends AppCompatActivity {
+public class AddingNotesActivity extends AppCompatActivity {
 
-    private TextInputLayout textInputDeliveryAddress;
-    private EditText etDeliveryAddress;
+    private TextInputLayout textInputNotes;
+    private EditText etNotes;
     private Button btnCancel, btnSave;
-    private String address;
-
-private FirebaseAuth auth;
+    private FirebaseAuth auth;
+    private String notes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_add_address);
+        setContentView(R.layout.order_add_notes);
 
         String title = getString(R.string.title_delivery_address);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
 
-        address = getIntent().getExtras().getString("address");
+        notes = getIntent().getExtras().getString("orderNotes");
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
         }
-        textInputDeliveryAddress = findViewById(R.id.text_input_address);
-        etDeliveryAddress = findViewById(R.id.edit_text_input_address);
-        etDeliveryAddress.setText(address);
-        etDeliveryAddress.selectAll();
-        etDeliveryAddress.setHorizontallyScrolling(false);
-        etDeliveryAddress.setLines(1);
-        btnCancel = findViewById(R.id.etAddressBtnCancel);
+        textInputNotes = findViewById(R.id.text_input_notes);
+        etNotes = findViewById(R.id.edit_text_input_notes);
+        etNotes.setText(notes);
+        etNotes.selectAll();
+        etNotes.setLines(12);
+        btnCancel = findViewById(R.id.etNotesBtnCancel);
         btnCancel.setOnClickListener(v -> finish());
-        btnSave = findViewById(R.id.etAddressBtnSave);
+        btnSave = findViewById(R.id.etNotesBtnSave);
         btnSave.setOnClickListener(v -> {
 
-                Intent retIntent = new Intent(getApplicationContext(), ShoppingCartActivity.class);
-                Bundle bn = new Bundle();
-                address = etDeliveryAddress.getText().toString();
-                bn.putString("address", address);
-                retIntent.putExtras(bn);
-                setResult(RESULT_OK, retIntent);
-                finish();
+            Intent retIntent = new Intent(getApplicationContext(), ShoppingCartActivity.class);
+            Bundle bn = new Bundle();
+            notes = etNotes.getText().toString();
+            bn.putString("orderNotes", notes);
+            retIntent.putExtras(bn);
+            setResult(RESULT_OK, retIntent);
+            finish();
         });
     }
 

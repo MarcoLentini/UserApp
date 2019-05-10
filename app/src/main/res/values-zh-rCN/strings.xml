@@ -80,7 +80,7 @@
     <string name="phone_failed_updated">Failed to update phone number!</string>
     <string name="invalid_mail">Enter valid email address!</string>
     <string name="invalid_phone">Invalid phone number</string>
-    <string name="enter_email">Enter email address!</string>
+    <string name="enter_email">请输入您的邮箱</string>
     <string name="logout_title">Log out</string>
     <string name="password_failed_updated">Failed to update password!</string>
     <string name="create_profile_failed">Error in creating your profile.</string>
@@ -155,5 +155,7 @@
     <string name="restaurants_filter_done">done</string>
     <string name="restaurants_filter_clear_all">clear all</string>
     <string name="title_total_items">TOTAL ITEMS :</string>
+    <string name="str_please_leave_your_notes_here_if_needed">Please leave your notes here if needed</string>
+    <string name="title_order_notes">leave your notes</string>
 
 </resources>

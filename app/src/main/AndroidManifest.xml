@@ -79,6 +79,7 @@
             android:theme="@style/AppThemeCurrentInfo" />
         <activity android:name=".ShoppingCart.ShoppingCartActivity"/>
         <activity android:name=".ShoppingCart.AddingAddressActivity"/>
+        <activity android:name=".ShoppingCart.AddingNotesActivity"/>
     </application>
 
 </manifest>

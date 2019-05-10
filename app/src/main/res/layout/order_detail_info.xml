@@ -264,6 +264,27 @@
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/orderDetailInfoNotes"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_gravity="start"
+                android:background="@drawable/text_view_border"
+                android:drawableStart="@drawable/ic_notes"
+                android:drawableLeft="@drawable/ic_notes"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:drawableRight="@drawable/ic_arrow_right"
+                android:clickable="true"
+                android:padding="@dimen/dp8"
+                android:text="@string/str_please_leave_your_notes_here_if_needed"
+                android:textAlignment="viewStart"
+                android:focusable="true"
+                android:layout_margin="@dimen/dp8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cv_order_delivery_info"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
