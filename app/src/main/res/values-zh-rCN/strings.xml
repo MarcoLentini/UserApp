@@ -66,7 +66,24 @@
     <string name="menu_login">登陆</string>
     <string name="menu_setting">设置</string>
     <string name="menu_help">帮助</string>
-
+    <!-- activity_signup-->
+    <string name="user_name">user name</string>
+    <string name="user_phone">Phone number</string>
+    <string name="user_description">Your description</string>
+    <string name="complete_rest_btn">Complete registration</string>
+    <string name="username_updated">Username is updated.</string>
+    <string name="username_failed_update">Failed to update username!</string>
+    <string name="invalid_username">Invalid username. Use minimum 3 characters</string>
+    <string name="email_updated">Email address is updated. Please sign in with new email id!</string>
+    <string name="email_failed_updated">Failed to update email!</string>
+    <string name="phone_updated">Phone number is updated.</string>
+    <string name="phone_failed_updated">Failed to update phone number!</string>
+    <string name="invalid_mail">Enter valid email address!</string>
+    <string name="invalid_phone">Invalid phone number</string>
+    <string name="enter_email">Enter email address!</string>
+    <string name="logout_title">Log out</string>
+    <string name="password_failed_updated">Failed to update password!</string>
+    <string name="create_profile_failed">Error in creating your profile.</string>
     <!-- For login and signup-->
     <string name="action_sign_in_short">注册</string>
     <string name="minimum_password">密码太短，请输入至少六位。</string>
@@ -137,5 +154,6 @@
     <string name="hint_search_restaurants">Search restaurants</string>
     <string name="restaurants_filter_done">done</string>
     <string name="restaurants_filter_clear_all">clear all</string>
+    <string name="title_total_items">TOTAL ITEMS :</string>
 
 </resources>

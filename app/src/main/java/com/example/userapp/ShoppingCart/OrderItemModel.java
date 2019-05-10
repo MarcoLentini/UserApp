@@ -1,6 +1,8 @@
 package com.example.userapp.ShoppingCart;
 
-public class OrderItemModel {
+import java.io.Serializable;
+
+public class OrderItemModel implements Serializable {
     //for OrderItem we need the name,price,count
     private String name;
     private double price;

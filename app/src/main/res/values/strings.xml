@@ -167,6 +167,7 @@
     <string name="restaurants_filter_done">done</string>
     <string name="sign_up">Sign up</string>
     <string name="restaurants_filter_clear_all">clear all</string>
+    <string name="title_total_items">TOTAL ITEMS :</string>
 
 
 </resources>

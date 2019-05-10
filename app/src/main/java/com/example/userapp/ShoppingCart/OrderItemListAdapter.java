@@ -43,7 +43,7 @@ public class OrderItemListAdapter extends  RecyclerView.Adapter<OrderItemListAda
         textViewIemPrice.setText(String.valueOf(item.getPrice()));
         textViewItemName.setText(item.getName());
         textViewItemCount.setText(String.valueOf(item.getCount()));
-/*
+
         imageViewItemAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +56,7 @@ public class OrderItemListAdapter extends  RecyclerView.Adapter<OrderItemListAda
             public void onClick(View v) {
                  ((ShoppingCartActivity)context).handlerShoppingCarNum(0,i,true);
             }
-        });*/
+        });
 
     }
 

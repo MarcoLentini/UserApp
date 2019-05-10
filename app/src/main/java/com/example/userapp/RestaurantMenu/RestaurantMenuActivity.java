@@ -27,10 +27,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RestaurantMenuActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
+    private static final int SHOP_CART_ACTIVITY = 1;
 
     private static final int PERCENTAGE_TO_SHOW_IMAGE = 20;
     private int mMaxScrollSize;
@@ -44,6 +46,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
     //for shopping cart   key->itemId value->OrderItemModel
     private HashMap<String,OrderItemModel> selectedItemsHashMap;
+    private ArrayList<OrderItemModel> selectedItemsList;
     private double totalMoney = 0.00;
     // BottomSheetBehavior variable
     private BottomSheetBehavior bottomSheetBehavior;
@@ -104,8 +107,20 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         Basket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //passing hashmap to new activity
+                //fill the Arraylist and pass as parameter to ShoppingCartActivity
+                selectedItemsList = new ArrayList<>();
+                if(selectedItemsHashMap.size() > 0) {
+                    for (OrderItemModel orderItem : selectedItemsHashMap.values()) {
+                        selectedItemsList.add(orderItem);
+                    }
+                }
                 Intent intent = new Intent(RestaurantMenuActivity.this, ShoppingCartActivity.class);
-                startActivity(intent);
+                intent.putExtra("selectedItems",(Serializable)selectedItemsList);
+                Bundle bundle = new Bundle();
+                bundle.putString("restName", rm.getName());
+                intent.putExtras(bundle);
+                startActivityForResult(intent, SHOP_CART_ACTIVITY);
             }
         });
      }
@@ -158,12 +173,14 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         update(refreshGoodList);
     }
 
+    //update the count of related items and the total cost of the all order items
         private void update(boolean refreshGoodList){
             if (selectedItemsHashMap.size() >0) { //user select some items
                 for (OrderItemModel orderItem : selectedItemsHashMap.values()) {
                     totalMoney += orderItem.getCount()*orderItem.getPrice();
                 }
             }else{
+                //nothing selected then hidden the bottom shopping cart
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
             //set the total money in the bottom shopping cart
@@ -176,7 +193,28 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
         }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == SHOP_CART_ACTIVITY) {
+            selectedItemsList=new ArrayList<>();
+            selectedItemsList =  (ArrayList<OrderItemModel>) data.getSerializableExtra("refselectedItems");
+            if(selectedItemsList.size() > 0){
+                //refresh the shop cart
+                selectedItemsHashMap = new HashMap<>();
+                for (OrderItemModel orderItem : selectedItemsList){
+                    selectedItemsHashMap.put(orderItem.getName(),orderItem);
+                }
+            }else{
+                //clear all things in the shopcart
+                selectedItemsHashMap = new HashMap<>();
+            }
+            //update the
+            update(true);
+        }
 
+
+    }
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         if (mMaxScrollSize == 0)
