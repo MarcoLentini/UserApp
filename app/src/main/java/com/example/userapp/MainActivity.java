@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         pbRestaurants = findViewById(R.id.progress_bar_restaurants);
+        tvRestaurantsCountValue = findViewById(R.id.textViewRestaurantsCountValue);
+        tvRestaurantsFiltersValue = findViewById(R.id.textViewFiltersCountValue);
 
         restaurantsData = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
