@@ -213,9 +213,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if(receivedFilters.isEmpty()) {
                         ((RestaurantsListAdapter) restaurantsAdapter).removeFilters();
                         tvRestaurantsFiltersValue.setText("0");
+                        int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
+                        tvRestaurantsCountValue.setText(String.valueOf(count));
                     }
                     else {
                         ((RestaurantsListAdapter) restaurantsAdapter).setFilters(receivedFilters);
+                        int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
+                        tvRestaurantsCountValue.setText(String.valueOf(count));
                         tvRestaurantsFiltersValue.setText(String.valueOf(receivedFilters.size()));
                     }
                 }
@@ -250,7 +254,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         tags));
                             }
                             pbRestaurants.setVisibility(View.GONE);
-                            tvRestaurantsCountValue.setText(String.valueOf(restaurantsData.size()));
+                            int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
+                            tvRestaurantsCountValue.setText(String.valueOf(count));
                             restaurantsAdapter.notifyDataSetChanged();
                         } else {
                             Log.d("QueryRestaurants", "No such document");
