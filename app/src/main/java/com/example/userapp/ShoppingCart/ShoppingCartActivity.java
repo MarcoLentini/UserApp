@@ -53,7 +53,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_detail_info);
 
-
         String title = getString(R.string.order_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -151,6 +150,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                        }
                    }
                 });
+                finish();
             }
         });
 
