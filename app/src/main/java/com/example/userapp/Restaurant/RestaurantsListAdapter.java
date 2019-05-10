@@ -65,7 +65,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         ImageView imageViewLogo = restaurantsViewHolder.imageViewLogo;
         TextView textViewName = restaurantsViewHolder.textViewName;
         TextView textViewDistance = restaurantsViewHolder.textViewDistance;
-        TextView textViewDescription = restaurantsViewHolder.textViewDeliveryFee;
+        TextView textViewDeliveryFee = restaurantsViewHolder.textViewDeliveryFee;
 
         RestaurantModel restaurantModel = dataSetFiltered.get(position);
 
@@ -73,7 +73,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
         textViewDistance.setText(restaurantModel.getAddress());
-        textViewDescription.setText(String.valueOf(restaurantModel.getDeliveryFee()));
+        textViewDeliveryFee.setText(String.valueOf(restaurantModel.getDeliveryFee() + "€"));
 
     }
 

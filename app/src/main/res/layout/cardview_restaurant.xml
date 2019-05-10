@@ -40,8 +40,9 @@
             >
             <TextView
                 android:padding="@dimen/dp12"
-                android:drawableLeft="@drawable/ic_currency_euro"
-                android:drawableStart="@drawable/ic_currency_euro"
+                android:drawableLeft="@drawable/ic_baseline_motorcycle"
+                android:drawableStart="@drawable/ic_baseline_motorcycle"
+                android:drawablePadding="2dp"
                 android:id="@+id/tvDeliveryFeeRestaurant"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
