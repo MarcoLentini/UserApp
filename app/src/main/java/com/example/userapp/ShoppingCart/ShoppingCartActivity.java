@@ -58,7 +58,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
-//Get Firebase auth instance
+        //Get Firebase auth instance
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
@@ -87,13 +87,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
         tvRestaurantName = findViewById(R.id.tvRestaurantName);
         tvRestaurantName.setText(rm.getName());
         tvNotes = findViewById(R.id.orderDetailInfoNotes);
-        tvNotes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(),"Add notes",Toast.LENGTH_SHORT).show();
-                //Invoke Address Activity
-                invokeAddNotesActivity(tvNotes.getText().toString());
-            }
+        tvNotes.setOnClickListener(v -> {
+            Toast.makeText(v.getContext(),"Add notes",Toast.LENGTH_SHORT).show();
+            //Invoke Address Activity
+            invokeAddNotesActivity(tvNotes.getText().toString());
         });
         tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
         tvDeliveryAddress.setOnClickListener(v -> {
@@ -122,12 +119,13 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 String totalMoney = textViewTotalMoney.getText().toString();
                 Double orderTotalCost = Double.parseDouble(totalMoney.replace("€", " "));
                 String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
+                String orderNotes = tvNotes.getText().toString().replace(getString(R.string.str_please_leave_your_notes_here_if_needed),"");
 
                 ReservationModel reservationModel = new ReservationModel(
                         auth.getCurrentUser().getUid(),
                         // Todo - timestamp and notes
                         Timestamp.now(), // delivery time
-                        null, //notes,
+                        orderNotes, //notes,
                         orderItems,
                         orderTotalCost,
                         rm.getId(), rm.getName(), rm.getAddress());
@@ -166,6 +164,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
         Double orderCost = Double.parseDouble(totalMoney.replace('€',' '));
         String orderRestaurantName = tvRestaurantName.getText().toString();
         String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
+        String orderNotes = tvNotes.getText().toString();
+
         if(orderCost == 0 && orderItemsCount == 0){
             Toast.makeText(this,"Please check you basket ,it it empty !",Toast.LENGTH_SHORT).show();
             return false;
@@ -218,19 +218,19 @@ public class ShoppingCartActivity extends AppCompatActivity {
         if (type == 0) { //decrease the count
             OrderItemModel tmpItem = orderItems.get(position);
             if (tmpItem != null){
-                if(tmpItem.getCount() < 2 ){
+                if(tmpItem.getDish_qty() < 2 ){
                     //when the count was 0 remove item from the list
-                    tmpItem.setCount(0);
+                    tmpItem.setDish_qty(0);
                     orderItems.remove(position);
                 }else{
-                    int i = tmpItem.getCount();
-                    tmpItem.setCount(--i);
+                    int i = tmpItem.getDish_qty();
+                    tmpItem.setDish_qty(--i);
                 }
             }
         }else if (type == 1) { //increase the count
             OrderItemModel tmpItem = orderItems.get(position);
-            int i= tmpItem.getCount();
-            tmpItem.setCount(++i);
+            int i= tmpItem.getDish_qty();
+            tmpItem.setDish_qty(++i);
             }
         //update the list of already ordered items
         update(refreshGoodList);
@@ -242,8 +242,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
         int count =0;
         for(int i=0;i<size;i++){
             OrderItemModel item = orderItems.get(i);
-            count += item.getCount();
-            totalMoney += item.getCount()*item.getPrice();
+            count += item.getDish_qty();
+            totalMoney += item.getDish_qty()*item.getDish_price();
         }
         textViewTotalMoney.setText("€"+String.valueOf(totalMoney));
         totalMoney = 0.00;

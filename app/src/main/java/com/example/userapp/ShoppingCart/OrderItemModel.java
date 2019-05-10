@@ -13,30 +13,29 @@ public class OrderItemModel implements Serializable {
         this.dish_price = dish_price;
         this.dish_qty = dish_qty;
     }
-    public int getCount() {
-        return dish_qty;
-    }
 
-    public void setCount(int count) {
-        this.dish_qty = count;
-    }
 
-    public String getName() {
+    public String getDish_name() {
         return dish_name;
     }
 
-    public void setName(String name) {
-        this.dish_name = name;
+    public void setDish_name(String dish_name) {
+        this.dish_name = dish_name;
     }
 
-
-    public double getPrice() {
+    public double getDish_price() {
         return dish_price;
     }
 
-    public void setPrice(double price) {
-        this.dish_price = price;
+    public void setDish_price(double dish_price) {
+        this.dish_price = dish_price;
     }
 
+    public int getDish_qty() {
+        return dish_qty;
+    }
 
+    public void setDish_qty(int dish_qty) {
+        this.dish_qty = dish_qty;
+    }
 }

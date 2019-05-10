@@ -40,23 +40,13 @@ public class OrderItemListAdapter extends  RecyclerView.Adapter<OrderItemListAda
         ImageView imageViewItemAdd = orderItemViewHolder.imageViewItemAdd;
         ImageView imageViewItemRemove = orderItemViewHolder.imageViewItemRemove;
 
-        textViewIemPrice.setText(String.valueOf(item.getPrice()));
-        textViewItemName.setText(item.getName());
-        textViewItemCount.setText(String.valueOf(item.getCount()));
+        textViewIemPrice.setText(String.valueOf(item.getDish_price()));
+        textViewItemName.setText(item.getDish_name());
+        textViewItemCount.setText(String.valueOf(item.getDish_qty()));
 
-        imageViewItemAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((ShoppingCartActivity)context).handlerShoppingCarNum(1,i,true);
-            }
-        });
+        imageViewItemAdd.setOnClickListener(v -> ((ShoppingCartActivity)context).handlerShoppingCarNum(1,i,true));
 
-        imageViewItemRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 ((ShoppingCartActivity)context).handlerShoppingCarNum(0,i,true);
-            }
-        });
+        imageViewItemRemove.setOnClickListener(v -> ((ShoppingCartActivity)context).handlerShoppingCarNum(0,i,true));
 
     }
 

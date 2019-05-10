@@ -127,7 +127,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                 return 0;
             } else {
                 OrderItemModel temp = selectedItemsHashMap.get(name);
-                return temp.getCount();
+                return temp.getDish_qty();
             }
         }
     }
@@ -138,27 +138,27 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
             if (type == 0) {//reduce the count of one menuItem
             OrderItemModel temp = selectedItemsHashMap.get(menuItem.getName());
             if(temp!=null){
-                if(temp.getCount()<2){
-                    temp.setCount(0);
+                if(temp.getDish_qty()<2){
+                    temp.setDish_qty(0);
                     selectedItemsHashMap.remove(menuItem.getName());
 
                 }else{
-                    int i =  temp.getCount();
-                    temp.setCount(--i);
+                    int i =  temp.getDish_qty();
+                    temp.setDish_qty(--i);
                 }
             }
         } else if (type == 1) { //increase the count of one menuItem
             if (selectedItemsHashMap.size() < 1){
                 OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1);
-                selectedItemsHashMap.put(temp.getName(), temp);
+                selectedItemsHashMap.put(temp.getDish_name(), temp);
             }else{
                 if (!selectedItemsHashMap.containsKey(menuItem.getName())){
                     OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1);
-                    selectedItemsHashMap.put(temp.getName(), temp);
+                    selectedItemsHashMap.put(temp.getDish_name(), temp);
                 }else {
                     OrderItemModel temp = selectedItemsHashMap.get(menuItem.getName());
-                    int i = temp.getCount();
-                    temp.setCount(++i);
+                    int i = temp.getDish_qty();
+                    temp.setDish_qty(++i);
                 }
             }
         }
@@ -169,7 +169,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         private void update(boolean refreshGoodList){
             if (selectedItemsHashMap.size() >0) { //user select some items
                 for (OrderItemModel orderItem : selectedItemsHashMap.values()) {
-                    totalMoney += orderItem.getCount()*orderItem.getPrice();
+                    totalMoney += orderItem.getDish_qty()*orderItem.getDish_qty();
                 }
             }else{
                 //nothing selected then hidden the bottom shopping cart
@@ -195,7 +195,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                 //refresh the shop cart
                 selectedItemsHashMap = new HashMap<>();
                 for (OrderItemModel orderItem : selectedItemsList){
-                    selectedItemsHashMap.put(orderItem.getName(),orderItem);
+                    selectedItemsHashMap.put(orderItem.getDish_name(),orderItem);
                 }
             }else{
                 //clear all things in the shopcart
