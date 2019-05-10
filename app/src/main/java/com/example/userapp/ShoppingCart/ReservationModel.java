@@ -17,39 +17,41 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
     private double totalIncome;*/
 
     private Long rs_id;
+    private String rs_status;
+
     private String cust_id;
+    private String cust_name;
+    private String cust_phone;
+    private String cust_address;
+
     private Timestamp timestamp;
     private String notes;
-    private String cust_phone;
-    private ArrayList<OrderItemModel> dishesArrayList;
-    private String rs_status;
+
+    private String rest_id;
+    private String rest_name;
+    private String rest_address;
+
+    private ArrayList<OrderItemModel> dishes;
     private Double total_income;
 
-    private String delivery_address;
 
 
-
-    public ReservationModel(Long rs_id, String cust_id, Timestamp timestamp, String notes,
-                            String cust_phone, ArrayList<OrderItemModel> dishesArrayList,
-                            String rs_status, Double total_income, String delivery_address) {
-        this.rs_id = rs_id;
+    public ReservationModel(String cust_id, Timestamp timestamp, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address) {
+        this.rs_id = null;
+        this.rs_status = "PENDING";
         this.cust_id = cust_id;
         this.timestamp = timestamp;
         this.notes = notes;
-        this.cust_phone = cust_phone;
-        this.dishesArrayList = dishesArrayList;
+        this.dishes = dishesArrayList;
         this.rs_status = rs_status;
         this.total_income = total_income;
-        this.delivery_address = delivery_address;
+
+        this.rest_id = rest_id;
+        this.rest_address = rest_address;
+        this.rest_name = rest_name;
 
     }
-    public String getDelivery_address() {
-        return delivery_address;
-    }
 
-    public void setDelivery_address(String delivery_address) {
-        this.delivery_address = delivery_address;
-    }
     public Long getRs_id() {
         return rs_id;
     }
@@ -90,14 +92,6 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
         this.cust_phone = cust_phone;
     }
 
-    public ArrayList<OrderItemModel> getDishesArrayList() {
-        return dishesArrayList;
-    }
-
-    public void setDishesArrayList(ArrayList<OrderItemModel> dishesArrayList) {
-        this.dishesArrayList = dishesArrayList;
-    }
-
     public String getRs_status() {
         return rs_status;
     }
@@ -114,21 +108,57 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
         this.total_income = total_income;
     }
 
-    /*public ReservationModel(int id, int customerId, int remainingMinutes, String notes,
-                            String customerPhoneNumber, ArrayList<ReservatedDish> reservatedDishes, String state, double totalIncome) {
-        this.id = id;
-        this.customerId = customerId;
-        this.remainingMinutes = remainingMinutes;
-        this.notes = notes;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.reservatedDishes = reservatedDishes;
-        this.state = state;
-        this.totalIncome = totalIncome;
-    }*/
-
 
     @Override
     public int compareTo(ReservationModel other) {
         return this.timestamp.compareTo(other.getTimestamp());
+    }
+
+    public String getCust_name() {
+        return cust_name;
+    }
+
+    public void setCust_name(String cust_name) {
+        this.cust_name = cust_name;
+    }
+
+    public String getCust_address() {
+        return cust_address;
+    }
+
+    public void setCust_address(String cust_address) {
+        this.cust_address = cust_address;
+    }
+
+    public String getRest_id() {
+        return rest_id;
+    }
+
+    public void setRest_id(String rest_id) {
+        this.rest_id = rest_id;
+    }
+
+    public String getRest_name() {
+        return rest_name;
+    }
+
+    public void setRest_name(String rest_name) {
+        this.rest_name = rest_name;
+    }
+
+    public String getRest_address() {
+        return rest_address;
+    }
+
+    public void setRest_address(String rest_address) {
+        this.rest_address = rest_address;
+    }
+
+    public ArrayList<OrderItemModel> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(ArrayList<OrderItemModel> dishes) {
+        this.dishes = dishes;
     }
 }

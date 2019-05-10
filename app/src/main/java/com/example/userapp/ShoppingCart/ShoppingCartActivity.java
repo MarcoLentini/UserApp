@@ -28,23 +28,24 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
     private FirebaseFirestore db ;
-    private  final static String TAG = "ShoppingCartActivity";
+    private final static String TAG = "ShoppingCartActivity";
     private static final int ADD_ADDRESS_ACTIVITY = 1;
     private RecyclerView.Adapter OrderItemListAdapter;
     //for shopping cart   key->itemId value->OrderItemModel
     private ArrayList<OrderItemModel> orderItems;
+    private RestaurantModel rm;
     private double totalMoney = 0.00;
     private TextView textViewTotalMoney;
     private  TextView tvDeliveryAddress;
     private  TextView tvRestaurantName;
     private Button btnPayForOrder;
     private  TextView textViewtotalCount;
-    private  Context context;
-    private String address;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
        // initStaticData();
         orderItems =  (ArrayList<OrderItemModel>) getIntent().getSerializableExtra("selectedItems");
         Intent receivedIntent = getIntent();
-        String restName = receivedIntent.getExtras().getString("restName");
+        rm = (RestaurantModel) receivedIntent.getExtras().getSerializable("rest");
+
         //this recycleView for the list of ordered items
 
         RecyclerView recyclerView = findViewById(R.id.rcOrderItemInfo);
@@ -81,74 +83,65 @@ public class ShoppingCartActivity extends AppCompatActivity {
         textViewTotalMoney = findViewById(R.id.tv_order_total_cost);
 
         tvRestaurantName = findViewById(R.id.tvRestaurantName);
-        tvRestaurantName.setText(restName);
+        tvRestaurantName.setText(rm.getName());
         tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
-        tvDeliveryAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              Toast.makeText(v.getContext(),"Add address",Toast.LENGTH_SHORT).show();
-              //Invoke Address Activity
-                invokeAddressActivity(address);
-            }
+        tvDeliveryAddress.setOnClickListener(v -> {
+          Toast.makeText(v.getContext(),"Add address",Toast.LENGTH_SHORT).show();
+          //Invoke Address Activity
+            invokeAddressActivity(tvDeliveryAddress.getText().toString());
         });
         textViewtotalCount = findViewById(R.id.tv_order_total_count);
         Switch switchASAP = findViewById(R.id.switch1);
         switchASAP.setChecked(false);
-        switchASAP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(),"You choose ASAP ",Toast.LENGTH_SHORT).show();
-                switchASAP.setChecked(true);
-            }
+        switchASAP.setOnClickListener(v -> {
+            Toast.makeText(v.getContext(),"You choose ASAP ",Toast.LENGTH_SHORT).show();
+            switchASAP.setChecked(true);
         });
 
         btnPayForOrder = findViewById(R.id.btnPayForOrder);
 
-        btnPayForOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(),"You click btnPayForOrder",Toast.LENGTH_SHORT).show();
-                //check the order information and upload to the firebase
-                if(isValidOrder()){
-
-                    String deliveryTime = "No mention";
-                    if (switchASAP.isChecked()){
-                        deliveryTime = "AS SOON AS POSSIBLE";
-                    }
-                    String  totalCount = textViewtotalCount.getText().toString();
-                    int orderItemsCount = Integer.parseInt(totalCount);
-                    String totalMoney = textViewTotalMoney.getText().toString();
-                    Double orderTotalCost = Double.parseDouble(totalMoney);
-                    String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
-                    String orderRestaurantName = tvRestaurantName.getText().toString();
-
-                    //TODO : sending order to the firebase
-                    /*Following down comment things may be not useful, delete if not needed*/
-                    /*
-                    Long rs_id = ;
-                    //need customer id  and phone number from firebase
-                    String customerId = "" ;
-                    String customerPhone ="334 033 7338" ;
-                    //need to get the timestamp
-                    Timestamp timestamp =  ;
-                    //need the notes here we can put notes for deliveryTime
-                    String rs_status = "PENDING"; // initial status of the reservation
-
-                    ReservationModel reservationModel = new ReservationModel(rs_id,customerId,timestamp,deliveryTime,
-                          customerPhone,orderItems,rs_status,orderTotalCost,orderDeliveryAddress);
-
-                    //store data to firebase
-                    DocumentReference dr = db.collection("reservations").document();
-                    dr.set(reservationModel).addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-
-                            Toast.makeText(context,"Your order is sending to restaurant !", Toast.LENGTH_LONG).show();
-                        } else {
-                            // Probably only on timeout, from test the request are stored offline
-                            Toast.makeText(context,"Internet problem, retry!", Toast.LENGTH_LONG).show();
-                        }
-                    });*/
+        btnPayForOrder.setOnClickListener(v -> {
+            if(isValidOrder()){
+                String deliveryTime = "No mention";
+                if (switchASAP.isChecked()){
+                    deliveryTime = "AS SOON AS POSSIBLE";
                 }
+                String  totalCount = textViewtotalCount.getText().toString();
+                int orderItemsCount = Integer.parseInt(totalCount);
+                String totalMoney = textViewTotalMoney.getText().toString();
+                Double orderTotalCost = Double.parseDouble(totalMoney.replace("€", " "));
+                String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
+
+                ReservationModel reservationModel = new ReservationModel(
+                        auth.getCurrentUser().getUid(),
+                        // Todo - timestamp and notes
+                        null, // Timestamp
+                        null, //notes,
+                        orderItems,
+                        orderTotalCost,
+                        rm.getId(), rm.getName(), rm.getAddress());
+
+                reservationModel.setCust_address(orderDeliveryAddress);
+
+                db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(task->{
+                   if(task.isSuccessful()){
+                       DocumentSnapshot doc = task.getResult();
+                       if(doc != null){
+                           reservationModel.setCust_name((String) doc.get("username"));
+                           reservationModel.setCust_phone((String) doc.get("phone"));
+
+                           db.collection("reservations").document().set(reservationModel).addOnCompleteListener(task1 -> {
+                               if(task1.isSuccessful()){
+
+                                   Toast.makeText(this,"Your order is sending to restaurant !", Toast.LENGTH_LONG).show();
+                               } else {
+                                   // Probably only on timeout, from test the request are stored offline
+                                   Toast.makeText(this,"Internet problem, retry!", Toast.LENGTH_LONG).show();
+                               }
+                           });
+                       }
+                   }
+                });
             }
         });
 
@@ -159,19 +152,19 @@ public class ShoppingCartActivity extends AppCompatActivity {
         String  totalCount = textViewtotalCount.getText().toString();
         int orderItemsCount = Integer.parseInt(totalCount);
         String totalMoney = textViewTotalMoney.getText().toString();
-        Double orderCost = Double.parseDouble(totalMoney);
+        Double orderCost = Double.parseDouble(totalMoney.replace('€',' '));
         String orderRestaurantName = tvRestaurantName.getText().toString();
         String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
         if(orderCost == 0 && orderItemsCount == 0){
-            Toast.makeText(context,"Please check you basket ,it it empty !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please check you basket ,it it empty !",Toast.LENGTH_SHORT).show();
             return false;
         }
         if(orderRestaurantName.isEmpty()) {
-            Toast.makeText(context,"Can not find this restaurant !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Can not find this restaurant !",Toast.LENGTH_SHORT).show();
             return false;
         }  ;
-        if(orderDeliveryAddress.isEmpty()) {
-            Toast.makeText(context,"Please input your address !",Toast.LENGTH_SHORT).show();
+        if(orderDeliveryAddress.isEmpty() || orderDeliveryAddress.equals(getString(R.string.str_nnt_please_addding_your_delivery_address_here))) {
+            Toast.makeText(this,"Please input your address !",Toast.LENGTH_SHORT).show();
             tvDeliveryAddress.setError("Field can't be empty");
             return false;
         } else
@@ -186,23 +179,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
     public void invokeAddressActivity(String address){
         Intent intent = new Intent(getApplicationContext(), AddingAddressActivity.class);
         Bundle bundle = new Bundle();
+        if(address.equals(getString(R.string.str_nnt_please_addding_your_delivery_address_here)))
+            address = "";
+        bundle.putString("address", address);
         intent.putExtras(bundle);
         startActivityForResult(intent, ADD_ADDRESS_ACTIVITY);
      }
-
-    private void initStaticData() {
-        OrderItemModel item0 = new OrderItemModel("pizza",2.00,5);
-        OrderItemModel item1 = new OrderItemModel("Torta",5.00,2);
-        OrderItemModel item2 = new OrderItemModel("Acqua",1.00,1);
-        OrderItemModel item3 = new OrderItemModel("Panino",3.00,1);
-        OrderItemModel item4 = new OrderItemModel("Yogurt",1.00,1);
-        orderItems.add(item0);
-        orderItems.add(item1);
-        orderItems.add(item2);
-        orderItems.add(item3);
-        orderItems.add(item4);
-
-    }
 
     //dealing with the increase or decrease of the item count
     public void handlerShoppingCarNum(int type, int position,boolean refreshGoodList) {

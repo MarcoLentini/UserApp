@@ -79,12 +79,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         db = FirebaseFirestore.getInstance();
         //toolbar
         Toolbar toolbar1 = findViewById(R.id.toolbarRestaurantDetails);
-        toolbar1.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar1.setNavigationOnClickListener(v -> onBackPressed());
         AppBarLayout appbarLayout = findViewById(R.id.appbarRestaurantDetails);
         appbarLayout.addOnOffsetChangedListener(this);
         mFab = findViewById(R.id.fabRestaurantDetails);
@@ -104,24 +99,21 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_shop_cart));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         Basket = findViewById(R.id.tv_pay_for_order);
-        Basket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //passing hashmap to new activity
-                //fill the Arraylist and pass as parameter to ShoppingCartActivity
-                selectedItemsList = new ArrayList<>();
-                if(selectedItemsHashMap.size() > 0) {
-                    for (OrderItemModel orderItem : selectedItemsHashMap.values()) {
-                        selectedItemsList.add(orderItem);
-                    }
+        Basket.setOnClickListener(v -> {
+            //passing hashmap to new activity
+            //fill the Arraylist and pass as parameter to ShoppingCartActivity
+            selectedItemsList = new ArrayList<>();
+            if(selectedItemsHashMap.size() > 0) {
+                for (OrderItemModel orderItem : selectedItemsHashMap.values()) {
+                    selectedItemsList.add(orderItem);
                 }
-                Intent intent = new Intent(RestaurantMenuActivity.this, ShoppingCartActivity.class);
-                intent.putExtra("selectedItems",(Serializable)selectedItemsList);
-                Bundle bundle = new Bundle();
-                bundle.putString("restName", rm.getName());
-                intent.putExtras(bundle);
-                startActivityForResult(intent, SHOP_CART_ACTIVITY);
             }
+            Intent intent = new Intent(RestaurantMenuActivity.this, ShoppingCartActivity.class);
+            intent.putExtra("selectedItems", selectedItemsList);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("rest", rm);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, SHOP_CART_ACTIVITY);
         });
      }
 

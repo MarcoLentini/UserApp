@@ -15,6 +15,8 @@ public class AddingAddressActivity extends AppCompatActivity {
     private TextInputLayout textInputDeliveryAddress;
     private EditText etDeliveryAddress;
     private Button btnCancel, btnSave;
+    private String address;
+
 private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ private FirebaseAuth auth;
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
 
+        address = getIntent().getExtras().getString("address");
+
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
@@ -33,6 +37,7 @@ private FirebaseAuth auth;
         }
         textInputDeliveryAddress = findViewById(R.id.text_input_address);
         etDeliveryAddress = findViewById(R.id.edit_text_input_address);
+        etDeliveryAddress.setText(address);
         etDeliveryAddress.setHorizontallyScrolling(false);
         etDeliveryAddress.setLines(1);
         btnCancel = findViewById(R.id.etAddressBtnCancel);
@@ -42,7 +47,7 @@ private FirebaseAuth auth;
 
                 Intent retIntent = new Intent(getApplicationContext(), ShoppingCartActivity.class);
                 Bundle bn = new Bundle();
-                String address = etDeliveryAddress.getText().toString();
+                address = etDeliveryAddress.getText().toString();
                 bn.putString("address", address);
                 retIntent.putExtras(bn);
                 setResult(RESULT_OK, retIntent);
