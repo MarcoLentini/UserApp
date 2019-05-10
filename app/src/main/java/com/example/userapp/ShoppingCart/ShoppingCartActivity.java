@@ -115,7 +115,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 ReservationModel reservationModel = new ReservationModel(
                         auth.getCurrentUser().getUid(),
                         // Todo - timestamp and notes
-                        null, // Timestamp
+                        Timestamp.now(), // delivery time
                         null, //notes,
                         orderItems,
                         orderTotalCost,

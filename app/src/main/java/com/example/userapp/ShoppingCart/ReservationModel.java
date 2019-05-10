@@ -7,15 +7,6 @@ import java.util.ArrayList;
 
 public class ReservationModel implements Comparable<ReservationModel>, Serializable {
 
-    /*private int id;
-    private int customerId;
-    private int remainingMinutes;
-    private String notes;
-    private String customerPhoneNumber;
-    private ArrayList<ReservatedDish> reservatedDishes;
-    private String state;
-    private double totalIncome;*/
-
     private Long rs_id;
     private String rs_status;
 
@@ -25,6 +16,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
     private String cust_address;
 
     private Timestamp timestamp;
+    private Timestamp delivery_time;
     private String notes;
 
     private String rest_id;
@@ -36,14 +28,15 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
 
 
-    public ReservationModel(String cust_id, Timestamp timestamp, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address) {
+    public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address) {
         this.rs_id = null;
         this.rs_status = "PENDING";
         this.cust_id = cust_id;
-        this.timestamp = timestamp;
+        // Todo - change with booking time
+        this.delivery_time = delivery_time;
+        this.timestamp = Timestamp.now();
         this.notes = notes;
         this.dishes = dishesArrayList;
-        this.rs_status = rs_status;
         this.total_income = total_income;
 
         this.rest_id = rest_id;
@@ -160,5 +153,13 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     public void setDishes(ArrayList<OrderItemModel> dishes) {
         this.dishes = dishes;
+    }
+
+    public Timestamp getDelivery_time() {
+        return delivery_time;
+    }
+
+    public void setDelivery_time(Timestamp delivery_time) {
+        this.delivery_time = delivery_time;
     }
 }
