@@ -76,7 +76,6 @@
     <string name="menu_help">Help</string>
 
 
-
     <!-- activity_signup-->
     <string name="user_name">user name</string>
     <string name="user_phone">Phone number</string>
@@ -133,7 +132,7 @@
     <string name="menu_account">Account Info</string>
     <string name="menu_star">Favorite</string>
     <string name="menu_logout">Logout</string>
-
+    <string name="menu_comments">Comments</string>
     <string name="menu_orders">Orders</string>
     <string name="str_txt_content">起送 ￥25 配送费 ￥1 平均45分钟</string>
     <string name="str_txt_month_sales">月售23份</string>
@@ -165,11 +164,31 @@
     <string name="action_filter">Filter</string>
     <string name="hint_search_restaurants">Search restaurants</string>
     <string name="restaurants_filter_done">done</string>
-    <string name="sign_up">Sign up</string>
     <string name="restaurants_filter_clear_all">clear all</string>
     <string name="title_total_items">TOTAL ITEMS :</string>
     <string name="str_please_leave_your_notes_here_if_needed">Please leave your notes here if needed</string>
     <string name="title_order_notes">leave your notes</string>
 
+    <string name="str_nnt_order_status">This order has already finished</string>
+    <string name="btn_order_accepted">Accept Order</string>
+    <string name="btn_order_rejected">Reject Order</string>
+    <string name="history_order_delivery_detail_information">Delivery Detail Information</string>
+    <string name="history_order_payment_method">Payment Method</string>
+    <string name="history_order_once_more">ORDER ONCE MORE</string>
+    <string name="history_order_welcome_next_time">Welcome next time !</string>
+    <string name="history_order_detail_informantion">Order Detail Informantion</string>
+    <string name="history_order_delivery_time">Delivery Time</string>
+    <string name="history_order_id">Order ID</string>
+    <string name="history_order_delivery_address">Delivery Address</string>
+    <string name="histoyr_order_delivery_time">Delivery Time</string>
+    <string name="history_order_time">Order Time</string>
+
+    <string name="current_order_details_title">Current Order</string>
+    <string name="title_activity_comments">Comments</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_leave_your_comments">Please leave your comments here</string>
+    <string name="title_comments_food_quality">Food Quality</string>
+    <string name="title_comments_delivery_service">Delivery Service</string>
+    <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
 
 </resources>

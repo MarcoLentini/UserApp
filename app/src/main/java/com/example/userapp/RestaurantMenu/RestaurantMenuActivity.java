@@ -8,14 +8,20 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.userapp.R;
@@ -70,6 +76,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         ImageView restaurantImageView = findViewById(R.id.tvRestaurantLogo);
         Uri tmpUri = Uri.parse(rm.getRestaurantLogo());
         Glide.with(this).load(tmpUri).placeholder(R.drawable.img_rest_1).into(restaurantImageView);
+        mFab = findViewById(R.id.restaurant_menu_cardView);
         TextView tvDeliveryFee = findViewById(R.id.tvDeliveryFeeRestaurant);
         tvDeliveryFee.setText(String.valueOf(rm.getDeliveryFee()));
         TextView tvDistance = findViewById(R.id.tvDistanceRestaurant);
@@ -79,10 +86,14 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         db = FirebaseFirestore.getInstance();
         //toolbar
         Toolbar toolbar1 = findViewById(R.id.toolbarRestaurantDetails);
-        toolbar1.setNavigationOnClickListener(v -> onBackPressed());
+        //toolbar1.setNavigationOnClickListener(v -> onBackPressed());
+        setSupportActionBar(toolbar1);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         AppBarLayout appbarLayout = findViewById(R.id.appbarRestaurantDetails);
         appbarLayout.addOnOffsetChangedListener(this);
-        mFab = findViewById(R.id.fabRestaurantDetails);
+       // mFab = findViewById(R.id.fabRestaurantDetails);
 
         getDataAndUpdateArrayList();
         restaurantMenuData = new ArrayList<>();
@@ -117,6 +128,23 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         });
      }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater menuInflater =  getMenuInflater();
+        menuInflater.inflate(R.menu.menu_restaurant, menu);
+        MenuItem like = menu.findItem(R.id.action_like);
+        like.setVisible(true);
+        like.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //TODO LAB5 send my favorite to firebase
+
+                return false;
+            }
+        });
+        return true;
+    }
     //following code for shoppingCart
     //get the current count with the given name of a dish
     public int getSelectedItemCountById(String name){
@@ -169,7 +197,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         private void update(boolean refreshGoodList){
             if (selectedItemsHashMap.size() >0) { //user select some items
                 for (OrderItemModel orderItem : selectedItemsHashMap.values()) {
-                    totalMoney += orderItem.getDish_qty()*orderItem.getDish_qty();
+                    totalMoney += orderItem.getDish_price()*orderItem.getDish_qty();
                 }
             }else{
                 //nothing selected then hidden the bottom shopping cart
@@ -207,6 +235,13 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
 
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         if (mMaxScrollSize == 0)

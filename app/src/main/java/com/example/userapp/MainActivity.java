@@ -169,20 +169,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         //handle navigation view item clicks here
-        //TODO : adding the corresponding action for each item click
         int id = menuItem.getItemId();
-        /*if (id == R.id.nav_account){
-            //go to the login activity
-            Intent intent = new Intent(this, UserInformationActivity.class);
-            startActivity(intent);
-            Toast.makeText(this,"Account",Toast.LENGTH_SHORT).show();
-        }else
-         */
+
         if (id == R.id.nav_setting){
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_help){
+            Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+            startActivity(intent);
             Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_orders){
             Intent intent = new Intent(MainActivity.this, OrdersActivity.class);
@@ -196,6 +191,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_home){
 
+        }else if (id == R.id.nav_comments){
+            Intent intent = new Intent(MainActivity.this, CommentsActivity.class);
+            startActivity(intent);
+            Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

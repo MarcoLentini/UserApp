@@ -2,10 +2,13 @@ package com.example.userapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -13,45 +16,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.userapp.Information.LoginActivity;
-import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-//TODO : LAB5 get list of favorite restaurants from firebase and shows them
-
-public class FavoritesActivity extends AppCompatActivity
+//TODO : LAB5 get list of comments and shows here
+public class CommentsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static ArrayList<RestaurantModel> favoriteRestaurantsData;
-    private ProgressBar pbFavRestaurants;
-    private FirebaseFirestore db;
-    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorites);
-
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() == null) {
-            finish();
-        }
-
-        //Get Firestore instance
-        db = FirebaseFirestore.getInstance();
-
+        setContentView(R.layout.activity_comments);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String title=getString(R.string.menu_star);
-        getSupportActionBar().setTitle(title);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -61,18 +42,16 @@ public class FavoritesActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        pbFavRestaurants = findViewById(R.id.progress_bar_fav_restaurants);
 
-        /*list of favorite restaurants*/
-        favoriteRestaurantsData = new ArrayList<>();
-        RecyclerView recyclerView = findViewById(R.id.rvFavoriteRestaurants);
+        /*
+        RecyclerView recyclerView = findViewById(R.id.rvMyComments);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // specify an Adapter
-        RecyclerView.Adapter restaurantsAdapter = new RestaurantsListAdapter(this, favoriteRestaurantsData);
-        recyclerView.setAdapter(restaurantsAdapter);
+        RecyclerView.Adapter commentsListAdapter = new CommentsListAdapter(this, myCommentsData);
+        recyclerView.setAdapter(commentsListAdapter);
+        */
 
-        
     }
 
     @Override
@@ -98,8 +77,7 @@ public class FavoritesActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        if(id == android.R.id.home){
+         if(id == android.R.id.home){
             onBackPressed();
             //getSupportFragmentManager().popBackStack();
         }
@@ -110,50 +88,39 @@ public class FavoritesActivity extends AppCompatActivity
      @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home){
-             Intent intent = new Intent(FavoritesActivity.this, MainActivity.class);
+            Intent intent = new Intent(CommentsActivity.this, MainActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Main",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_setting){
-            Intent intent = new Intent(FavoritesActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(CommentsActivity.this, SettingsActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_help){
-            Intent intent = new Intent(FavoritesActivity.this, HelpActivity.class);
+            Intent intent = new Intent(CommentsActivity.this, HelpActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_orders){
-            Intent intent = new Intent(FavoritesActivity.this, OrdersActivity.class);
+            Intent intent = new Intent(CommentsActivity.this, OrdersActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_star){
-            Intent intent = new Intent(FavoritesActivity.this, FavoritesActivity.class);
+            Intent intent = new Intent(CommentsActivity.this, FavoritesActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Star",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
             Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_comments){
-            Intent intent = new Intent(FavoritesActivity.this, CommentsActivity.class);
-            startActivity(intent);
+
             Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-         if (auth.getCurrentUser() == null ) {
-            startActivity(new Intent(FavoritesActivity.this, LoginActivity.class));
-            finish();
-
-        }
 
     }
 }

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/addCommentsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <RelativeLayout
+        android:id="@+id/addCommentsDeliveryService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/dp8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCommentsToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <TextView
+            android:id="@+id/tvCommentsDeliveryService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp6"
+            android:text="@string/title_comments_delivery_service"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryText"
+            />
+        <com.example.userapp.View.StarLinearLayout
+            android:layout_toRightOf="@+id/tvCommentsDeliveryService"
+            android:id="@+id/commentFiveStarVoteDeliveryService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp4"
+            app:isEdit="true"
+            android:layout_toEndOf="@+id/tvCommentsDeliveryService" />
+        <TextView
+            android:layout_toRightOf="@+id/commentFiveStarVoteDeliveryService"
+            android:id="@+id/commentTagDeliveryService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:padding="@dimen/dp6"
+            android:text=""
+            android:visibility="gone"
+            android:layout_toEndOf="@+id/commentFiveStarVoteDeliveryService" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/addCommentsFoodQuality"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCommentsDeliveryService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8"
+
+         >
+        <TextView
+            android:id="@+id/tvCommentsFoodQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp6"
+            android:text="@string/title_comments_food_quality"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryText"
+            />
+        <com.example.userapp.View.StarLinearLayout
+            android:layout_toRightOf="@+id/tvCommentsFoodQuality"
+            android:id="@+id/commentFiveStarVoteFoodQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp4"
+            app:isEdit="true"
+            android:layout_toEndOf="@+id/tvCommentsFoodQuality" />
+        <TextView
+            android:layout_toRightOf="@+id/commentFiveStarVoteFoodQuality"
+            android:id="@+id/commentTagFoodQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp6"
+            android:text=""
+            android:visibility="gone"
+            android:layout_toEndOf="@+id/commentFiveStarVoteFoodQuality" />
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/addCommentsLeaveMsg"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCommentsFoodQuality"
+        >
+        <TextView
+            android:id="@+id/tvCommentsLeaveMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp6"
+            android:text="@string/title_leave_your_comments"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryText"
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_below="@+id/tvCommentsLeaveMsg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edit_text_input_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:gravity="start|top"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLines="20"
+                android:nextFocusDown="@+id/btnSubmitComments" />
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnSubmitComments"
+        android:layout_margin="@dimen/dp8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_comment_submit_comment"
+        android:padding="@dimen/dp16"
+        android:textSize="16sp"
+        android:textColor="@color/colorSecondaryText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Button"/>
+</android.support.constraint.ConstraintLayout>

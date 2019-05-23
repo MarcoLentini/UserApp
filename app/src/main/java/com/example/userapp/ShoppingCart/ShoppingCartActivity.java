@@ -1,34 +1,27 @@
 package com.example.userapp.ShoppingCart;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.userapp.OrdersActivity;
 import com.example.userapp.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.example.userapp.ShoppingCart.ReservationModel;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
-import com.example.userapp.RestaurantMenu.RestaurantMenuListAdapter;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
@@ -122,7 +115,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
                 ReservationModel reservationModel = new ReservationModel(
                         auth.getCurrentUser().getUid(),
-                        // Todo - timestamp and notes
                         Timestamp.now(), // delivery time
                         orderNotes, //notes,
                         orderItems,
@@ -141,7 +133,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
                            db.collection("reservations").document().set(reservationModel).addOnCompleteListener(task1 -> {
                                if(task1.isSuccessful()){
 
+                                   //TODO : Task finished successful them go the the current order page show the order information
                                    Toast.makeText(this,"Your order is sending to restaurant !", Toast.LENGTH_LONG).show();
+
+                                   Intent intent = new Intent(ShoppingCartActivity.this, OrdersActivity.class);
+
+                                   startActivity(intent);
                                } else {
                                    // Probably only on timeout, from test the request are stored offline
                                    Toast.makeText(this,"Internet problem, retry!", Toast.LENGTH_LONG).show();

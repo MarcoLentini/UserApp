@@ -25,7 +25,6 @@ private FirebaseAuth auth;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbarRestaurantDetails);
         toolbar.setTitle(R.string.menu_setting);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +33,7 @@ private FirebaseAuth auth;
             }
         });
 
-//Get Firebase auth instance
+         //Get Firebase auth instance
          auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
@@ -80,5 +79,12 @@ private FirebaseAuth auth;
             finish();
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SettingsActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 }

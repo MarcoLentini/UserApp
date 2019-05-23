@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class ReservationModel implements Comparable<ReservationModel>, Serializable {
 
+    private Boolean is_current_order;
     private Long rs_id;
     private String rs_status;
 
@@ -29,6 +30,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
 
     public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address) {
+        this.is_current_order = true;
         this.rs_id = Long.parseLong("55");
         this.rs_status = "PENDING";
         this.cust_id = cust_id;
@@ -161,5 +163,13 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     public void setDelivery_time(Timestamp delivery_time) {
         this.delivery_time = delivery_time;
+    }
+
+    public Boolean getIs_current_order() {
+        return is_current_order;
+    }
+
+    public void setIs_current_order(Boolean is_current_order) {
+        this.is_current_order = is_current_order;
     }
 }

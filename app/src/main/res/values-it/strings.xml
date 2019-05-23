@@ -151,4 +151,28 @@
     <string name="str_please_leave_your_notes_here_if_needed">Please leave your notes here if needed</string>
     <string name="title_order_notes">leave your notes</string>
 
+    <string name="str_nnt_order_status">This order has already finished</string>
+    <string name="btn_order_accepted">Accept Order</string>
+    <string name="btn_order_rejected">Reject Order</string>
+    <string name="history_order_delivery_detail_information">Delivery Detail Information</string>
+    <string name="history_order_payment_method">Payment Method</string>
+    <string name="history_order_once_more">ORDER ONCE MORE</string>
+    <string name="history_order_welcome_next_time">Welcome next time !</string>
+    <string name="history_order_detail_informantion">Order Detail Informantion</string>
+    <string name="history_order_delivery_time">Delivery Time</string>
+    <string name="history_order_id">Order ID</string>
+    <string name="history_order_delivery_address">Delivery Address</string>
+    <string name="histoyr_order_delivery_time">Delivery Time</string>
+    <string name="history_order_time">Order Time</string>
+
+    <string name="current_order_details_title">Current Order</string>
+    <string name="menu_comments">Comments</string>
+    <string name="title_activity_comments">Comments</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_leave_your_comments">Please eave your comments here</string>
+    <string name="title_comments_food_quality">Food Quality</string>
+    <string name="title_comments_delivery_service">Delivery Service</string>
+    <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
+
+
 </resources>
