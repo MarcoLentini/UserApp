@@ -91,6 +91,16 @@
             android:layout_toEndOf="@+id/commentFiveStarVoteFoodQuality" />
     </RelativeLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvListOfDishes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCommentsFoodQuality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8">
+
+    </android.support.v7.widget.RecyclerView>
     <RelativeLayout
 
         android:id="@+id/addCommentsLeaveMsg"
@@ -100,7 +110,7 @@
         android:layout_margin="@dimen/dp8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addCommentsFoodQuality"
+        app:layout_constraintTop_toBottomOf="@+id/rvListOfDishes"
         >
         <TextView
             android:id="@+id/tvCommentsLeaveMsg"

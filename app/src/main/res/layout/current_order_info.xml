@@ -136,6 +136,28 @@
             android:layout_marginTop="@dimen/dp4"
             android:background="@color/colorDivider" />
 
+        <TextView
+            android:layout_marginTop="@dimen/dp4"
+            android:padding="@dimen/dp4"
+            android:id="@+id/tvConfirmationCodeInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider2"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold"
+            android:text="@string/confirmation_code"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/dp4"
+            android:padding="@dimen/dp4"
+            android:id="@+id/tvConfirmationCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvConfirmationCodeInfo"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,7 +165,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/dp6"
             android:layout_marginBottom="@dimen/dp6"
-            android:layout_below="@+id/divider2"
+            android:layout_below="@+id/tvConfirmationCode"
             >
 
             <Button

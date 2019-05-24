@@ -19,13 +19,16 @@
             android:src="@drawable/img_rest_1"
             android:contentDescription="@string/cd_logoimageview"
             />
+
         <TextView
             android:id="@+id/tvRestaurantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvRestaurantLogo"
             android:layout_alignBottom="@+id/tvRestaurantLogo"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginTop="55dp"
+            android:layout_marginBottom="55dp"
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="@color/colorSecondaryText"

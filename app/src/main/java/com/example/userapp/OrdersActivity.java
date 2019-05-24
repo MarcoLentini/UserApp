@@ -205,6 +205,7 @@ public class OrdersActivity extends AppCompatActivity
                                                  (Long) dish.get("dish_qty")));
                                      }
                                      CurrentOrderModel tmpCurrentOrderModel = new CurrentOrderModel(
+                                             (Long) dc.get("confirmation_code"),
                                              (Boolean) dc.get("is_current_order"),
                                              (String) dc.get("cust_id"),//customer id
                                              (String) dc.get("rs_status"), // order status

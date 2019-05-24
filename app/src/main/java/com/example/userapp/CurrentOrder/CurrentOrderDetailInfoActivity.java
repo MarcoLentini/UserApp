@@ -53,6 +53,8 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
             textViewTime.setText(String.valueOf(rm.getDelivery_time()));
 
 
+            TextView textViewConfirmationCode = findViewById(R.id.tvConfirmationCodeDetail);
+            textViewConfirmationCode.setText(String.valueOf(rm.getConfirmation_code()));
             TextView textViewOrderId = findViewById(R.id.tvCurrentOrderID);
             textViewOrderId.setText(String.valueOf(rm.getRs_id()));
 

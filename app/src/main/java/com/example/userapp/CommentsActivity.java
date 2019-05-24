@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.example.userapp.Restaurant.RestaurantsListAdapter;
 
 import java.util.ArrayList;
 

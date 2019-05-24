@@ -61,6 +61,7 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView textViewTotalItems = currentOrderViewHolder.textViewTotalItems;
         Button buttonOrderAccepted = currentOrderViewHolder.buttonOrderAccepted;
         TextView textViewCurrentOrderInfo = currentOrderViewHolder.textViewCurrentOrderInfo;
+        TextView textViewConfirmationCode = currentOrderViewHolder.textViewConfirmationCode;
 
 
         CurrentOrderModel currentOrder = currentOrders.get(pos);
@@ -68,6 +69,7 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
         textViewRestName.setText(""+currentOrder.getRest_name());
         textViewOrderStatus.setText(""+currentOrder.getRs_status());
         textViewTotalCost.setText(""+currentOrder.getTotal_cost());
+        textViewConfirmationCode.setText(""+currentOrder.getConfirmation_code());
         String reservationOffer = "";
         int count = 0;
         for (int i = 0; i < currentOrder.getDishes().size(); i++) {
@@ -100,9 +102,11 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView textViewTotalItems;
         Button buttonOrderAccepted;
         TextView textViewCurrentOrderInfo;
+        TextView textViewConfirmationCode;
 
         public CurrentOrderViewHolder(View view) {
             super(view);
+            this.textViewConfirmationCode = itemView.findViewById(R.id.tvConfirmationCode);
             this.textViewRestName = itemView.findViewById(R.id.tvRestaurantNameCurrentOrder);
             this.textViewOrderStatus = itemView.findViewById(R.id.tvOrderStatusCurrentOrder);
             this.textViewTotalCost = itemView.findViewById(R.id.tvCurrentOrderTotalCost);

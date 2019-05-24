@@ -180,6 +180,7 @@
     <string name="title_comments_food_quality">Food Quality</string>
     <string name="title_comments_delivery_service">Delivery Service</string>
     <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
+    <string name="confirmation_code">Your Confirmation code:(This code should be showed to the Biker when you are asked for the code.)</string>
 
 
 </resources>

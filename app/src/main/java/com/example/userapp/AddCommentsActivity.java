@@ -3,12 +3,19 @@ package com.example.userapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.userapp.AddComments.CommentsDishesListAdapter;
+import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
+import com.example.userapp.CurrentOrder.CurrentOrderListAdapter;
 import com.example.userapp.View.StarLinearLayout;
+
+import java.util.ArrayList;
 
 public class AddCommentsActivity extends AppCompatActivity {
 
@@ -19,11 +26,22 @@ public class AddCommentsActivity extends AppCompatActivity {
     private TextView textViewMsg;
     private Button btnSubmitComments;
 
+    private RecyclerView recyclerViewCommentsDishes;
+    private RecyclerView.Adapter commentsDishesListAdapter;
 
+    private ArrayList<CurrentOrderItemModel> orderedDishes;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comments_add_comments);
+
+
+        recyclerViewCommentsDishes = findViewById(R.id.rvListOfDishes);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerViewCommentsDishes.setLayoutManager(layoutManager);
+        commentsDishesListAdapter = new CommentsDishesListAdapter(this,orderedDishes);
+        recyclerViewCommentsDishes.setAdapter(commentsDishesListAdapter);
+
 
         mStarDeliveryService = findViewById(R.id.commentFiveStarVoteDeliveryService);
         textViewDeliveryService = findViewById(R.id.commentTagDeliveryService);

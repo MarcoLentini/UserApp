@@ -23,6 +23,7 @@
             app:contentScrim="?colorPrimary"
             >
 
+            <!--   android:tint="#BBF0C842"-->
             <ImageView
                 android:id="@+id/tvRestaurantLogo"
                 android:layout_width="wrap_content"

@@ -35,6 +35,28 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:layout_marginTop="@dimen/dp4"
+                    android:padding="@dimen/dp4"
+                    android:id="@+id/tvConfirmationCodeInfoDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvStatusCurrentOrder"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textStyle="bold"
+                    android:text="@string/confirmation_code"/>
+
+                <TextView
+                    android:layout_marginTop="@dimen/dp4"
+                    android:padding="@dimen/dp4"
+                    android:id="@+id/tvConfirmationCodeDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvConfirmationCodeInfoDetail"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,7 +64,7 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/dp6"
                     android:layout_marginBottom="@dimen/dp6"
-                    android:layout_below="@+id/tvStatusCurrentOrder"
+                    android:layout_below="@+id/tvConfirmationCodeDetail"
                     >
 
                     <Button
