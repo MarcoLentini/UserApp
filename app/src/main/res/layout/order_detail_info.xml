@@ -178,29 +178,72 @@
                         android:layout_marginTop="@dimen/dp4"
                         android:background="@color/colorDivider" />
 
-                    <TextView
-                        android:id="@+id/tvDeliveryAddress"
-                        style="@style/TextAppearance.AppCompat.Body1"
+                    <LinearLayout
+                        android:id="@+id/deliveryInformation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/divider3"
-                        android:layout_gravity="end"
-                        android:background="@drawable/text_view_border"
-                        android:drawableStart="@drawable/ic_account_address"
-                        android:drawableLeft="@drawable/ic_account_address"
-                        android:drawableEnd="@drawable/ic_arrow_right"
-                        android:drawableRight="@drawable/ic_arrow_right"
                         android:clickable="true"
-                        android:padding="@dimen/dp8"
-                        android:text="@string/str_nnt_please_addding_your_delivery_address_here"
-                        android:textAlignment="viewEnd"
-                        android:focusable="true" />
+                        android:focusable="true"
+                        android:layout_below="@+id/divider3"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start"
+                            android:src="@drawable/ic_account_address"/>
+
+                        <LinearLayout
+
+                            android:layout_width="0dp"
+                            android:layout_weight="7"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/text_view_border"
+                            android:orientation="vertical"
+
+                            android:padding="@dimen/dp8"
+                            >
+                            <TextView
+
+                                android:id="@+id/tvDeliveryAddress"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                 android:layout_gravity="start"
+                                android:text="@string/str_nnt_please_addding_your_delivery_address_here"
+                                android:textAlignment="viewStart"
+                                />
+                            <TextView
+                                android:id="@+id/tvDeliveryNotes"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:text="@string/str_nnt_please_addding_your_delivery_notes_here"
+                                android:textAlignment="viewStart"
+                                />
+
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:src="@drawable/ic_arrow_right"/>
+
+                    </LinearLayout>
+
+
 
                     <View
                         android:id="@+id/divider4"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:layout_below="@+id/tvDeliveryAddress"
+                        android:layout_below="@+id/deliveryInformation"
                         android:layout_marginTop="@dimen/dp4"
                         android:background="@color/colorDivider" />
 

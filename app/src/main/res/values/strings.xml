@@ -158,12 +158,12 @@
     <string name="str_nnt_product_name">product name</string>
     <string name="str_nnt_price">price</string>
     <string name="str_nnt_5">5</string>
-    <string name="str_nnt_please_addding_your_delivery_address_here">Please addding your delivery address here *</string>
+    <string name="str_nnt_please_addding_your_delivery_address_here">Please addding your delivery address here</string>
     <string name="str_total_pay">￥0.00</string>
     <string name="button_save">Save</string>
     <string name="action_filter">Filter</string>
     <string name="hint_search_restaurants">Search restaurants</string>
-    <string name="restaurants_filter_done">done</string>
+    <string name="restaurants_filter_done">Done</string>
     <string name="restaurants_filter_clear_all">clear all</string>
     <string name="title_total_items">TOTAL ITEMS :</string>
     <string name="str_please_leave_your_notes_here_if_needed">Please leave your notes here if needed</string>
@@ -191,5 +191,12 @@
     <string name="title_comments_delivery_service">Delivery Service</string>
     <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
     <string name="confirmation_code">Your Confirmation code:(This code should be showed to the Biker when you are asked for the code .)</string>
+    <string name="title_delivery_city">City</string>
+    <string name="title_delivery_route">Route/Place</string>
+    <string name="title_delivery_number">n°</string>
+    <string name="title_delivery_notes">DELIVERY NOTES</string>
+    <string name="str_nnt_please_addding_your_delivery_notes_here">Please addding your delivery notes here</string>
+    <string name="address_not_correct">Your address is not valid</string>
+    <string name="used_addre_title">Your used addresses</string>
 
 </resources>

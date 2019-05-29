@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.userapp.OrdersActivity;
 import com.example.userapp.R;
+import com.google.api.Distribution;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
@@ -37,10 +39,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private TextView textViewTotalMoney;
     private  TextView tvDeliveryAddress;
     private  TextView tvNotes;
-    private  TextView tvRestaurantName;
+    private  TextView tvRestaurantName,tvDeliveryNotes;
     private Button btnPayForOrder;
     private  TextView textViewtotalCount;
-
+    private AddressModel myAddress;
+    private LinearLayout deliveryInfo;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,11 +87,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
             //Invoke Address Activity
             invokeAddNotesActivity(tvNotes.getText().toString());
         });
+
+        deliveryInfo=findViewById(R.id.deliveryInformation);
         tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
-        tvDeliveryAddress.setOnClickListener(v -> {
-          Toast.makeText(v.getContext(),"Add address",Toast.LENGTH_SHORT).show();
-          //Invoke Address Activity
-            invokeAddressActivity(tvDeliveryAddress.getText().toString());
+        tvDeliveryNotes=findViewById(R.id.tvDeliveryNotes);
+        deliveryInfo.setOnClickListener(v -> {
+             invokeAddressActivity(tvDeliveryAddress.getText().toString(),tvDeliveryNotes.getText().toString());
         });
         textViewtotalCount = findViewById(R.id.tv_order_total_count);
         Switch switchASAP = findViewById(R.id.switch1);
@@ -196,16 +200,25 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
 
     //activity for adding  the address
-    public void invokeAddressActivity(String address){
+    public void invokeAddressActivity(String address,String notes){
         Intent intent = new Intent(getApplicationContext(), AddingAddressActivity.class);
         Bundle bundle = new Bundle();
+        AddressModel sentAddr;
         if(address.equals(getString(R.string.str_nnt_please_addding_your_delivery_address_here))){
-            address = "";
+            sentAddr = new AddressModel("","",0);
         }else{
-            address = tvDeliveryAddress.getText().toString();
+            sentAddr = myAddress;
+        }
+        if(notes.equals(getString(R.string.str_nnt_please_addding_your_delivery_notes_here))){
+            notes = "";
+        }else{
+            notes = tvDeliveryNotes.getText().toString();
         }
 
-        bundle.putString("address", address);
+
+        bundle.putSerializable("address", sentAddr);
+        bundle.putString("notes",notes);
+
         intent.putExtras(bundle);
         startActivityForResult(intent, ADD_ADDRESS_ACTIVITY);
      }
@@ -259,10 +272,13 @@ public class ShoppingCartActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
             if (requestCode == ADD_ADDRESS_ACTIVITY) {
-                String myAddress = data.getStringExtra("address");
-                if (!myAddress.equals("")) {
-                    tvDeliveryAddress.setText(myAddress);
-                }
+
+                Bundle bn= data.getExtras();
+                myAddress = (AddressModel)bn.getSerializable("address");
+                String notes= bn.getString("notes");
+                tvDeliveryAddress.setText(myAddress.toString());
+                tvDeliveryNotes.setText(notes);
+
             }else if (requestCode == ADD_NOTES_ACTIVITY){
                 String myNotes = data.getStringExtra("orderNotes");
                 if (!myNotes.equals("")) {
