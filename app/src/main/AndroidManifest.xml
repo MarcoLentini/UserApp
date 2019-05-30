@@ -15,6 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".HistoryOrderActivity"
+            android:label="@string/title_activity_history_order"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.userapp.MainActivity" />
+        </activity>
+        <activity
             android:name=".CommentsActivity"
             android:label="@string/title_activity_comments"
             android:parentActivityName=".MainActivity"
@@ -79,7 +88,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppThemeCurrentInfo"></activity>
+            android:theme="@style/AppThemeCurrentInfo" />
         <activity android:name=".Information.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -95,9 +104,8 @@
         <activity android:name=".ShoppingCart.ShoppingCartActivity" />
         <activity android:name=".ShoppingCart.AddingAddressActivity" />
         <activity android:name=".ShoppingCart.AddingNotesActivity" />
-        <activity android:name=".CurrentOrder.CurrentOrderDetailInfoActivity"></activity>
-        <activity android:name=".AddCommentsActivity"/>
-
+        <activity android:name=".CurrentOrder.CurrentOrderDetailInfoActivity" />
+        <activity android:name=".AddComments.AddCommentsActivity" />
     </application>
 
 </manifest>

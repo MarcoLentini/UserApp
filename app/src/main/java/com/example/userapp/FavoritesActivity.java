@@ -16,20 +16,18 @@ import android.view.Menu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.userapp.Favorites.FavoriteRestaurantListAdapter;
 import com.example.userapp.Information.LoginActivity;
-import com.example.userapp.Restaurant.RestaurantModel;
-import com.example.userapp.Restaurant.RestaurantsListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-
-//TODO : LAB5 get list of favorite restaurants from firebase and shows them
 
 public class FavoritesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static ArrayList<RestaurantModel> favoriteRestaurantsData;
+    private RecyclerView.Adapter restaurantsAdapter;
+    private RecyclerView recyclerView;
+
     private ProgressBar pbFavRestaurants;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -38,7 +36,6 @@ public class FavoritesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
-
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
@@ -50,7 +47,7 @@ public class FavoritesActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String title=getString(R.string.menu_star);
+        String title = getString(R.string.menu_star);
         getSupportActionBar().setTitle(title);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -64,15 +61,15 @@ public class FavoritesActivity extends AppCompatActivity
         pbFavRestaurants = findViewById(R.id.progress_bar_fav_restaurants);
 
         /*list of favorite restaurants*/
-        favoriteRestaurantsData = new ArrayList<>();
-        RecyclerView recyclerView = findViewById(R.id.rvFavoriteRestaurants);
+
+        recyclerView = findViewById(R.id.rvFavoriteRestaurants);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // specify an Adapter
-        RecyclerView.Adapter restaurantsAdapter = new RestaurantsListAdapter(this, favoriteRestaurantsData);
+        restaurantsAdapter = new FavoriteRestaurantListAdapter(this, MainActivity.favoritesData);
         recyclerView.setAdapter(restaurantsAdapter);
 
-        
+
     }
 
     @Override
@@ -94,50 +91,50 @@ public class FavoritesActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == android.R.id.home){
+        if (id == android.R.id.home) {
             onBackPressed();
             //getSupportFragmentManager().popBackStack();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-     @Override
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home){
-             Intent intent = new Intent(FavoritesActivity.this, MainActivity.class);
+        if (id == R.id.nav_home) {
+            Intent intent = new Intent(FavoritesActivity.this, MainActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Main",Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.nav_setting){
+            Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_setting) {
             Intent intent = new Intent(FavoritesActivity.this, SettingsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.nav_help){
+            Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_help) {
             Intent intent = new Intent(FavoritesActivity.this, HelpActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.nav_orders){
+            Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_orders) {
             Intent intent = new Intent(FavoritesActivity.this, OrdersActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.nav_star){
+            Toast.makeText(this, "Orders", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_star) {
             Intent intent = new Intent(FavoritesActivity.this, FavoritesActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Star",Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.nav_logout){
-            Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.nav_comments){
+            Toast.makeText(this, "Star", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_logout) {
+            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_comments) {
             Intent intent = new Intent(FavoritesActivity.this, CommentsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Comments", Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_history_order){
+            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(FavoritesActivity.this, HistoryOrderActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -149,11 +146,12 @@ public class FavoritesActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-         if (auth.getCurrentUser() == null ) {
+       // getDataAndUpdateArrayList();
+        if (auth.getCurrentUser() == null) {
             startActivity(new Intent(FavoritesActivity.this, LoginActivity.class));
             finish();
 
         }
-
     }
+
 }

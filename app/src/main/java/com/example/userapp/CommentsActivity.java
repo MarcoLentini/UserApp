@@ -115,6 +115,10 @@ public class CommentsActivity extends AppCompatActivity
         }else if (id == R.id.nav_comments){
 
             Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_history_order){
+            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CommentsActivity.this, HistoryOrderActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -104,7 +104,7 @@
     <string name="title_activity_reset_password">重置密码</string>
     <string name="btn_forgot_password">忘记您的密码？</string>
     <string name="btn_reset_password">重置密码</string>
-    <string name="btn_back">返回</string>
+    <string name="btn_back"><![CDATA[<< 返回]]></string>
     <string name="hint_new_email">New Email</string>
     <string name="btn_change">更改</string>
     <string name="btn_send">发送</string>
@@ -181,6 +181,17 @@
     <string name="title_comments_delivery_service">Delivery Service</string>
     <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
     <string name="confirmation_code">Your Confirmation code:(This code should be showed to the Biker when you are asked for the code.)</string>
+    <string name="label_empty_data">Nothing is here now</string>
+    <string name="btn_reload">RELOAD</string>
+    <string name="menu_history_order">History Order</string>
+    <string name="address_not_correct">地址不识别</string>
+    <string name="str_nnt_please_addding_your_delivery_notes_here">Please addding your delivery notes here</string>
+    <string name="title_activity_history_order">历史订单</string>
+    <string name="title_delivery_city">City</string>
+    <string name="title_delivery_notes">DELIVERY NOTES</string>
+    <string name="title_delivery_number">n°</string>
+    <string name="title_delivery_route">Route/Place</string>
+    <string name="used_addre_title">Your used addresses</string>
 
 
 </resources>

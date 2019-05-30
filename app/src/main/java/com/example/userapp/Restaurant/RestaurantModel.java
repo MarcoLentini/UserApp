@@ -14,6 +14,8 @@ public class RestaurantModel implements Serializable {
     private String restaurantLogo;
     private ArrayList<String> tags;
 
+    private Boolean isLiked;
+
 
     public RestaurantModel(String id, String name, String address, String description, String restaurantLogo) {
         this.id = id;
@@ -23,8 +25,18 @@ public class RestaurantModel implements Serializable {
         this.restaurantLogo = restaurantLogo;
     }
 
+    public RestaurantModel(Boolean isLiked,String id, String name,double deliveryFee, String description, String restaurantLogo, String address) {
+        this.isLiked = isLiked;
+        this.id = id;
+        this.name = name;
+        this.deliveryFee = deliveryFee;
+        this.address = address;
+        this.description = description;
+        this.restaurantLogo = restaurantLogo;
+    }
 
     public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo, ArrayList<String> tags) {
+        this.isLiked = false;
         this.id = id;
         this.name = name;
         this.deliveryFee = deliveryFee;
@@ -32,6 +44,14 @@ public class RestaurantModel implements Serializable {
         this.description = description;
         this.restaurantLogo = restaurantLogo;
         this.tags = tags;
+    }
+
+    public Boolean getLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(Boolean liked) {
+        isLiked = liked;
     }
 
     public String getName() {

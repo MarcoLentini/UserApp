@@ -13,8 +13,12 @@
             android:title="@string/menu_orders" />
         <item
             android:id="@+id/nav_star"
-            android:icon="@drawable/ic_liked"
+            android:icon="@drawable/ic_menu_favorite"
             android:title="@string/menu_star" />
+        <item
+            android:id="@+id/nav_history_order"
+            android:icon="@drawable/ic_menu_history_order"
+            android:title="@string/menu_history_order" />
         <item
             android:id="@+id/nav_comments"
             android:icon="@drawable/ic_comments"

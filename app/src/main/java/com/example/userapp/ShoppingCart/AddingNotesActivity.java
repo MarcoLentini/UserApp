@@ -22,7 +22,7 @@ public class AddingNotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_add_notes);
 
-        String title = getString(R.string.title_delivery_address);
+        String title = getString(R.string.title_order_notes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);

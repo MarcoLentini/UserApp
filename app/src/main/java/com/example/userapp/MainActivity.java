@@ -22,16 +22,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.Information.LoginActivity;
 import com.example.userapp.Restaurant.FilterRestaurantsActivity;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView tvRestaurantsCountValue;
     private TextView tvRestaurantsFiltersValue;
 
+    public static ArrayList<FavoritesModel> favoritesData;
     private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +85,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvRestaurantsFiltersValue = findViewById(R.id.textViewFiltersCountValue);
 
         restaurantsData = new ArrayList<>();
+        favoritesData = new ArrayList<>();
+        getDataAndUpdateArrayList();
+
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // specify an Adapter
-        restaurantsAdapter = new RestaurantsListAdapter(this, restaurantsData);
+        restaurantsAdapter = new RestaurantsListAdapter(this, restaurantsData,favoritesData);
         recyclerView.setAdapter(restaurantsAdapter);
     }
 
@@ -195,6 +204,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, CommentsActivity.class);
             startActivity(intent);
             Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_history_order){
+            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, HistoryOrderActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -264,6 +277,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
+        String userId = auth.getCurrentUser().getUid();
+        db.collection("favorites")
+                .whereEqualTo("userID", userId)
+                .addSnapshotListener((EventListener<QuerySnapshot>) (document, e) -> {
+            if (e != null) return;
+            for(DocumentChange dc : document.getDocumentChanges()) {
+                if (dc.getType() == DocumentChange.Type.ADDED) {
+                    RestaurantModel restaurantModel = null;
+                    if (dc.getDocument().get("restaurantModel") != null){
+                        HashMap<String, Object> rest = (HashMap<String, Object>) dc.getDocument().get("restaurantModel");
+                        restaurantModel =new RestaurantModel(
+                                true,
+                                (String) rest.get("id"),
+                                (String) rest.get("name"),
+                                (Double)  rest.get("deliveryFee"),
+                                (String) rest.get("description"),
+                                (String) rest.get("restaurantLogo"),
+                                (String) rest.get("address"));
+                    }
+
+                    FavoritesModel favoritesModel = new FavoritesModel(
+                            dc.getDocument().getId(),
+                            (String)dc.getDocument().get("userID"),
+                            (String)dc.getDocument().get("restaurantID"),
+                            restaurantModel );
+
+                    favoritesData.add(favoritesModel);
+                    //TODO LAB5 Problem Left Favorites
+                    // for favorites now you can add a restaurant to your favorite list and also remove it successfully
+                    // but the problem was when you go to FavoriteActivity page there are more than one the same restaurant
+                    System.out.println("MainActivity    "+favoritesData.size()+favoritesModel.getId());
+                }
+
+                restaurantsAdapter.notifyDataSetChanged();
+                }
+        });
     }
 
     @Override

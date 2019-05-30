@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.userapp.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static  final  int  CURRENT_ORDER_DETAIL_INFO_CODE =1;
@@ -23,6 +24,8 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
     private Context context;
     private ArrayList<CurrentOrderModel>  currentOrders;
     private LayoutInflater mInflater;
+
+    HashMap<String,CurrentOrderModel> orders;
 
     public CurrentOrderListAdapter(Context context, ArrayList<CurrentOrderModel> currentOrders) {
               this.context = context;

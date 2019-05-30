@@ -147,7 +147,7 @@
     <string name="str_payment_method">Payment Method</string>
     <string name="str_adding_address">Adding Address</string>
     <string name="ContentDescription">TODO-content description of pics</string>
-    <string name="title_basket">Basket</string>
+    <string name="title_basket">CHECKOUT</string>
     <string name="title_total_cost">TOTAL COST :</string>
     <string name="title_delivery_address">DELIVERY ADDRESS</string>
     <string name="title_delivery_time">DELIVERY TIME</string>
@@ -167,7 +167,7 @@
     <string name="restaurants_filter_clear_all">clear all</string>
     <string name="title_total_items">TOTAL ITEMS :</string>
     <string name="str_please_leave_your_notes_here_if_needed">Please leave your notes here if needed</string>
-    <string name="title_order_notes">leave your notes</string>
+    <string name="title_order_notes">LEAVE YOUR NOTES</string>
 
     <string name="str_nnt_order_status">This order has already finished</string>
     <string name="btn_order_accepted">Accept Order</string>
@@ -198,5 +198,9 @@
     <string name="str_nnt_please_addding_your_delivery_notes_here">Please addding your delivery notes here</string>
     <string name="address_not_correct">Your address is not valid</string>
     <string name="used_addre_title">Your used addresses</string>
+    <string name="title_activity_history_order">HistoryOrder</string>
+    <string name="label_empty_data">Nothing is here now</string>
+    <string name="btn_reload">RELOAD</string>
+    <string name="menu_history_order">History Order</string>
 
 </resources>

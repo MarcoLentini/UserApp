@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class CommentsDishesListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-
     private ArrayList<CurrentOrderItemModel> orderedDishes;
     private Context context;
     private LayoutInflater mInflater;
@@ -38,13 +37,13 @@ public class CommentsDishesListAdapter  extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int pos) {
         CommentsDishesViewHolder commentsDishesViewHolder= (CommentsDishesViewHolder)viewHolder;
-        TextView tvorderedDishesName = commentsDishesViewHolder.tvorderedDishesName;
-        View vthumbDown = commentsDishesViewHolder.vthumbDown;
-        View vthumbUp = commentsDishesViewHolder.vthumbUp;
+        TextView tvOrderedDishesName = commentsDishesViewHolder.tvOrderedDishesName;
+        View vThumbDown = commentsDishesViewHolder.vTumbDown;
+        View vThumbUp = commentsDishesViewHolder.vThumbUp;
 
         CurrentOrderItemModel currentOrderItem= orderedDishes.get(pos);
-        tvorderedDishesName.setText(currentOrderItem.getDish_name());
-        vthumbUp.setOnClickListener(new View.OnClickListener() {
+        tvOrderedDishesName.setText(currentOrderItem.getDish_name());
+        vThumbUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO send back the position and counter +1
@@ -52,7 +51,7 @@ public class CommentsDishesListAdapter  extends RecyclerView.Adapter<RecyclerVie
 
             }
         });
-        vthumbDown.setOnClickListener(new View.OnClickListener() {
+        vThumbDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO send back the position and counter -1
@@ -69,15 +68,15 @@ public class CommentsDishesListAdapter  extends RecyclerView.Adapter<RecyclerVie
     }
 
     private class CommentsDishesViewHolder extends RecyclerView.ViewHolder {
-         TextView tvorderedDishesName;
-         View vthumbUp;
-         View vthumbDown;
+         TextView tvOrderedDishesName;
+         View vThumbUp;
+         View vTumbDown;
 
         public CommentsDishesViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.tvorderedDishesName = itemView.findViewById(R.id.tvDishNameCommentsItem);
-            this.vthumbDown = itemView.findViewById(R.id.ivThumbDown);
-            this.vthumbUp = itemView.findViewById(R.id.ivThumbUp);
+            this.tvOrderedDishesName = itemView.findViewById(R.id.tvDishNameCommentsItem);
+            this.vTumbDown = itemView.findViewById(R.id.ivThumbDown);
+            this.vThumbUp = itemView.findViewById(R.id.ivThumbUp);
         }
     }
 }

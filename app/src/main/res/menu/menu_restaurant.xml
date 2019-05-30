@@ -5,7 +5,7 @@
     tools:context="com.example.userapp.RestaurantMenu.RestaurantMenuActivity">
 
     <item android:id="@+id/action_like"
-        android:title="@string/title_search_history_order"
+        android:title=""
         android:icon="@drawable/ic_like"
         app:showAsAction="always"
         />

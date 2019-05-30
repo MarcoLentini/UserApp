@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.R;
 import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
 
@@ -31,7 +32,9 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
     private ArrayList<RestaurantModel> dataSetFiltered;
     private boolean activeFilters;
 
-    public RestaurantsListAdapter(Context context, ArrayList<RestaurantModel> restaurants){
+    private ArrayList<FavoritesModel> favorites;
+    public RestaurantsListAdapter(Context context, ArrayList<RestaurantModel> restaurants, ArrayList<FavoritesModel> favorites){
+        this.favorites = favorites;
         this.context = context;
         this.dataSet = restaurants;
         this.dataSetFiltered = restaurants;
@@ -68,6 +71,15 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         TextView textViewDeliveryFee = restaurantsViewHolder.textViewDeliveryFee;
 
         RestaurantModel restaurantModel = dataSetFiltered.get(position);
+
+        if (favorites.size() > 0) {
+            for (FavoritesModel favoritesModel : favorites) {
+                if (favoritesModel.getRestaurantID().equals(restaurantModel.getId())) {
+                    System.out.println("**********find this restaurant"+restaurantModel.getId());
+                    restaurantModel.setLiked(true);
+                }
+            }
+        }
 
         Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);

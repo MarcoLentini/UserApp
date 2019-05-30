@@ -1,4 +1,4 @@
-package com.example.userapp;
+package com.example.userapp.AddComments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.userapp.AddComments.CommentsDishesListAdapter;
 import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
-import com.example.userapp.CurrentOrder.CurrentOrderListAdapter;
+import com.example.userapp.R;
 import com.example.userapp.View.StarLinearLayout;
 
 import java.util.ArrayList;

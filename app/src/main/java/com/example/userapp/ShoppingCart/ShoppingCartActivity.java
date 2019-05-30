@@ -1,6 +1,9 @@
 package com.example.userapp.ShoppingCart;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.userapp.OrdersActivity;
@@ -23,7 +27,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
@@ -44,6 +52,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private  TextView textViewtotalCount;
     private AddressModel myAddress;
     private LinearLayout deliveryInfo;
+    TimePickerDialog.OnTimeSetListener mOnTimeSetListener;
+    private String deliverytime = "AS SOON AS POSSIBLE";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,12 +91,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         tvRestaurantName = findViewById(R.id.tvRestaurantName);
         tvRestaurantName.setText(rm.getName());
-        tvNotes = findViewById(R.id.orderDetailInfoNotes);
+       /*tvNotes = findViewById(R.id.orderDetailInfoNotes);
         tvNotes.setOnClickListener(v -> {
             Toast.makeText(v.getContext(),"Add notes",Toast.LENGTH_SHORT).show();
             //Invoke Address Activity
             invokeAddNotesActivity(tvNotes.getText().toString());
-        });
+        }); */
 
         deliveryInfo=findViewById(R.id.deliveryInformation);
         tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
@@ -96,19 +106,50 @@ public class ShoppingCartActivity extends AppCompatActivity {
         });
         textViewtotalCount = findViewById(R.id.tv_order_total_count);
         Switch switchASAP = findViewById(R.id.switch1);
-        switchASAP.setChecked(false);
+        //default status of switchASAP is true
+        switchASAP.setChecked(true);
         switchASAP.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(),"You choose ASAP ",Toast.LENGTH_SHORT).show();
-            switchASAP.setChecked(true);
+            Toast.makeText(v.getContext(),"You change the delivery time ",Toast.LENGTH_SHORT).show();
+            // check current state of a Switch (true or false).
+            Boolean switchState = switchASAP.isChecked();
+            if (!switchState){
+                //when status changes into false then all user choose the time
+                Calendar mCalendar =  Calendar.getInstance();
+                int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
+                int minute = mCalendar.get(Calendar.MINUTE);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = mCalendar.getTime();
+
+                TimePickerDialog mTimePickerDialog = new TimePickerDialog(
+                        ShoppingCartActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mOnTimeSetListener,
+                        hour,minute,true);
+
+                mTimePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                mTimePickerDialog.setTitle(dateFormat.format(date));
+                mTimePickerDialog.show();
+
+            }else {
+                switchASAP.setChecked(true);
+
+            }
         });
+
+        mOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourofday, int minute) {
+               //the time choosed
+                deliverytime = hourofday+":"+minute;
+            }
+        };
 
         btnPayForOrder = findViewById(R.id.btnPayForOrder);
 
         btnPayForOrder.setOnClickListener(v -> {
             if(isValidOrder()){
-                String deliveryTime = "No mention";
                 if (switchASAP.isChecked()){
-                    deliveryTime = "AS SOON AS POSSIBLE";
+                    deliverytime = "AS SOON AS POSSIBLE";
                 }
                 String  totalCount = textViewtotalCount.getText().toString();
                 int orderItemsCount = Integer.parseInt(totalCount);

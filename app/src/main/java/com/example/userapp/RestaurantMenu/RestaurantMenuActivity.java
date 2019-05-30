@@ -1,5 +1,6 @@
 package com.example.userapp.RestaurantMenu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,18 +25,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.userapp.Favorites.FavoritesModel;
+import com.example.userapp.FavoritesActivity;
+import com.example.userapp.MainActivity;
 import com.example.userapp.R;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.ShoppingCart.OrderItemModel;
 import com.example.userapp.ShoppingCart.ShoppingCartActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RestaurantMenuActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     private static final int SHOP_CART_ACTIVITY = 1;
@@ -59,6 +68,8 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     private TextView textViewTotalMoney;
     private TextView Basket;
     private FirebaseAuth auth;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +114,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         restaurantMenuListAdapter = new RestaurantMenuListAdapter(this, restaurantMenuData);
         recyclerView.setAdapter(restaurantMenuListAdapter);
 
-
         //for shopping cart
         selectedItemsHashMap = new HashMap<>();
         textViewTotalMoney = findViewById(R.id.tv_bottom_shop_cart_total_money);
@@ -126,6 +136,8 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
             intent.putExtras(bundle);
             startActivityForResult(intent, SHOP_CART_ACTIVITY);
         });
+
+
      }
 
     @Override
@@ -135,16 +147,66 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         menuInflater.inflate(R.menu.menu_restaurant, menu);
         MenuItem like = menu.findItem(R.id.action_like);
         like.setVisible(true);
+        String userId = auth.getCurrentUser().getUid();
+
+        if (rm.getLiked()) {
+            like.setIcon(R.drawable.ic_liked);
+        }else {
+            like.setIcon(R.drawable.ic_like);
+        }
+
         like.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                //TODO LAB5 send my favorite to firebase
+                // LAB5 send my favorite to firebase
+                // first check whether this restaurant is liked by user or not if not then liked else cancel liked
+                // get user id and information of the current restaurant
 
+               // Map<String,String> cat = new HashMap<>();
+                //cat.put("userId",userId);
+               // cat.put("rest_id",rm.getId());
+                //cat.put("restaurantModel",rm);
+                FavoritesModel myFavorite = new FavoritesModel(userId,rm.getId(),rm);
+
+                if (!rm.getLiked()){//this click means user like this restaurant
+                    DocumentReference dr =  db.collection("favorites").document();
+                    dr.set(myFavorite).addOnCompleteListener(task1 -> {
+                        if(task1.isSuccessful()){
+                            Toast.makeText(RestaurantMenuActivity.this,"Add to favorite", Toast.LENGTH_LONG).show();
+                            item.setIcon(R.drawable.ic_liked);
+                            rm.setLiked(true);
+                        } else {
+                            // Probably only on timeout, from test the request are stored offline nothing happened
+                            Toast.makeText(RestaurantMenuActivity.this,"Internet problem, retry!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }else{//this click means user cancel like this restaurant
+                    //TODO Lab5 delete this favorite form firebase
+                    // get the id and delete
+                    for (FavoritesModel favoritesModel : MainActivity.favoritesData){
+                        if (favoritesModel.getRestaurantID().equals(rm.getId()) && favoritesModel.getUserID().equals(userId)){
+                            db.collection("favorites").document(favoritesModel.getId()).delete().addOnCompleteListener(task->{
+                                if(task.isSuccessful()){
+                                    MainActivity.favoritesData.remove(favoritesModel);
+                                    Toast.makeText(RestaurantMenuActivity.this,"Remove from favorite", Toast.LENGTH_LONG).show();
+                                    item.setIcon(R.drawable.ic_like);
+                                    rm.setLiked(false);
+                                }else{
+                                    // Probably only on timeout, from test the request are stored offline nothing happened
+                                    Toast.makeText(RestaurantMenuActivity.this,"Internet problem, retry!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                }
                 return false;
             }
         });
+
         return true;
     }
+
+
     //following code for shoppingCart
     //get the current count with the given name of a dish
     public int getSelectedItemCountById(String name){
@@ -314,6 +376,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                         Log.d("QueryRestaurantMenu", "get failed with ", task.getException());
                     }
                 });
+
     }
 
     protected void onResume() {
