@@ -175,6 +175,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                             Toast.makeText(RestaurantMenuActivity.this,"Add to favorite", Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_liked);
                             rm.setLiked(true);
+                            MainActivity.favoritesData.add(myFavorite);
                         } else {
                             // Probably only on timeout, from test the request are stored offline nothing happened
                             Toast.makeText(RestaurantMenuActivity.this,"Internet problem, retry!", Toast.LENGTH_LONG).show();

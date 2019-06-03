@@ -146,6 +146,7 @@ public class FavoritesActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        restaurantsAdapter.notifyDataSetChanged();
        // getDataAndUpdateArrayList();
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(FavoritesActivity.this, LoginActivity.class));

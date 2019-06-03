@@ -29,6 +29,7 @@ import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         restaurantsData = new ArrayList<>();
         favoritesData = new ArrayList<>();
         getDataAndUpdateArrayList();
+        fillWithData();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -239,6 +241,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void fillWithData(){
+        String userId = auth.getCurrentUser().getUid();
+        db.collection("favorites")
+                .whereEqualTo("userID", userId)
+                .get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        QuerySnapshot docs = task.getResult();
+                        if(!docs.isEmpty()){
+                            for(DocumentSnapshot doc : docs.getDocuments()){
+                                RestaurantModel restaurantModel = null;
+                                if (doc.get("restaurantModel") != null){
+                                    HashMap<String, Object> rest = (HashMap<String, Object>) doc.get("restaurantModel");
+                                    restaurantModel =new RestaurantModel(
+                                            true,
+                                            (String) rest.get("id"),
+                                            (String) rest.get("name"),
+                                            (Double)  rest.get("deliveryFee"),
+                                            (String) rest.get("description"),
+                                            (String) rest.get("restaurantLogo"),
+                                            (String) rest.get("address"));
+                                }
+
+                                FavoritesModel favoritesModel = new FavoritesModel(
+                                        doc.getId(),
+                                        (String)doc.get("userID"),
+                                        (String)doc.get("restaurantID"),
+                                        restaurantModel );
+
+                                favoritesData.add(favoritesModel);
+                                System.out.println("MainActivity    "+favoritesData.size()+favoritesModel.getId());
+                            }
+                        }
+
+                    }
+
+            // restaurantsAdapter.notifyDataSetChanged();
+
+
+                });
+    }
+
+
     public void getDataAndUpdateArrayList() {
 
         pbRestaurants.setVisibility(View.VISIBLE);
@@ -249,7 +293,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         QuerySnapshot document = task.getResult();
                         if (!document.isEmpty()) {
                             for(DocumentSnapshot doc : document){
-                                // TODO remove the if when the tags will be compulsory
                                 Map<String, Boolean> receivedTags;
                                 ArrayList<String> tags = null;
                                 if(doc.get("tags") != null) {
@@ -276,43 +319,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Log.d("QueryRestaurants", "get failed with ", task.getException());
                     }
                 });
-
-        String userId = auth.getCurrentUser().getUid();
-        db.collection("favorites")
-                .whereEqualTo("userID", userId)
-                .addSnapshotListener((EventListener<QuerySnapshot>) (document, e) -> {
-            if (e != null) return;
-            for(DocumentChange dc : document.getDocumentChanges()) {
-                if (dc.getType() == DocumentChange.Type.ADDED) {
-                    RestaurantModel restaurantModel = null;
-                    if (dc.getDocument().get("restaurantModel") != null){
-                        HashMap<String, Object> rest = (HashMap<String, Object>) dc.getDocument().get("restaurantModel");
-                        restaurantModel =new RestaurantModel(
-                                true,
-                                (String) rest.get("id"),
-                                (String) rest.get("name"),
-                                (Double)  rest.get("deliveryFee"),
-                                (String) rest.get("description"),
-                                (String) rest.get("restaurantLogo"),
-                                (String) rest.get("address"));
-                    }
-
-                    FavoritesModel favoritesModel = new FavoritesModel(
-                            dc.getDocument().getId(),
-                            (String)dc.getDocument().get("userID"),
-                            (String)dc.getDocument().get("restaurantID"),
-                            restaurantModel );
-
-                    favoritesData.add(favoritesModel);
-                    //TODO LAB5 Problem Left Favorites
-                    // for favorites now you can add a restaurant to your favorite list and also remove it successfully
-                    // but the problem was when you go to FavoriteActivity page there are more than one the same restaurant
-                    System.out.println("MainActivity    "+favoritesData.size()+favoritesModel.getId());
-                }
-
-                restaurantsAdapter.notifyDataSetChanged();
-                }
-        });
     }
 
     @Override

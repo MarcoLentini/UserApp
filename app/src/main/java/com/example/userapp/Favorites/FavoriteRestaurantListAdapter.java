@@ -36,17 +36,14 @@ public class FavoriteRestaurantListAdapter extends RecyclerView.Adapter<Favorite
     public FavoriteRestaurantListAdapter.FavoriteRestaurantsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = mInflater.inflate(R.layout.cardview_restaurant,viewGroup,false);
         FavoriteRestaurantsViewHolder holder = new  FavoriteRestaurantListAdapter.FavoriteRestaurantsViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, RestaurantMenuActivity.class);
-                int position = holder.getAdapterPosition();
-                RestaurantModel rm = favorites.get(position).getRestaurantModel();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("rest", rm);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(context, RestaurantMenuActivity.class);
+            int position = holder.getAdapterPosition();
+            RestaurantModel rm = favorites.get(position).getRestaurantModel();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("rest", rm);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
 
         return holder;
