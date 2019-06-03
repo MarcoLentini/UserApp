@@ -91,12 +91,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         tvRestaurantName = findViewById(R.id.tvRestaurantName);
         tvRestaurantName.setText(rm.getName());
-       /*tvNotes = findViewById(R.id.orderDetailInfoNotes);
+       tvNotes = findViewById(R.id.orderDetailInfoNotes);
         tvNotes.setOnClickListener(v -> {
             Toast.makeText(v.getContext(),"Add notes",Toast.LENGTH_SHORT).show();
             //Invoke Address Activity
             invokeAddNotesActivity(tvNotes.getText().toString());
-        }); */
+        });
 
         deliveryInfo=findViewById(R.id.deliveryInformation);
         tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);

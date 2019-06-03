@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutMain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp8"
+    android:layout_marginRight="@dimen/dp8"
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
@@ -67,12 +68,34 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/tvTitlePopularRestaurant"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TOP RESTAURANTS"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutRestaurants" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewTopRestaurants"
+            app:layout_scrollFlags="scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             app:layout_constraintTop_toBottomOf="@+id/tvTitlePopularRestaurant"
+            tools:ignore="MissingConstraints">
+
+        </android.support.v7.widget.RecyclerView>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewRestaurants"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical"
-            app:layout_constraintTop_toBottomOf="@id/constraintLayoutRestaurants"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewTopRestaurants"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ProgressBar

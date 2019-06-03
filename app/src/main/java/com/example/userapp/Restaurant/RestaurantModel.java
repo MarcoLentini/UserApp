@@ -24,7 +24,7 @@ public class RestaurantModel implements Serializable {
         this.description = description;
         this.restaurantLogo = restaurantLogo;
     }
-
+    //this constructor for the restaurant that already liked by current user
     public RestaurantModel(Boolean isLiked,String id, String name,double deliveryFee, String description, String restaurantLogo, String address) {
         this.isLiked = isLiked;
         this.id = id;
@@ -34,7 +34,7 @@ public class RestaurantModel implements Serializable {
         this.description = description;
         this.restaurantLogo = restaurantLogo;
     }
-
+    //this constructor for the all restaurants with isLiked = false(initial value)
     public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo, ArrayList<String> tags) {
         this.isLiked = false;
         this.id = id;

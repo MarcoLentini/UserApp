@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.Information.LoginActivity;
 import com.example.userapp.Restaurant.FilterRestaurantsActivity;
+import com.example.userapp.Restaurant.PopularRestaurantsListAdapter;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
     private RecyclerView.Adapter restaurantsAdapter;
+    private RecyclerView.Adapter popularRestaurantsAdapter;
     private ArrayList<String> receivedFilters;
     private FirebaseFirestore db;
     private ProgressBar pbRestaurants;
@@ -90,12 +92,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getDataAndUpdateArrayList();
         fillWithData();
 
+        //recyclerView for the popular restaurant
+        RecyclerView recyclerViewPopular = findViewById(R.id.recyclerViewTopRestaurants);
+        RecyclerView.LayoutManager layoutManagerHorizential = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        recyclerViewPopular.setLayoutManager(layoutManagerHorizential);
+        // specify an Adapter
+        popularRestaurantsAdapter = new PopularRestaurantsListAdapter(this, restaurantsData,favoritesData);
+        recyclerViewPopular.setAdapter(popularRestaurantsAdapter);
+
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // specify an Adapter
         restaurantsAdapter = new RestaurantsListAdapter(this, restaurantsData,favoritesData);
         recyclerView.setAdapter(restaurantsAdapter);
+
+
     }
 
 
@@ -312,6 +324,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
                             tvRestaurantsCountValue.setText(String.valueOf(count));
                             restaurantsAdapter.notifyDataSetChanged();
+                            popularRestaurantsAdapter.notifyDataSetChanged();
+
                         } else {
                             Log.d("QueryRestaurants", "No such document");
                         }
