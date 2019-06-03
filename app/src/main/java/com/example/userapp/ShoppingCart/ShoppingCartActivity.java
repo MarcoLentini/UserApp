@@ -246,7 +246,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         AddressModel sentAddr;
         if(address.equals(getString(R.string.str_nnt_please_addding_your_delivery_address_here))){
-            sentAddr = new AddressModel("","",0);
+
+            sentAddr = new AddressModel("","",Long.parseLong("0"));
         }else{
             sentAddr = myAddress;
         }

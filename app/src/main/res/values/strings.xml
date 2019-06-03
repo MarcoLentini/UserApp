@@ -202,5 +202,6 @@
     <string name="label_empty_data">Nothing is here now</string>
     <string name="btn_reload">RELOAD</string>
     <string name="menu_history_order">History Order</string>
+    <string name="past_address_tv_title">Address already used</string>
 
 </resources>

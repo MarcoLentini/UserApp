@@ -1,10 +1,12 @@
 package com.example.userapp.ShoppingCart;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -29,6 +31,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,14 +39,14 @@ public class AddingAddressActivity extends AppCompatActivity {
 
     private TextInputLayout textInputDeliveryTown,textInputDeliveryStreet,textInputDeliveryNumber,textInputDeliveryNotes;
     private EditText etDeliveryTown,etDeliveryStreet,etDeliveryNumber,etDeliveryNotes;
+    private TextView tvPastAddr;
     private Button btnCancel, btnSave;
     private String town,street,notes,old_notes,new_notes;
-    private Integer number;
+    private Long number;
     private AddressModel address,old_address,new_address;
     private ProgressBar pb;
 private FirebaseAuth auth;
 private FirebaseFirestore db;
-    private ArrayAdapter<String> spinnerAdapter;
     private HashMap<String,AddressModel> availableAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,44 +65,8 @@ private FirebaseFirestore db;
         if (auth.getCurrentUser() == null) {
             finish();
         }
-
         db = FirebaseFirestore.getInstance();
         availableAddress=new HashMap<>();
-        db.collection("address").whereEqualTo("user_id",auth.getCurrentUser().getUid()).get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot document = task.getResult();
-                        if (!document.isEmpty()) {
-                            AddressModel tmpAddr;
-                            for (DocumentSnapshot doc : document) {
-                                tmpAddr = (AddressModel) doc.get("address");
-                                availableAddress.put(tmpAddr.toString(), tmpAddr);
-
-                            }
-                        }
-                    }
-                });
-
-
-
-        spinnerAdapter=new ArrayAdapter<String>(this, R.layout.address_spinner_row);
-        spinnerAdapter.addAll(availableAddress.keySet());
-        Spinner sp=(Spinner) findViewById(R.id.past_addr);
-        sp.setPrompt(getString(R.string.used_addre_title));
-        sp.setAdapter(spinnerAdapter);
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                TextView txt=(TextView) arg1.findViewById(R.id.rowtext);
-                String s=txt.getText().toString();
-                fillEditText(s);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0)
-            { }
-        });
 
         textInputDeliveryTown = findViewById(R.id.text_input_city);
         textInputDeliveryStreet = findViewById(R.id.text_input_route);
@@ -111,6 +78,7 @@ private FirebaseFirestore db;
         etDeliveryStreet=findViewById(R.id.edit_text_input_route);
         etDeliveryNumber=findViewById(R.id.edit_text_input_number);
         etDeliveryNotes= findViewById(R.id.edit_text_input_delivery_notes);
+        tvPastAddr=findViewById(R.id.past_addr);
 
         etDeliveryTown.setText(address.getTown());
         etDeliveryTown.setFocusable(true);
@@ -127,19 +95,70 @@ private FirebaseFirestore db;
         btnCancel.setOnClickListener(v -> finish());
         btnSave = findViewById(R.id.etAddressBtnSave);
         btnSave.setOnClickListener(v -> {
-            address= new AddressModel(etDeliveryTown.getText().toString(),etDeliveryStreet.getText().toString(),Integer.parseInt(etDeliveryNumber.getText().toString()));
+            address= new AddressModel(etDeliveryTown.getText().toString(),etDeliveryStreet.getText().toString(),Long.parseLong(etDeliveryNumber.getText().toString()));
             GeocodingLocation locationAddress = new GeocodingLocation();
             locationAddress.getAddressFromLocation(address.toString(),
                     this, new GeocoderHandler());
             pb.setVisibility(View.VISIBLE);
         });
+
+        db.collection("address").whereEqualTo("user_id",auth.getCurrentUser().getUid()).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot document = task.getResult();
+                        if (!document.isEmpty()) {
+                            AddressModel tmpAddr;
+                            for (DocumentSnapshot doc : document) {
+                                HashMap<String,Object> hash_addr= (HashMap<String, Object>) doc.get("address");
+                                tmpAddr=new AddressModel((String)hash_addr.get("town"),(String)hash_addr.get("street"),(Long)hash_addr.get("number"),(String)hash_addr.get("notes"));
+                                availableAddress.put(tmpAddr.toString(), tmpAddr);
+
+                            }
+                            tvPastAddr.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                usePastAddr();
+                                }
+                            });
+/*
+
+                            spinnerAdapter=new ArrayAdapter<String>(this, R.layout.address_spinner_row);
+                            spinnerAdapter.addAll(availableAddress.keySet());
+                            Spinner sp=(Spinner) findViewById(R.id.past_addr);
+                            sp.setPrompt(getString(R.string.used_addre_title));
+                            sp.setAdapter(spinnerAdapter);
+                            sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                            {
+                                @Override
+                                public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                                           int arg2, long arg3) {
+                                    TextView txt=(TextView) arg1.findViewById(R.id.rowtext);
+                                    String s=txt.getText().toString();
+                                    fillEditText(s);
+                                }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> arg0)
+                                { }
+                            });*/
+                        }
+                    }
+                    else{
+                        Log.d("AddingAddressActivity", "not find past address");
+                    }
+                });
+
+
+
+
+
+
     }
 
     private void fillEditText(String s) {
         AddressModel addr=availableAddress.get(s);
         etDeliveryTown.setText(addr.getTown());
         etDeliveryStreet.setText(addr.getStreet());
-        etDeliveryNumber.setText(addr.getNumber());
+        etDeliveryNumber.setText(addr.getNumber().toString());
         etDeliveryNotes.setText(addr.getNotes());
 
     }
@@ -156,6 +175,26 @@ private FirebaseFirestore db;
             finish();
 
         }
+    }
+
+    private void usePastAddr(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select one address");
+        String[] pastAddress= availableAddress.keySet().toArray(new String[availableAddress.keySet().size()]);
+        builder.setMultiChoiceItems(pastAddress, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                if(isChecked) {
+                    new_address=availableAddress.get(pastAddress[which]);
+                    fillEditText(new_address.toString());
+                    dialog.cancel();
+                }
+            }
+        });
+        builder.setPositiveButton("Cancel", null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private class GeocoderHandler extends Handler {
@@ -176,7 +215,7 @@ private FirebaseFirestore db;
                 Bundle bn = new Bundle();
                 town = etDeliveryTown.getText().toString();
                 street=etDeliveryStreet.getText().toString();
-                number=Integer.parseInt(etDeliveryNumber.getText().toString());
+                number=Long.parseLong(etDeliveryNumber.getText().toString());
                 notes=etDeliveryNotes.getText().toString();
                 AddressModel addr= new AddressModel(town,street,number,notes);
                 bn.putSerializable("address", addr);
@@ -185,18 +224,18 @@ private FirebaseFirestore db;
                 pb.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(),getString(R.string.restaurants_filter_done),Toast.LENGTH_SHORT).show();
 
-
-                Map<String, Object> address_map = new HashMap<>();
-                address_map.put("user_id", auth.getCurrentUser().getUid());
-                address_map.put("address",addr);
-                db.collection("address").document().set(address_map)
-                        .addOnSuccessListener(task->{
-                            Log.d("AddingAddress", "Address updated");
-                        })
-                        .addOnFailureListener(task->{
-                            Log.d("AddingAddress", "Failed to upload address");
-                        });
-
+                if(!availableAddress.containsValue(addr)) {
+                    Map<String, Object> address_map = new HashMap<>();
+                    address_map.put("user_id", auth.getCurrentUser().getUid());
+                    address_map.put("address", addr);
+                    db.collection("address").document().set(address_map)
+                            .addOnSuccessListener(task -> {
+                                Log.d("AddingAddress", "Address updated");
+                            })
+                            .addOnFailureListener(task -> {
+                                Log.d("AddingAddress", "Failed to upload address");
+                            });
+                }
                 setResult(RESULT_OK, retIntent);
                 finish();
             }else{

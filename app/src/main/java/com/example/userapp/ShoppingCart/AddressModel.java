@@ -6,17 +6,17 @@ import java.util.Objects;
 class AddressModel implements Serializable {
     private String town;
     private String street;
-    private Integer number;
+    private Long number;
     private String notes;
 
-    public AddressModel(String town, String street, Integer number, String notes) {
+    public AddressModel(String town, String street, Long number, String notes) {
         this.town = town;
         this.street = street;
         this.number = number;
         this.notes = notes;
     }
 
-    public AddressModel(String town, String street, Integer number) {
+    public AddressModel(String town, String street, Long number) {
         this.town = town;
         this.street = street;
         this.number = number;
@@ -38,11 +38,11 @@ class AddressModel implements Serializable {
         this.street = street;
     }
 
-    public Integer getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
@@ -66,8 +66,7 @@ class AddressModel implements Serializable {
         AddressModel that = (AddressModel) o;
         return Objects.equals(town, that.town) &&
                 Objects.equals(street, that.street) &&
-                Objects.equals(number, that.number) &&
-                Objects.equals(notes, that.notes);
+                Objects.equals(number, that.number);
     }
 
     @Override
