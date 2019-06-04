@@ -185,6 +185,11 @@
     <string name="title_delivery_number">n°</string>
     <string name="title_delivery_route">Route/Place</string>
     <string name="used_addre_title">Your used addresses</string>
+    <string name="title_close_icon">X</string>
+    <string name="title_leave_this_store">Leave this Store ?</string>
+    <string name="title_leave_alert_msg">If you exit now, you will lose all the products you have already selected.Are you sure ?</string>
+    <string name="btn_yes_leave">YES,LEAVE</string>
+    <string name="btn_no_stay">NO,STAY</string>
 
 
 </resources>

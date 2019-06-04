@@ -1,7 +1,10 @@
 package com.example.userapp.RestaurantMenu;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,7 +108,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
         AppBarLayout appbarLayout = findViewById(R.id.appbarRestaurantDetails);
         appbarLayout.addOnOffsetChangedListener(this);
-       // mFab = findViewById(R.id.fabRestaurantDetails);
 
         getDataAndUpdateArrayList();
         restaurantMenuData = new ArrayList<>();
@@ -161,11 +164,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                 // LAB5 send my favorite to firebase
                 // first check whether this restaurant is liked by user or not if not then liked else cancel liked
                 // get user id and information of the current restaurant
-
-               // Map<String,String> cat = new HashMap<>();
-                //cat.put("userId",userId);
-               // cat.put("rest_id",rm.getId());
-                //cat.put("restaurantModel",rm);
                 FavoritesModel myFavorite = new FavoritesModel(userId,rm.getId(),rm);
 
                 if (!rm.getLiked()){//this click means user like this restaurant
@@ -300,10 +298,51 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     }
     @Override
     public boolean onSupportNavigateUp() {
+        //when press back first check whether the shop cart is empty or not
+
         onBackPressed();
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (selectedItemsHashMap.size() > 0){
+            //show self defined popup window
+            Button btnYesLeave;
+            Button btnNoStay;
+            TextView txtCloseWindow;
+            Dialog myDialog = new Dialog(this);
+            myDialog.setContentView(R.layout.popup_window_shopping_cart);
+            txtCloseWindow = myDialog.findViewById(R.id.tvCloseWindow);
+            btnYesLeave = myDialog.findViewById(R.id.btnYesLeave);
+            btnNoStay = myDialog.findViewById(R.id.btnNoStay);
+
+            txtCloseWindow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            btnNoStay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+
+            btnYesLeave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RestaurantMenuActivity.super.onBackPressed();
+                }
+            });
+
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+
+        } else super.onBackPressed();
+
+    }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
