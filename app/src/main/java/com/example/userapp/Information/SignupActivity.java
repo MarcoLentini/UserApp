@@ -88,7 +88,9 @@ public class SignupActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar1);
 
         btnSignIn.setOnClickListener(v -> finish());
+        btnImage = findViewById(R.id.background_img_user1);
 
+        btnImage.setOnClickListener(v -> invokeDialogImageProfile());
         btnSignUp.setOnClickListener(v -> {
 
             String email = inputEmail.getText().toString().trim();
@@ -132,11 +134,11 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
-      /*   if (user_image==null) {
+         if (user_image==null) {
                 Toast.makeText(getApplicationContext(), "Enter Photo!", Toast.LENGTH_SHORT).show();
                 btnImage.performClick();
                 return;
-            }*/
+            }
 
             progressBar.setVisibility(View.VISIBLE);
             //create user
@@ -151,17 +153,17 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(SignupActivity.this, getString(R.string.auth_failed) + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                             Map<String, Object> user = new HashMap<>();
                             user.put("username", username);
                             user.put("email", email);
                             user.put("phone", phone);
-                            uploadOnFirebase(file_image);
-                            user.put("image_url", user_image.toString());
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
                             db.collection("users").document(auth.getCurrentUser().getUid())
                                     .set(user)
                                     .addOnSuccessListener(documentReference1 -> {
+                                        uploadOnFirebase(file_image);
+                                        Toast.makeText(SignupActivity.this, getString(R.string.profile_created),Toast.LENGTH_SHORT).show();
                                          startActivity(new Intent(SignupActivity.this, MainActivity.class));
                                         finish();
                                     })
@@ -222,14 +224,14 @@ public class SignupActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
             if(requestCode == CAMERA_REQUEST)  {
                 user_image = file_image;
-                Glide.with(this).load(user_image).placeholder(R.drawable.img_profile_1).into((ImageView) findViewById(R.id.img_profile));
+                Glide.with(this).load(user_image).placeholder(R.drawable.img_profile_1).into((ImageView) findViewById(R.id.user_image1));
 
 
             }
             if(requestCode == GALLERY_REQUEST){
 
                 user_image = data.getData();
-                Glide.with(this).load(user_image).placeholder(R.drawable.img_profile_1).into((ImageView) findViewById(R.id.img_profile));
+                Glide.with(this).load(user_image).placeholder(R.drawable.img_profile_1).into((ImageView) findViewById(R.id.user_image1));
 
             }
         }
@@ -253,7 +255,11 @@ public class SignupActivity extends AppCompatActivity {
             // Upload succeeded
             Log.d(TAG, "uploadFromUri: getDownloadUri success");
             user_image = downloadUri;
-            Glide.with(this).load(user_image).placeholder(R.drawable.img_profile_1).into((ImageView) findViewById(R.id.img_profile));
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("users").document(auth.getCurrentUser().getUid()).update("image_url",user_image.toString()).addOnCompleteListener(task->{
+                if(task.isSuccessful())
+                    Glide.with(this).load(user_image).placeholder(R.drawable.img_rest_1).into((ImageView) findViewById(R.id.img_profile));
+            });
             try {
                 deleteImage();
             } catch (IOException e) {
