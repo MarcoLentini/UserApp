@@ -207,7 +207,6 @@
     <string name="internet_down">Internet problem, retry!</string>
     <string name="removed_from_favorite">Removed from favorite</string>
     <string name="add_notes">Add notes</string>
-    <string name="changed_delivery_time">You changed the delivery time</string>
     <string name="order_sent">Your order is sending to restaurant !</string>
     <string name="empty_basket">Please check you basket ,it is empty !</string>
     <string name="rest_not_found">Can not find this restaurant !</string>

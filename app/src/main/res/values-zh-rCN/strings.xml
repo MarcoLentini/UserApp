@@ -150,7 +150,7 @@
     <string name="str_nnt_please_addding_your_delivery_address_here">Please addding your delivery address here *</string>
     <string name="str_total_pay">￥0.00</string>
     <string name="button_save">保存</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">筛选</string>
     <string name="hint_search_restaurants">搜索</string>
     <string name="restaurants_filter_done">完成</string>
     <string name="restaurants_filter_clear_all">清空</string>
@@ -197,6 +197,20 @@
     <string name="btn_no_stay">不，留下</string>
     <string name="title_leave_comments_for_order">添加评价</string>
     <string name="title_btn_delete">删除</string>
+    <string name="add_notes">添加备注</string>
+    <string name="added_to_favorite">收藏</string>
+    <string name="delete_account">您的账户已删除，可以注册新的用户</string>
+    <string name="empty_basket">请检查您的购物车，没有食品被添加</string>
+    <string name="empty_field">不能为空</string>
+    <string name="enter_pwd">请输入您的密码</string>
+    <string name="failed_delete_account">删除账户失败</string>
+    <string name="failed_send_reset_email">发送重置邮箱失败</string>
+    <string name="insert_address">请输入您的地址</string>
+    <string name="internet_down">网络有问题，请重试</string>
+    <string name="order_sent">您的订单已被送到餐馆</string>
+    <string name="removed_from_favorite">取消收藏</string>
+    <string name="rest_not_found">找不到此餐馆</string>
+    <string name="select_filters">筛选</string>
 
 
 </resources>

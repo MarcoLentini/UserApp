@@ -153,10 +153,7 @@
 
     <string name="str_nnt_order_status">Ordine completato</string>
     <string name="btn_order_accepted">Accetta ordine</string>
-    <string name="btn_order_rejected">Rifiuta ordine</string>
     <string name="history_order_delivery_detail_information">Informazioni di consegna</string>
-    <string name="history_order_payment_method">Metodo di pagamento</string>
-    <string name="history_order_once_more">Ordina uno in più</string>
     <string name="history_order_welcome_next_time">Welcome next time !</string>
     <string name="history_order_detail_informantion">Dettaglio dell\'ordine</string>
     <string name="history_order_delivery_time">Orario di consegna</string>
