@@ -43,73 +43,36 @@
                 />
 
         </android.support.design.widget.CollapsingToolbarLayout>
-<!--
-         <LinearLayout
-             android:background="@color/white"
-             android:padding="@dimen/dp8"
-             android:layout_below="@+id/tvRestaurantLogo"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:orientation="horizontal"
-             android:paddingTop="8dp"
-             android:gravity="center"
-             app:layout_scrollFlags="scroll|enterAlways|snap"
-             >
 
-             <TextView
-                 android:id="@+id/tvDeliveryFeeRestaurant"
-                 style="@style/TextAppearance.MaterialComponents.Headline5"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="start"
-                 android:layout_weight="1"
-                 android:drawableStart="@drawable/ic_currency_euro"
-                 android:drawableLeft="@drawable/ic_currency_euro"
-                 android:padding="@dimen/dp12"
-                 android:text=""
-                 android:textAlignment="viewStart"
-                 android:textColor="@color/colorPrimaryText"
-                 android:textSize="18sp" />
-             <TextView
-                 android:padding="@dimen/dp12"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1"
-                 android:drawableLeft="@drawable/ic_account_address"
-                 android:drawableStart="@drawable/ic_account_address"
-                 android:id="@+id/tvDistanceRestaurant"
-                 android:text=""
-                 android:layout_gravity="start"
-                 android:textAlignment="viewStart"
-                 style="@style/TextAppearance.MaterialComponents.Headline5"
-                 android:textColor="@color/colorPrimaryText"
-                 android:textSize="18sp" />
-         </LinearLayout>
--->
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayoutRestaurantMenu"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_marginBottom="@dimen/dp56"
-        android:layout_marginTop="@dimen/dp56"
+        android:layout_height="match_parent"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewRestaurantMenu"
+        <RelativeLayout
+            android:id="@+id/relativeLayoutRestaurantMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="#FFFFFA"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical"
-            app:behavior_overlapTop="78dp"
-              />
+            android:layout_marginTop="@dimen/dp56"
+            android:layout_marginBottom="@dimen/dp60"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewRestaurantMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="#FFFFFA"
+                android:scrollbars="vertical"
+                 />
 
-</RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <include layout="@layout/bottom_shop_cart"/>
 
@@ -120,7 +83,7 @@
         android:layout_margin="2dp"
         app:cardBackgroundColor="#FFFFFF"
         app:cardUseCompatPadding="true"
-        app:layout_anchor="@id/relativeLayoutRestaurantMenu"
+        app:layout_anchor="@id/nestedScrollView"
         app:layout_anchorGravity="top|center|end"
         tools:ignore="RtlHardcoded">
         <LinearLayout

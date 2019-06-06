@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ReservationModel implements Comparable<ReservationModel>, Serializable {
-
+    private Boolean is_commented;
     private Boolean is_current_order;
     private Long rs_id;
     private String rs_status;
@@ -30,6 +30,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
 
     public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address) {
+        this.is_commented = false;
         this.is_current_order = true;
         this.rs_id = Long.parseLong("55");
         this.rs_status = "PENDING";
@@ -45,6 +46,14 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
         this.rest_address = rest_address;
         this.rest_name = rest_name;
 
+    }
+
+    public Boolean getIs_commented() {
+        return is_commented;
+    }
+
+    public void setIs_commented(Boolean is_commented) {
+        this.is_commented = is_commented;
     }
 
     public Long getRs_id() {

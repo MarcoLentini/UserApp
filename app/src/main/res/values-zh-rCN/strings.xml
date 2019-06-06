@@ -6,7 +6,7 @@
     <string name="default_user_description">个人简介</string>
     <string name="default_user_phone_number">联系电话</string>
 
-    <string name="name_field_id">user_name</string>
+    <string name="name_field_id">用户名</string>
     <string name="email_field_id">user_email</string>
     <string name="pwd_field_id">user_password</string>
     <string name="phone_number__field_id">user_phone_number</string>
@@ -70,12 +70,12 @@
     <string name="user_name">用户名</string>
     <string name="user_phone">电话号码</string>
     <string name="user_description">个人描述</string>
-    <string name="complete_rest_btn">Complete registration</string>
+    <string name="complete_rest_btn">完成注册</string>
     <string name="username_updated">用户名已更新</string>
     <string name="username_failed_update">更新用户名失败</string>
     <string name="invalid_username">用户名无效，至少三位</string>
-    <string name="email_updated">Email address is updated. Please sign in with new email id!</string>
-    <string name="email_failed_updated">Failed to update email!</string>
+    <string name="email_updated">邮箱已更新，请用新的邮箱deng</string>
+    <string name="email_failed_updated">更新邮箱失败</string>
     <string name="phone_updated">电话号码已更新。</string>
     <string name="phone_failed_updated">更新电话号码失败</string>
     <string name="invalid_mail">请输入有效的邮箱地址</string>
@@ -83,7 +83,7 @@
     <string name="enter_email">请输入您的邮箱</string>
     <string name="logout_title">退出</string>
     <string name="password_failed_updated">更新密码失败</string>
-    <string name="create_profile_failed">Error in creating your profile.</string>
+    <string name="create_profile_failed">生成个人主页失败</string>
     <!-- For login and signup-->
     <string name="action_sign_in_short">注册</string>
     <string name="minimum_password">密码太短，请输入至少六位。</string>
@@ -95,9 +95,9 @@
     <string name="new_pass">新密码</string>
     <string name="title_activity_profile">Firebase</string>
     <string name="title_activity_login">登陆</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
-    <string name="hint_name">Fullname</string>
+    <string name="hint_email">邮箱</string>
+    <string name="hint_password">密码</string>
+    <string name="hint_name">用户名</string>
     <string name="btn_login">登陆</string>
     <string name="btn_link_to_register">还不是会员，立即注册加入！</string>
     <string name="btn_link_to_login">已注册，点击登陆！</string>
@@ -105,7 +105,7 @@
     <string name="btn_forgot_password">忘记您的密码？</string>
     <string name="btn_reset_password">重置密码</string>
     <string name="btn_back"><![CDATA[<< 返回]]></string>
-    <string name="hint_new_email">New Email</string>
+    <string name="hint_new_email">新邮箱</string>
     <string name="btn_change">更改</string>
     <string name="btn_send">发送</string>
     <string name="btn_remove">移除</string>
@@ -127,7 +127,7 @@
     <string name="str_tvRestaurantName">必胜宅急送（锦秋店）</string>
 
     <!--Tab labels in the Restaurant Detail Page -->
-     <string name="comments_label">Comments</string>
+     <string name="comments_label">我的评价</string>
     <string name="information_label">个人信息</string>
     <string name="title_activity_orders">订单</string>
     <string name="title_activity_favorites">收藏</string>
@@ -151,7 +151,7 @@
     <string name="str_total_pay">￥0.00</string>
     <string name="button_save">保存</string>
     <string name="action_filter">Filter</string>
-    <string name="hint_search_restaurants">Search restaurants</string>
+    <string name="hint_search_restaurants">搜索</string>
     <string name="restaurants_filter_done">完成</string>
     <string name="restaurants_filter_clear_all">清空</string>
     <string name="title_total_items">总商品数 :</string>
@@ -159,45 +159,44 @@
     <string name="title_order_notes">备注信息</string>
 
     <string name="str_nnt_order_status">This order has already finished</string>
-    <string name="btn_order_accepted">Accept Order</string>
-    <string name="btn_order_rejected">Reject Order</string>
-    <string name="history_order_delivery_detail_information">Delivery Detail Information</string>
-    <string name="history_order_payment_method">Payment Method</string>
-    <string name="history_order_once_more">ORDER ONCE MORE</string>
+    <string name="btn_order_accepted">接收订单</string>
+    <string name="history_order_delivery_detail_information">配送信息</string>
     <string name="history_order_welcome_next_time">欢迎下次光临！</string>
-    <string name="history_order_detail_informantion">Order Detail Informantion</string>
-    <string name="history_order_delivery_time">Delivery Time</string>
-    <string name="history_order_id">Order ID</string>
-    <string name="history_order_delivery_address">Delivery Address</string>
+    <string name="history_order_detail_informantion">订单信息</string>
+    <string name="history_order_delivery_time">配送时间</string>
+    <string name="history_order_id">订单号码</string>
+    <string name="history_order_delivery_address">配送地址</string>
     <string name="histoyr_order_delivery_time">派送时间</string>
     <string name="history_order_time">下单时间</string>
 
-    <string name="current_order_details_title">Current Order</string>
+    <string name="current_order_details_title">当前订单</string>
     <string name="menu_comments">评论</string>
     <string name="title_activity_comments">评论</string>
     <string name="sign_up">注册</string>
-    <string name="title_leave_your_comments">Please eave your comments here</string>
-    <string name="title_comments_food_quality">Food Quality</string>
-    <string name="title_comments_delivery_service">Delivery Service</string>
-    <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
-    <string name="confirmation_code">Il tuo codice di conferma: questo codice deve essere mostrato al biker al momento della consegna.</string>
-    <string name="label_empty_data">Nothing is here now</string>
-    <string name="btn_reload">RELOAD</string>
-    <string name="menu_history_order">History Order</string>
+    <string name="title_leave_your_comments">请留下您的评论</string>
+    <string name="title_comments_food_quality">食品质量</string>
+    <string name="title_comments_delivery_service">配送服务</string>
+    <string name="title_comment_submit_comment">提交评论</string>
+    <string name="confirmation_code">验证码:(该验证码需要提供给骑手来完成pai\'song)</string>
+    <string name="label_empty_data">还没有数据</string>
+    <string name="btn_reload">重新加载</string>
+    <string name="menu_history_order">历史订单</string>
     <string name="address_not_correct">地址不识别</string>
     <string name="str_nnt_please_addding_your_delivery_notes_here">Please addding your delivery notes here</string>
     <string name="title_activity_history_order">历史订单</string>
-    <string name="title_delivery_city">City</string>
-    <string name="title_delivery_notes">DELIVERY NOTES</string>
+    <string name="title_delivery_city">城市</string>
+    <string name="title_delivery_notes">详细信息</string>
     <string name="title_delivery_number">n°</string>
-    <string name="title_delivery_route">Route/Place</string>
-    <string name="used_addre_title">Your used addresses</string>
+    <string name="title_delivery_route">街道/楼层</string>
+    <string name="used_addre_title">已使用的地址</string>
     <string name="past_address_tv_title">从已使用过的地址里选择地址</string>
     <string name="title_close_icon">X</string>
-    <string name="title_leave_this_store">Leave this Store ?</string>
-    <string name="title_leave_alert_msg">If you exit now, you will lose all the products you have already selected.Are you sure ?</string>
-    <string name="btn_yes_leave">YES,LEAVE</string>
-    <string name="btn_no_stay">NO,STAY</string>
+    <string name="title_leave_this_store">离开当前商铺?</string>
+    <string name="title_leave_alert_msg">如果您继续返回，您将丢失您购物车里的所有商品，确定退出?</string>
+    <string name="btn_yes_leave">是，狠心离开</string>
+    <string name="btn_no_stay">不，留下</string>
+    <string name="title_leave_comments_for_order">添加评价</string>
+    <string name="title_btn_delete">删除</string>
 
 
 </resources>

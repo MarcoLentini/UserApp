@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.RestaurantsViewHolder>
     implements Filterable {
-
+    private static final String TAG = "RestaurantsListAdapter";
     private Context context;
     private LayoutInflater mInflater;
     private ArrayList<RestaurantModel> dataSet;
@@ -82,6 +83,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
             }
         }
 
+        Log.e(TAG,"restaurantModel.getRestaurantLogo()"+restaurantModel.getRestaurantLogo());
         Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
