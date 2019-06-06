@@ -20,6 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -79,6 +81,10 @@ public class SignupActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
         btnSignIn = findViewById(R.id.sign_in_button1);
         btnSignUp = findViewById(R.id.sign_up_button1);
         inputEmail = findViewById(R.id.email_user1);
@@ -142,6 +148,11 @@ public class SignupActivity extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
             //create user
+            InputMethodManager inputManager = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
 
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(SignupActivity.this, task -> {
@@ -162,7 +173,7 @@ public class SignupActivity extends AppCompatActivity {
                             db.collection("users").document(auth.getCurrentUser().getUid())
                                     .set(user)
                                     .addOnSuccessListener(documentReference1 -> {
-                                        uploadOnFirebase(file_image);
+                                        uploadOnFirebase(user_image);
                                         Toast.makeText(SignupActivity.this, getString(R.string.profile_created),Toast.LENGTH_SHORT).show();
                                          startActivity(new Intent(SignupActivity.this, MainActivity.class));
                                         finish();
@@ -257,8 +268,8 @@ public class SignupActivity extends AppCompatActivity {
             user_image = downloadUri;
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users").document(auth.getCurrentUser().getUid()).update("image_url",user_image.toString()).addOnCompleteListener(task->{
-                if(task.isSuccessful())
-                    Glide.with(this).load(user_image).placeholder(R.drawable.img_rest_1).into((ImageView) findViewById(R.id.img_profile));
+               // if(task.isSuccessful())
+                   // Glide.with(this).load(user_image).placeholder(R.drawable.img_rest_1).into((ImageView) findViewById(R.id.img_profile));
             });
             try {
                 deleteImage();
