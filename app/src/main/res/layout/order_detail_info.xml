@@ -256,56 +256,12 @@
                         android:layout_marginTop="@dimen/dp4"
                         android:background="@color/colorDivider" />
 
-                    <TextView
-                        android:id="@+id/tvIdDeliveryTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/divider4"
-                        android:layout_marginTop="@dimen/dp4"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/dp4"
-                        android:text="@string/title_delivery_time"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textStyle="bold"/>
 
-                    <View
-                        android:id="@+id/divider5"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_below="@+id/tvIdDeliveryTime"
-                        android:layout_marginTop="@dimen/dp4"
-                        android:background="@color/colorDivider" />
-                    <Switch
-                        android:checked="true"
-                        android:id="@+id/switch1"
-                        android:layout_marginTop="@dimen/dp4"
-                        android:padding="@dimen/dp8"
-                        android:text="@string/title_as_soon_as_possible"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/divider5"
-                        android:drawableStart="@drawable/ic_calender_clock"
-                        android:drawableLeft="@drawable/ic_calender_clock"
-                        android:drawablePadding="@dimen/dp6"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:switchPadding="@dimen/dp8"
-                        android:textStyle="bold"/>
-
-                        <View
-                             android:id="@+id/divider6"
-                             android:layout_width="match_parent"
-                             android:layout_height="2dp"
-                             android:layout_below="@+id/switch1"
-                             android:layout_marginTop="@dimen/dp4"
-                             android:background="@color/colorDivider" />
                          <TextView
                              android:id="@+id/tvIdLeaveANote"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
-                             android:layout_below="@+id/divider6"
+                             android:layout_below="@+id/divider4"
                              android:layout_marginTop="@dimen/dp4"
                              android:gravity="center_vertical"
                              android:padding="@dimen/dp4"
@@ -328,7 +284,7 @@
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
                              android:padding="@dimen/dp8"
-                             android:layout_gravity="end|center"
+                             android:layout_gravity="start"
                              android:background="@drawable/text_view_border"
                              android:drawableStart="@drawable/ic_notes"
                              android:drawableLeft="@drawable/ic_notes"
@@ -336,7 +292,7 @@
                              android:drawableRight="@drawable/ic_arrow_right"
                              android:drawablePadding="@dimen/dp6"
                              android:text="@string/str_please_leave_your_notes_here_if_needed"
-                             android:textAlignment="viewEnd"
+                             android:textAlignment="viewStart"
                              android:clickable="true"
                              android:focusable="true"
                              android:textSize="16sp"

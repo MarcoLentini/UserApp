@@ -106,36 +106,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
              invokeAddressActivity(tvDeliveryAddress.getText().toString(),tvDeliveryNotes.getText().toString());
         });
         textViewtotalCount = findViewById(R.id.tv_order_total_count);
-        Switch switchASAP = findViewById(R.id.switch1);
-        //default status of switchASAP is true
-        switchASAP.setChecked(true);
-        switchASAP.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(),getString(R.string.changed_delivery_time),Toast.LENGTH_SHORT).show();
-            // check current state of a Switch (true or false).
-            Boolean switchState = switchASAP.isChecked();
-            if (!switchState){
-                //when status changes into false then all user choose the time
-                Calendar mCalendar =  Calendar.getInstance();
-                int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
-                int minute = mCalendar.get(Calendar.MINUTE);
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date date = mCalendar.getTime();
 
-                TimePickerDialog mTimePickerDialog = new TimePickerDialog(
-                        ShoppingCartActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mOnTimeSetListener,
-                        hour,minute,true);
-
-                mTimePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                mTimePickerDialog.setTitle(dateFormat.format(date));
-                mTimePickerDialog.show();
-
-            }else {
-                switchASAP.setChecked(true);
-
-            }
-        });
 
         mOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -149,9 +120,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         btnPayForOrder.setOnClickListener(v -> {
             if(isValidOrder()){
-                if (switchASAP.isChecked()){
+
                     deliverytime = "AS SOON AS POSSIBLE";
-                }
+
                 String  totalCount = textViewtotalCount.getText().toString();
                 int orderItemsCount = Integer.parseInt(totalCount);
                 String totalMoney = textViewTotalMoney.getText().toString();
