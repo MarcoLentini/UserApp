@@ -1,11 +1,14 @@
 package com.example.userapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,8 +19,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.Toast;
 
+
+import com.example.userapp.AddComments.AddCommentsActivity;
+import com.example.userapp.AddComments.CommentsDataModel;
+import com.example.userapp.Comments.CommentsListAdapter;
+import com.example.userapp.Information.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import com.example.userapp.Information.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,26 +40,46 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-//TODO : LAB5 get list of comments and shows here
 public class CommentsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth auth;
+    private final static String TAG = "CommentsActivity";
+    private ArrayList<CommentsDataModel> commentsData;
+    private CommentsListAdapter commentsListAdapter;
+    private FirebaseFirestore db;
+    private static final String userDataFile = "UserDataFile";
+    private String userKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
+        Log.d(TAG, "onCreate called.");
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
+        //Get Firestore instance
+        db = FirebaseFirestore.getInstance();
+        SharedPreferences sharedPref = getSharedPreferences(userDataFile, Context.MODE_PRIVATE);
+
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }else{
+            //get the user id when user is validated
+            String useID = auth.getCurrentUser().getUid();
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("userKey", useID);
+            editor.commit();
+        }
+        userKey = sharedPref.getString("userKey","");
+        Log.d(TAG, "userKey"+userKey);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user == null) {
-            finish();
-        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,15 +88,15 @@ public class CommentsActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        commentsData = new ArrayList<>();
+        fillWithData();
 
-        /*
         RecyclerView recyclerView = findViewById(R.id.rvMyComments);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // specify an Adapter
-        RecyclerView.Adapter commentsListAdapter = new CommentsListAdapter(this, myCommentsData);
+        commentsListAdapter = new CommentsListAdapter(this, commentsData);
         recyclerView.setAdapter(commentsListAdapter);
-        */
 
     }
 
@@ -98,7 +133,6 @@ public class CommentsActivity extends AppCompatActivity
 
      @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -137,6 +171,47 @@ public class CommentsActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    private void fillWithData(){
+         db.collection("comments")
+                .whereEqualTo("userId", userKey)
+                .addSnapshotListener((EventListener<QuerySnapshot>) (document, e) -> {
+                    if (e != null) return;
+
+                    for(DocumentChange dc : document.getDocumentChanges()) {
+                        if (dc.getType() == DocumentChange.Type.ADDED) {
+                            CommentsDataModel tmpComment = new CommentsDataModel(
+                                    (String)  dc.getDocument().get("custName"),
+                                    (String) dc.getDocument().getId(),  //commentsId
+                                    (Long) dc.getDocument().get("reservationId"),  //reservationId
+                                    (String) dc.getDocument().get("restId"),  //restId
+                                    (String)dc.getDocument().get("restName"),  //restName
+                                    (String)dc.getDocument().get("bikerId"),  //bikerId
+                                    (String)dc.getDocument().get("userId"),  //userId
+                                    (Float)((Double) dc.getDocument().get("voteForRestaurant")).floatValue(),  //voteForRestaurant
+                                    (Float)((Double) dc.getDocument().get("voteForBiker")).floatValue(),  //voteForBiker
+                                    (String)dc.getDocument().get("notes")//notes
+                            );
+
+                            Log.d(TAG, "tmpComment"+tmpComment.getCommentsId());
+                            commentsData.add(tmpComment);
+                            commentsListAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        commentsListAdapter.notifyDataSetChanged();
+        // getDataAndUpdateArrayList();
+        if (auth.getCurrentUser() == null) {
+            startActivity(new Intent(CommentsActivity.this, LoginActivity.class));
+            finish();
+
+        }
     }
     //sign out method
     public void signOut() {

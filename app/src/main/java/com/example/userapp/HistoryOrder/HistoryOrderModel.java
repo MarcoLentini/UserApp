@@ -13,17 +13,26 @@ public class HistoryOrderModel implements Comparable<HistoryOrderModel>, Seriali
     private Long rs_id;        //order id
     private Timestamp timestamp; // order time
 
+    private String rest_id;
     private String rest_name;
     private ArrayList<HistoryOrderItemModel> dishes;
     private Double total_cost;
 
     private Timestamp delivery_time;  //delivery time
     private String cust_address;     //delivery address
+    private String cust_name;     //delivery address
 
+    private Boolean is_commented;
     private Boolean is_current_order;
+    private String biker_id;
 
 
-    public HistoryOrderModel(Boolean is_current_order,String cust_id, String rs_status, Long rs_id, Timestamp timestamp, String rest_name, ArrayList<HistoryOrderItemModel> dishes, Double total_cost,  Timestamp delivery_time, String cust_address) {
+    public HistoryOrderModel(String cust_name,Boolean is_commented,Boolean is_current_order,String cust_id, String rs_status, Long rs_id,
+                             Timestamp timestamp, String rest_name, ArrayList<HistoryOrderItemModel> dishes,
+                             Double total_cost,  Timestamp delivery_time, String cust_address,
+                             String rest_id,String biker_id) {
+        this.cust_name = cust_name;
+        this.is_commented = is_commented;
         this.is_current_order = is_current_order;
         this.cust_id = cust_id;
         this.rs_status = rs_status;
@@ -34,6 +43,40 @@ public class HistoryOrderModel implements Comparable<HistoryOrderModel>, Seriali
         this.total_cost = total_cost;
         this.delivery_time = delivery_time;
         this.cust_address = cust_address;
+        this.rest_id = rest_id;
+        this.biker_id = biker_id;
+    }
+
+    public String getCust_name() {
+        return cust_name;
+    }
+
+    public void setCust_name(String cust_name) {
+        this.cust_name = cust_name;
+    }
+
+    public Boolean getIs_commented() {
+        return is_commented;
+    }
+
+    public void setIs_commented(Boolean is_commented) {
+        this.is_commented = is_commented;
+    }
+
+    public String getRest_id() {
+        return rest_id;
+    }
+
+    public void setRest_id(String rest_id) {
+        this.rest_id = rest_id;
+    }
+
+    public String getBiker_id() {
+        return biker_id;
+    }
+
+    public void setBiker_id(String biker_id) {
+        this.biker_id = biker_id;
     }
 
     public Boolean getIs_current_order() {

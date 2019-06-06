@@ -1,67 +1,72 @@
 package com.example.userapp.AddComments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
+import com.example.userapp.CommentsActivity;
+import com.example.userapp.HistoryOrder.HistoryOrderModel;
+import com.example.userapp.HistoryOrderActivity;
 import com.example.userapp.R;
-import com.example.userapp.View.StarLinearLayout;
-
-import java.util.ArrayList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddCommentsActivity extends AppCompatActivity {
-
-    private StarLinearLayout mStarDeliveryService;
-    private StarLinearLayout mStarFoodQuality;
-    private TextView textViewDeliveryService;
-    private TextView textViewFoodQuality;
+    private FirebaseFirestore db ;
+    private final static String TAG = "AddCommentsActivity";
     private TextView textViewMsg;
     private Button btnSubmitComments;
+    private RatingBar ratingBarFoodQuality;
+    private RatingBar ratingBarDeliveryService;
+    private HistoryOrderModel historyOrderModel;
 
-    private RecyclerView recyclerViewCommentsDishes;
-    private RecyclerView.Adapter commentsDishesListAdapter;
-
-    private ArrayList<CurrentOrderItemModel> orderedDishes;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comments_add_comments);
 
+        String title = getString(R.string.title_delivery_address);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(title);
+        //Get Firebase auth instance
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            finish();
+        }
+        //get Firestore instance
+        db = FirebaseFirestore.getInstance();
 
-        recyclerViewCommentsDishes = findViewById(R.id.rvListOfDishes);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerViewCommentsDishes.setLayoutManager(layoutManager);
-        commentsDishesListAdapter = new CommentsDishesListAdapter(this,orderedDishes);
-        recyclerViewCommentsDishes.setAdapter(commentsDishesListAdapter);
+        Intent receivedIntent = getIntent();
+        Integer itemPosition = receivedIntent.getExtras().getInt("HistoryOrder");
+        historyOrderModel = HistoryOrderActivity.historyOrders.get(itemPosition);
 
-
-        mStarDeliveryService = findViewById(R.id.commentFiveStarVoteDeliveryService);
-        textViewDeliveryService = findViewById(R.id.commentTagDeliveryService);
-        mStarFoodQuality = findViewById(R.id.commentFiveStarVoteFoodQuality);
-        textViewFoodQuality = findViewById(R.id.commentTagFoodQuality);
         textViewMsg = findViewById(R.id.edit_text_input_comments);
+        textViewMsg.setMaxLines(10);
         btnSubmitComments = findViewById(R.id.btnSubmitComments);
-
-        mStarDeliveryService.setChangeListener(new StarLinearLayout.ChangeListener() {
+        ratingBarFoodQuality = findViewById(R.id.ratingBarFoodQuality);
+        ratingBarFoodQuality.setStepSize((float) 0.5);
+        ratingBarFoodQuality.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void Change(int level) {
-                textViewDeliveryService.setText(level);
-                Toast.makeText(AddCommentsActivity.this, " " + level + " ", Toast.LENGTH_LONG).show();
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                Toast.makeText(AddCommentsActivity.this, "ratingBarFoodQuality rating:" + String.valueOf(rating),
+                        Toast.LENGTH_SHORT).show();
             }
         });
-
-        mStarFoodQuality.setChangeListener(new StarLinearLayout.ChangeListener() {
+        ratingBarDeliveryService = findViewById(R.id.ratingBarDeliveryService);
+        ratingBarDeliveryService.setStepSize((float) 0.5);
+        ratingBarDeliveryService.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void Change(int level) {
-                textViewFoodQuality.setText(level );
-                Toast.makeText(AddCommentsActivity.this, " " + level + " ", Toast.LENGTH_LONG).show();
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                Toast.makeText(AddCommentsActivity.this, "ratingBarDeliveryService rating:" + String.valueOf(rating),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -69,18 +74,50 @@ public class AddCommentsActivity extends AppCompatActivity {
         btnSubmitComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double deliveryServiceLevel = 0.0;
-                Double foodQualityService = 0.0;
-                if (!textViewDeliveryService.getText().toString().isEmpty()){
-                    deliveryServiceLevel = Double.parseDouble(textViewDeliveryService.getText().toString());
-                }
-               if (!textViewFoodQuality.getText().toString().isEmpty()){
-                   foodQualityService = Double.parseDouble(textViewFoodQuality.getText().toString());
-               }
-              String myComments = textViewMsg.getText().toString();
+                Float ratingFoodQuality = ratingBarDeliveryService.getRating();
+                Float ratingDeliveryService = ratingBarDeliveryService.getRating();
+                String myComments = textViewMsg.getText().toString();
 
-               //TODO : LAB5 send comments to firebase
+              CommentsDataModel commentsDataModel = new CommentsDataModel(
+                      historyOrderModel.getCust_name(),
+                      "0",//initialized with 0
+                      historyOrderModel.getRs_id(),
+                      historyOrderModel.getRest_id(),
+                      historyOrderModel.getRest_name(),
+                      historyOrderModel.getBiker_id(),
+                      historyOrderModel.getCust_id(),
+                      ratingFoodQuality,
+                      ratingDeliveryService,
+                      myComments
+              );
+
+            Log.d(TAG, "This is my comments "+commentsDataModel.toString());
+
+             db.collection("comments")
+                        .document()
+                        .set(commentsDataModel)
+                        .addOnCompleteListener(task1 -> {
+                           if(task1.isSuccessful()){
+                              Log.e(TAG, "Comments send to firebase successfully");
+                               //TODO LAB 5
+                               // after user maker comments for a order first should change the data in friebase is_commented to false
+                               // also change locally
+                              historyOrderModel.setIs_commented(true);
+                              Log.e(TAG, "Going to Comments Activity");
+                              Intent intent = new Intent(AddCommentsActivity.this, CommentsActivity.class);
+                              startActivity(intent);
+                           } else {
+                             // Probably only on timeout, from test the request are stored offline
+                             Toast.makeText(v.getContext(),"Internet problem, retry!", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

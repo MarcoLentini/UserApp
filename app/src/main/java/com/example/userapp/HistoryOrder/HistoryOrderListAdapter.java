@@ -5,16 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.userapp.AddComments.AddCommentsActivity;
+import com.example.userapp.CurrentOrder.CurrentOrderDetailInfoActivity;
+import com.example.userapp.HistoryOrderActivity;
 import com.example.userapp.R;
 
 import java.util.ArrayList;
 
 public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "HistoryOrderListAdapter";
     private Context context;
     private ArrayList<HistoryOrderModel> historyOrders;
     private LayoutInflater mInflater;
@@ -30,16 +36,15 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = mInflater.inflate(R.layout.history_order_info, viewGroup,false);
         HistoryOrderViewHolder holder = new HistoryOrderViewHolder(view);
-/*
         view.setOnClickListener(v -> {
-            Intent myIntent = new Intent(mainFragment.getContext(), InProgressDetailsActivity.class);
+            Intent myIntent = new Intent(view.getContext(), HistoryOrderDetailInfoActivity.class);
             int itemPosition = holder.getAdapterPosition();
             Bundle bn = new Bundle();
-            bn.putInt("reservationCardData", itemPosition);
+            bn.putInt("historyOrderData", itemPosition);
             myIntent.putExtras(bn);
-            mainFragment.startActivityForResult(myIntent, tabFrag.INPROGRESS_REQ);
-        });
-*/
+            context.startActivity(myIntent);
+         });
+
         return holder;
     }
 
@@ -51,6 +56,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
         TextView textViewTotalCost =historyOrderViewHolder.textViewTotalCost;
         TextView textViewTotalItems = historyOrderViewHolder.textViewTotalItems;
         TextView textViewHistoryOrderInfo = historyOrderViewHolder.textViewHistoryOrderInfo;
+        Button  btnCommentForThisOrderFinish = historyOrderViewHolder.btnCommentForThisOrderFinish;
 
         HistoryOrderModel historyOrder = historyOrders.get(pos);
         textViewRestName.setText(historyOrder.getRest_name());
@@ -66,6 +72,23 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
         textViewTotalItems.setText(""+count);
         textViewHistoryOrderInfo.setText(reservationOffer);
 
+        if (!historyOrder.getIs_commented()){
+            btnCommentForThisOrderFinish.setVisibility(View.VISIBLE);
+        }else {
+            btnCommentForThisOrderFinish.setVisibility(View.GONE);
+        }
+
+        btnCommentForThisOrderFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "btnCommentForThisOrderFinish is clicked,AddCommentsActivity is called.");
+                Intent intent = new Intent(view.getContext(), AddCommentsActivity.class);
+                Bundle bn = new Bundle();
+                bn.putInt("historyOrderData", pos);
+                intent.putExtras(bn);
+                context.startActivity(intent);;
+            }
+        });
     }
 
     @Override
@@ -80,6 +103,8 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
         TextView textViewTotalCost;
         TextView textViewTotalItems;
         TextView textViewHistoryOrderInfo;
+        Button  btnCommentForThisOrderFinish;
+
         public HistoryOrderViewHolder(View itemView) {
             super(itemView);
             this.textViewRestName = itemView.findViewById(R.id.tvRestaurantNameHistoryOrderFinished);
@@ -87,6 +112,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
             this.textViewTotalCost = itemView.findViewById(R.id.tvOrderTotalCostFinished);
             this.textViewTotalItems = itemView.findViewById(R.id.tvOrderTotalCountFinished);
             this.textViewHistoryOrderInfo = itemView.findViewById(R.id.OrderInfoFinished);
+            this.btnCommentForThisOrderFinish = itemView.findViewById(R.id.btnCommentForThisOrderFinish);
         }
     }
 }

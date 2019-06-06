@@ -193,6 +193,8 @@
     <string name="title_leave_alert_msg">If you exit now, you will lose all the products you have already selected.Are you sure ?</string>
     <string name="btn_yes_leave">YES,LEAVE</string>
     <string name="btn_no_stay">NO,STAY</string>
+    <string name="title_leave_comments_for_order">LEAVE COMMENTS</string>
+    <string name="title_btn_delete">DELETE</string>
 
 
 </resources>

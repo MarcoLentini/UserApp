@@ -171,10 +171,7 @@
 
     <string name="str_nnt_order_status">This order has already finished</string>
     <string name="btn_order_accepted">Accept Order</string>
-    <string name="btn_order_rejected">Reject Order</string>
     <string name="history_order_delivery_detail_information">Delivery Detail Information</string>
-    <string name="history_order_payment_method">Payment Method</string>
-    <string name="history_order_once_more">ORDER ONCE MORE</string>
     <string name="history_order_welcome_next_time">Welcome next time !</string>
     <string name="history_order_detail_informantion">Order Detail Informantion</string>
     <string name="history_order_delivery_time">Delivery Time</string>
@@ -223,5 +220,7 @@
     <string name="title_leave_alert_msg">If you exit now, you will lose all the products you have already selected.Are you sure ?</string>
     <string name="btn_yes_leave">YES,LEAVE</string>
     <string name="btn_no_stay">NO,STAY</string>
+    <string name="title_leave_comments_for_order">LEAVE COMMENTS</string>
+    <string name="title_btn_delete">DELETE</string>
 
 </resources>

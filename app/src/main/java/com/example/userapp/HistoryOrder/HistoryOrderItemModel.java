@@ -1,6 +1,8 @@
 package com.example.userapp.HistoryOrder;
 
-public class HistoryOrderItemModel {
+import java.io.Serializable;
+
+public class HistoryOrderItemModel implements Serializable{
     //for OrderItem we need the name,price,count
     private String dish_name;
     private double dish_price;

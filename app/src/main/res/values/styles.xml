@@ -66,4 +66,18 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <!--self_define RatingBar Color-->
+    <style name="RatingBar_CustomColorRating" parent="@android:style/Widget.Holo.RatingBar">
+        <!--Background Color-->
+        <item name="colorControlNormal">#D7D7D7</item>
+        <!--Progress Color-->
+        <item name="colorControlActivated">#FF5722</item>
+    </style>
+    <!--self_define RatingBar Color-->
+    <style name="RatingBar_CustomColor" parent="@android:style/Widget.Holo.RatingBar.Indicator">
+        <!--Background Color-->
+        <item name="colorControlNormal">#D7D7D7</item>
+        <!--Progress Color-->
+        <item name="colorControlActivated">#FFEB3B</item>
+    </style>
 </resources>

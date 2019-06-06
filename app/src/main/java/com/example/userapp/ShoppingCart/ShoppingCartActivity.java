@@ -108,13 +108,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         textViewtotalCount = findViewById(R.id.tv_order_total_count);
 
 
-        mOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourofday, int minute) {
-               //the time choosed
-                deliverytime = hourofday+":"+minute;
-            }
-        };
+
 
         btnPayForOrder = findViewById(R.id.btnPayForOrder);
 

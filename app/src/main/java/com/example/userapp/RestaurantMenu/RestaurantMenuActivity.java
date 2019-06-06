@@ -180,6 +180,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                             Toast.makeText(RestaurantMenuActivity.this,getString(R.string.added_to_favorite), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_liked);
                             rm.setLiked(true);
+                            myFavorite.setId(dr.getId());
                             MainActivity.favoritesData.add(myFavorite);
                         } else {
                             // Probably only on timeout, from test the request are stored offline nothing happened
@@ -190,8 +191,12 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                     //TODO Lab5 delete this favorite form firebase
                     // get the id and delete
                     for (FavoritesModel favoritesModel : MainActivity.favoritesData){
-                        if (favoritesModel.getRestaurantID().equals(rm.getId()) && favoritesModel.getUserID().equals(userId)){
-                            db.collection("favorites").document(favoritesModel.getId()).delete().addOnCompleteListener(task->{
+                            if (favoritesModel.getRestaurantID().equals(rm.getId()) && favoritesModel.getUserID().equals(userId)){
+
+                            db.collection("favorites")
+                                    .document(favoritesModel.getId())
+                                    .delete()
+                                    .addOnCompleteListener(task->{
                                 if(task.isSuccessful()){
                                     MainActivity.favoritesData.remove(favoritesModel);
                                     Toast.makeText(RestaurantMenuActivity.this,getString(R.string.removed_from_favorite), Toast.LENGTH_LONG).show();
@@ -307,8 +312,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
     }
     @Override
     public boolean onSupportNavigateUp() {
-        //when press back first check whether the shop cart is empty or not
-
         onBackPressed();
         return true;
     }
@@ -436,7 +439,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         super.onResume();
         if (auth.getCurrentUser() == null) {
             getDataAndUpdateArrayList();
-
             finish();
 
         }

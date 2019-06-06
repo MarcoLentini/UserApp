@@ -107,6 +107,7 @@
         <activity android:name=".ShoppingCart.AddingNotesActivity" />
         <activity android:name=".CurrentOrder.CurrentOrderDetailInfoActivity" />
         <activity android:name=".AddComments.AddCommentsActivity" />
+        <activity android:name=".HistoryOrder.HistoryOrderDetailInfoActivity"/>
     </application>
 
 </manifest>

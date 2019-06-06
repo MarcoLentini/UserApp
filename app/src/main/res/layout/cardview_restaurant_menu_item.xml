@@ -55,6 +55,7 @@
             android:id="@+id/textViewMenuItemLogo"
             android:layout_width="@dimen/dp96"
             android:layout_height="@dimen/dp96"
+            android:scaleType="centerInside"
             android:layout_toEndOf="@+id/llmeno"
             android:layout_toRightOf="@+id/llmeno"
 

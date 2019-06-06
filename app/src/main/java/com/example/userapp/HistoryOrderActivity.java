@@ -185,7 +185,7 @@ public class HistoryOrderActivity extends AppCompatActivity
     // (an idea related to comments) when there is a history order send a notification for user to make comments
     private void fillWithData(){
         Log.d("QueryHistoryOrder", "Start fill with data...");
-        progressBarCurrentOrder.setVisibility(View.VISIBLE);
+        //progressBarCurrentOrder.setVisibility(View.VISIBLE);
 
         Query request = db.collection("reservations")
                           .whereEqualTo("cust_id", userKey);
@@ -207,6 +207,8 @@ public class HistoryOrderActivity extends AppCompatActivity
                                     (Long) dish.get("dish_qty")));
                         }
                         HistoryOrderModel tmpHistoryOrderModel = new HistoryOrderModel(
+                                (String) dc.getDocument().get("cust_name"),//cust_name
+                                (Boolean) dc.getDocument().get("is_commented"),
                                 (Boolean) dc.getDocument().get("is_current_order"),
                                 (String) dc.getDocument().get("cust_id"),//customer id
                                 (String) dc.getDocument().get("rs_status"), // order status
@@ -216,12 +218,14 @@ public class HistoryOrderActivity extends AppCompatActivity
                                 tmpArrayList,
                                 (Double) dc.getDocument().get("total_income"),
                                 (Timestamp) dc.getDocument().get("delivery_time"),
-                                (String) dc.getDocument().get("cust_address")
-                        );
+                                (String) dc.getDocument().get("cust_address"),
+                                (String) dc.getDocument().get("rest_id"),
+                                (String) dc.getDocument().get("biker_id")
+                                );
                         //add this current order into the arraylist
                         Log.d("QueryHistoryOrder", "add  tmpHistoryOrderModel successful to arraylist!");
                         historyOrders.add(tmpHistoryOrderModel);
-                        progressBarCurrentOrder.setVisibility(View.GONE);
+                       //progressBarCurrentOrder.setVisibility(View.GONE);
                         historyOrderListAdapter.notifyDataSetChanged();
                     }
                 }
