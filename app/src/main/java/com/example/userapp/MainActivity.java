@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             Toast.makeText(this,"Favorite",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
-            Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
+            signOut();
         }else if (id == R.id.nav_home){
 
         }else if (id == R.id.nav_comments){
@@ -346,4 +346,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+    //sign out method
+    public void signOut() {
+        auth.signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+
+    }
+
 }

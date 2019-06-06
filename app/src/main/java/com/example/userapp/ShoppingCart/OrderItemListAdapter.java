@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.userapp.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class OrderItemListAdapter extends  RecyclerView.Adapter<OrderItemListAdapter.OrderItemViewHolder> {
@@ -40,7 +41,9 @@ public class OrderItemListAdapter extends  RecyclerView.Adapter<OrderItemListAda
         ImageView imageViewItemAdd = orderItemViewHolder.imageViewItemAdd;
         ImageView imageViewItemRemove = orderItemViewHolder.imageViewItemRemove;
 
-        textViewIemPrice.setText(String.valueOf(item.getDish_price()));
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedPrice = format.format(item.getDish_price());
+        textViewIemPrice.setText("€ " +formattedPrice);
         textViewItemName.setText(item.getDish_name());
         textViewItemCount.setText(String.valueOf(item.getDish_qty()));
 

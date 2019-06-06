@@ -166,8 +166,7 @@ public class HistoryOrderActivity extends AppCompatActivity
             startActivity(intent);
             Toast.makeText(this,"Favorite",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
-            Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
-
+            signOut();
         }else if (id == R.id.nav_comments){
             Intent intent = new Intent(HistoryOrderActivity.this, CommentsActivity.class);
             startActivity(intent);
@@ -236,6 +235,13 @@ public class HistoryOrderActivity extends AppCompatActivity
         });
 
 
+
+    }
+    //sign out method
+    public void signOut() {
+        auth.signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
 
     }
 }

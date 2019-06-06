@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.example.userapp.Information.AddAddrActivity;
 import com.example.userapp.Information.ResetPasswordActivity;
 import com.example.userapp.Information.UserInformationActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,19 +51,9 @@ private FirebaseAuth auth;
         tvAddingAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SettingsActivity.this,"adding new address activity ",Toast.LENGTH_SHORT).show();
-            }
+            startActivity(new Intent(SettingsActivity.this, AddAddrActivity.class));            }
         });
-        tvChangePwd = findViewById(R.id.tvSettingChangePwd);
-        tvChangePwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
-                startActivity(intent);
-                Toast.makeText(SettingsActivity.this,"change password activity ",Toast.LENGTH_SHORT).show();
 
-            }
-        });
         tvPaymentMethod =findViewById(R.id.tvSettingPayment);
         tvPaymentMethod.setOnClickListener(new View.OnClickListener() {
             @Override

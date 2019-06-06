@@ -36,6 +36,7 @@ import com.example.userapp.R;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.ShoppingCart.OrderItemModel;
 import com.example.userapp.ShoppingCart.ShoppingCartActivity;
+import com.firebase.client.DataSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -46,8 +47,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.security.SignatureException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RestaurantMenuActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
@@ -93,7 +98,9 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         Glide.with(this).load(tmpUri).placeholder(R.drawable.img_rest_1).into(restaurantImageView);
         mFab = findViewById(R.id.restaurant_menu_cardView);
         TextView tvDeliveryFee = findViewById(R.id.tvDeliveryFeeRestaurant);
-        tvDeliveryFee.setText(String.valueOf(rm.getDeliveryFee()));
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedPrice = format.format(rm.getDeliveryFee());
+        tvDeliveryFee.setText(" " +formattedPrice);
         TextView tvDistance = findViewById(R.id.tvDistanceRestaurant);
         tvDistance.setText(rm.getAddress()); // TODO change with dinstance in lab4
 
@@ -109,9 +116,9 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         AppBarLayout appbarLayout = findViewById(R.id.appbarRestaurantDetails);
         appbarLayout.addOnOffsetChangedListener(this);
 
-        getDataAndUpdateArrayList();
         restaurantMenuData = new ArrayList<>();
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurantMenu);
+        getDataAndUpdateArrayList();
+         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurantMenu);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         restaurantMenuListAdapter = new RestaurantMenuListAdapter(this, restaurantMenuData);
@@ -170,13 +177,13 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                     DocumentReference dr =  db.collection("favorites").document();
                     dr.set(myFavorite).addOnCompleteListener(task1 -> {
                         if(task1.isSuccessful()){
-                            Toast.makeText(RestaurantMenuActivity.this,"Add to favorite", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RestaurantMenuActivity.this,getString(R.string.added_to_favorite), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_liked);
                             rm.setLiked(true);
                             MainActivity.favoritesData.add(myFavorite);
                         } else {
                             // Probably only on timeout, from test the request are stored offline nothing happened
-                            Toast.makeText(RestaurantMenuActivity.this,"Internet problem, retry!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RestaurantMenuActivity.this,getString(R.string.internet_down), Toast.LENGTH_LONG).show();
                         }
                     });
                 }else{//this click means user cancel like this restaurant
@@ -187,12 +194,12 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                             db.collection("favorites").document(favoritesModel.getId()).delete().addOnCompleteListener(task->{
                                 if(task.isSuccessful()){
                                     MainActivity.favoritesData.remove(favoritesModel);
-                                    Toast.makeText(RestaurantMenuActivity.this,"Remove from favorite", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RestaurantMenuActivity.this,getString(R.string.removed_from_favorite), Toast.LENGTH_LONG).show();
                                     item.setIcon(R.drawable.ic_like);
                                     rm.setLiked(false);
                                 }else{
                                     // Probably only on timeout, from test the request are stored offline nothing happened
-                                    Toast.makeText(RestaurantMenuActivity.this,"Internet problem, retry!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RestaurantMenuActivity.this,getString(R.string.internet_down), Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -225,11 +232,11 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
             if (type == 0) {//reduce the count of one menuItem
-            OrderItemModel temp = selectedItemsHashMap.get(menuItem.getName());
+            OrderItemModel temp = selectedItemsHashMap.get(menuItem.getCategoryId()+"_"+menuItem.getName());
             if(temp!=null){
                 if(temp.getDish_qty()<2){
                     temp.setDish_qty(0);
-                    selectedItemsHashMap.remove(menuItem.getName());
+                    selectedItemsHashMap.remove(menuItem.getCategoryId()+"_"+menuItem.getName());
 
                 }else{
                     int i =  temp.getDish_qty();
@@ -238,14 +245,14 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
             }
         } else if (type == 1) { //increase the count of one menuItem
             if (selectedItemsHashMap.size() < 1){
-                OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1);
-                selectedItemsHashMap.put(temp.getDish_name(), temp);
+                OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1,menuItem.getCategoryId());
+                selectedItemsHashMap.put(temp.getDish_category()+"_"+temp.getDish_name(), temp);
             }else{
-                if (!selectedItemsHashMap.containsKey(menuItem.getName())){
-                    OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1);
-                    selectedItemsHashMap.put(temp.getDish_name(), temp);
+                if (!selectedItemsHashMap.containsKey(menuItem.getCategoryId()+"_"+menuItem.getName())){
+                    OrderItemModel temp = new OrderItemModel(menuItem.getName(),menuItem.getPrice(),1,menuItem.getCategoryId());
+                    selectedItemsHashMap.put(temp.getDish_category()+"_"+temp.getDish_name(), temp);
                 }else {
-                    OrderItemModel temp = selectedItemsHashMap.get(menuItem.getName());
+                    OrderItemModel temp = selectedItemsHashMap.get(menuItem.getCategoryId()+"_"+menuItem.getName());
                     int i = temp.getDish_qty();
                     temp.setDish_qty(++i);
                 }
@@ -265,7 +272,9 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
             //set the total money in the bottom shopping cart
-            textViewTotalMoney.setText("€"+String.valueOf(totalMoney));
+            DecimalFormat format = new DecimalFormat("0.00");
+            String formattedPrice = format.format(totalMoney);
+            textViewTotalMoney.setText("€ " +formattedPrice);
             totalMoney = 0.00;
 
             if(restaurantMenuListAdapter!=null){
@@ -375,12 +384,16 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                     if (task.isSuccessful()) {
                         QuerySnapshot document = task.getResult();
                         if (!document.isEmpty()) {
-                            for(DocumentSnapshot doc : document) {
+                            List<DocumentSnapshot> docu= document.getDocuments();
+                          Collections.sort(docu,CategoryComparator);
+
+                            for(DocumentSnapshot doc : docu) {
 
                                 HeaderOrMenuItem tmpHeader = HeaderOrMenuItem.onCreateHeader(
                                                                 new RestaurantMenuHeaderModel(
                                                             (String) doc.getId(),
-                                                            (String) doc.get("category_name")));
+                                                            (String) doc.get("category_name")
+                                                                        ));
 
 
                                 doc.getReference().collection("dishes").whereEqualTo("state", true).get()
@@ -428,6 +441,23 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
 
         }
     }
+
+    public static Comparator<DocumentSnapshot> CategoryComparator
+            = new Comparator<DocumentSnapshot>() {
+
+        public int compare(DocumentSnapshot cat1, DocumentSnapshot cat2) {
+
+            Long catPosition1 = (Long)cat1.get("category_position");
+            Long catPosition2 = (Long)cat2.get("category_position");
+
+            //ascending order
+            return catPosition1.compareTo(catPosition2);
+            //descending order
+            //return fruitName2.compareTo(fruitName1);
+        }
+
+    };
+
 }
 
 

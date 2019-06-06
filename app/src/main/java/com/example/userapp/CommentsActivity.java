@@ -19,12 +19,17 @@ import android.view.Menu;
 import android.widget.Toast;
 
 
+import com.example.userapp.Information.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 //TODO : LAB5 get list of comments and shows here
 public class CommentsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,13 @@ public class CommentsActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            finish();
+        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -111,7 +123,7 @@ public class CommentsActivity extends AppCompatActivity
             startActivity(intent);
             Toast.makeText(this,"Star",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
-            Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
+            signOut();
         }else if (id == R.id.nav_comments){
 
             Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
@@ -126,4 +138,12 @@ public class CommentsActivity extends AppCompatActivity
         return true;
 
     }
+    //sign out method
+    public void signOut() {
+        auth.signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+
+    }
+
 }

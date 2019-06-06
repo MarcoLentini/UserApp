@@ -19,6 +19,7 @@ import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.R;
 import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -85,7 +86,9 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
         textViewDistance.setText(restaurantModel.getAddress());
-        textViewDeliveryFee.setText(String.valueOf(restaurantModel.getDeliveryFee() + "€"));
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedPrice = format.format(restaurantModel.getDeliveryFee());
+        textViewDeliveryFee.setText("€ " +formattedPrice);
 
     }
 

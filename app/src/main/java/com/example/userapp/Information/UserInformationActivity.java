@@ -180,16 +180,16 @@ public class UserInformationActivity extends AppCompatActivity {
                                    if(userInfo.getRest_id()==null&&userInfo.getBiker_id()==null){
                                        db.collection("users").document(user.getUid()).delete()
                                                .addOnSuccessListener(succe->{
-                                                   Toast.makeText(UserInformationActivity.this, "Your  profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                                                   Toast.makeText(UserInformationActivity.this, getString(R.string.delete_account), Toast.LENGTH_SHORT).show();
                                                    signOut();
                                                    finish();
                                                })
                                                .addOnFailureListener(taskFailId -> {
                                                    Log.d("USerInfo", "failed delete");
-                                                   Toast.makeText(UserInformationActivity.this, "Failed to delete  your account!", Toast.LENGTH_SHORT).show();
+                                                   Toast.makeText(UserInformationActivity.this, getString(R.string.failed_delete_account), Toast.LENGTH_SHORT).show();
                                                });
                                    }else{
-                                       Toast.makeText(UserInformationActivity.this, "Your  profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                                       Toast.makeText(UserInformationActivity.this, getString(R.string.delete_account), Toast.LENGTH_SHORT).show();
                                        signOut();
                                        finish();
 

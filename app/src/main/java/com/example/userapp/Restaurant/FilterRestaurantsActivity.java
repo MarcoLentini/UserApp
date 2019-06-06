@@ -30,7 +30,7 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
-        getSupportActionBar().setTitle("Select filters");
+        getSupportActionBar().setTitle(R.string.select_filters);
 
 //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();

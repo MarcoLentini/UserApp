@@ -3,7 +3,7 @@ package com.example.userapp.ShoppingCart;
 import java.io.Serializable;
 import java.util.Objects;
 
-class AddressModel implements Serializable {
+public class AddressModel implements Serializable {
     private String town;
     private String street;
     private Long number;

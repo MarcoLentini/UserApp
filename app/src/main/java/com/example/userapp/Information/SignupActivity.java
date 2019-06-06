@@ -114,7 +114,7 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.enter_pwd), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (!isValidPassword(password)) {
@@ -148,7 +148,7 @@ public class SignupActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
+                            Toast.makeText(SignupActivity.this, getString(R.string.auth_failed) + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             FirebaseFirestore db = FirebaseFirestore.getInstance();

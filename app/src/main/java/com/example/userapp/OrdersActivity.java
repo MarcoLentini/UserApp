@@ -162,7 +162,7 @@ public class OrdersActivity extends AppCompatActivity
             startActivity(intent);
             Toast.makeText(this,"Favorite",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
-                Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
+            signOut();
         }else if (id == R.id.nav_comments){
             Intent intent = new Intent(OrdersActivity.this, CommentsActivity.class);
             startActivity(intent);
@@ -197,7 +197,9 @@ public class OrdersActivity extends AppCompatActivity
         Query request = db.collection("reservations").whereEqualTo("cust_id", userKey);
 
         request.whereEqualTo("is_current_order", true).addSnapshotListener((EventListener<QuerySnapshot>) (document, e) -> {
-            if (e != null) return;
+            if (e != null) {
+                  return;
+            }
             for(DocumentChange dc : document.getDocumentChanges()) {
                 if (dc.getType() == DocumentChange.Type.ADDED) {
                     ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
@@ -240,5 +242,11 @@ public class OrdersActivity extends AppCompatActivity
 
 
     }
+    //sign out method
+    public void signOut() {
+        auth.signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
 
+    }
 }

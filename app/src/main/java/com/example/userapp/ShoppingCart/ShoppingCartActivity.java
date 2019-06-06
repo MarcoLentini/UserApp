@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,7 +94,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         tvRestaurantName.setText(rm.getName());
        tvNotes = findViewById(R.id.orderDetailInfoNotes);
         tvNotes.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(),"Add notes",Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(),getString(R.string.add_notes),Toast.LENGTH_SHORT).show();
             //Invoke Address Activity
             invokeAddNotesActivity(tvNotes.getText().toString());
         });
@@ -109,7 +110,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         //default status of switchASAP is true
         switchASAP.setChecked(true);
         switchASAP.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(),"You change the delivery time ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(),getString(R.string.changed_delivery_time),Toast.LENGTH_SHORT).show();
             // check current state of a Switch (true or false).
             Boolean switchState = switchASAP.isChecked();
             if (!switchState){
@@ -179,14 +180,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                if(task1.isSuccessful()){
 
                                    //TODO : Task finished successful them go the the current order page show the order information
-                                   Toast.makeText(this,"Your order is sending to restaurant !", Toast.LENGTH_LONG).show();
+                                   Toast.makeText(this,getString(R.string.order_sent), Toast.LENGTH_LONG).show();
 
                                    Intent intent = new Intent(ShoppingCartActivity.this, OrdersActivity.class);
 
                                    startActivity(intent);
                                } else {
                                    // Probably only on timeout, from test the request are stored offline
-                                   Toast.makeText(this,"Internet problem, retry!", Toast.LENGTH_LONG).show();
+                                   Toast.makeText(this,getString(R.string.internet_down), Toast.LENGTH_LONG).show();
                                }
                            });
                        }
@@ -209,16 +210,16 @@ public class ShoppingCartActivity extends AppCompatActivity {
         String orderNotes = tvNotes.getText().toString();
 
         if(orderCost == 0 && orderItemsCount == 0){
-            Toast.makeText(this,"Please check you basket ,it it empty !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.empty_basket),Toast.LENGTH_SHORT).show();
             return false;
         }
         if(orderRestaurantName.isEmpty()) {
-            Toast.makeText(this,"Can not find this restaurant !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.rest_not_found),Toast.LENGTH_SHORT).show();
             return false;
         }  ;
         if(orderDeliveryAddress.isEmpty() || orderDeliveryAddress.equals(getString(R.string.str_nnt_please_addding_your_delivery_address_here))) {
-            Toast.makeText(this,"Please input your address !",Toast.LENGTH_SHORT).show();
-            tvDeliveryAddress.setError("Field can't be empty");
+            Toast.makeText(this,getString(R.string.insert_address),Toast.LENGTH_SHORT).show();
+            tvDeliveryAddress.setError(getString(R.string.empty_field));
             return false;
         } else
             tvDeliveryAddress.setError(null);
@@ -297,7 +298,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
             count += item.getDish_qty();
             totalMoney += item.getDish_qty()*item.getDish_price();
         }
-        textViewTotalMoney.setText("€"+String.valueOf(totalMoney));
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedPrice = format.format(totalMoney);
+        textViewTotalMoney.setText("€ " +formattedPrice);
         totalMoney = 0.00;
 
 

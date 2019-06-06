@@ -7,6 +7,14 @@ public class OrderItemModel implements Serializable {
     private String dish_name;
     private double dish_price;
     private int dish_qty;
+    private String dish_category;
+
+    public OrderItemModel(String dish_name, double dish_price, int dish_qty, String dish_category) {
+        this.dish_name = dish_name;
+        this.dish_price = dish_price;
+        this.dish_qty = dish_qty;
+        this.dish_category = dish_category;
+    }
 
     public OrderItemModel(String dish_name, double dish_price, int dish_qty) {
         this.dish_name = dish_name;
@@ -37,5 +45,13 @@ public class OrderItemModel implements Serializable {
 
     public void setDish_qty(int dish_qty) {
         this.dish_qty = dish_qty;
+    }
+
+    public String getDish_category() {
+        return dish_category;
+    }
+
+    public void setDish_category(String dish_category) {
+        this.dish_category = dish_category;
     }
 }

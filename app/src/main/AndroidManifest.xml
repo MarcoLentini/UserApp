@@ -33,6 +33,7 @@
                 android:value="com.example.userapp.MainActivity" />
         </activity>
         <activity android:name=".Restaurant.FilterRestaurantsActivity" />
+        <activity android:name=".Information.AddAddrActivity"/>
         <activity
             android:name=".OrdersActivity"
             android:label="@string/title_activity_orders"

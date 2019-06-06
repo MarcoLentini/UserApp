@@ -12,45 +12,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp4"
-        android:paddingStart="@dimen/dp4"
-        android:paddingRight="@dimen/dp16"
-        android:paddingEnd="@dimen/dp16"
         android:padding="@dimen/dp12"
        >
 
-        <TextView
-            android:id="@+id/cv_tv_acount"
+        <LinearLayout
+            android:id="@+id/llmeno"
             android:layout_width="@dimen/dp30"
-            android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:background="@color/white"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:text=""
-            android:textColor="@color/colorPrimaryDark"
-            android:visibility="invisible"/>
-
-        <ImageView
-            android:id="@+id/cv_iv_remove"
-            android:layout_width="@dimen/dp30"
-            android:layout_height="48dp"
-            android:layout_below="@+id/cv_tv_acount"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:contentDescription="@string/ContentDescription"
-            android:src="@drawable/ic_remove_circle_outline_black_24dp"
-            android:visibility="invisible"
-            />
+            android:layout_alignParentBottom="true"
+            >
+            <TextView
+                android:id="@+id/cv_tv_acount"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/cv_iv_remove"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/ContentDescription"
+                android:src="@drawable/ic_remove_circle_outline_black_24dp"
+                android:visibility="invisible"
+                />
+
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/textViewMenuItemLogo"
             android:layout_width="@dimen/dp96"
             android:layout_height="@dimen/dp96"
-            android:layout_toEndOf="@+id/cv_tv_acount"
-            android:layout_toRightOf="@+id/cv_tv_acount"
+            android:layout_toEndOf="@+id/llmeno"
+            android:layout_toRightOf="@+id/llmeno"
+
             android:contentDescription="@string/ContentDescription"
             android:src="@drawable/img_rest_1" />
 
@@ -63,12 +70,14 @@
             android:layout_marginLeft="@dimen/dp8"
             android:layout_toEndOf="@+id/textViewMenuItemLogo"
             android:layout_toRightOf="@+id/textViewMenuItemLogo"
+            android:layout_toStartOf="@+id/llpiù"
+            android:layout_toLeftOf="@+id/llpiù"
             android:orientation="vertical"
            >
 
             <TextView
                 android:id="@+id/textViewMenuItemName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="@color/colorAccent"
@@ -78,29 +87,56 @@
 
             <TextView
                 android:id="@+id/textViewMenuItemDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingRight="@dimen/dp8"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
             <TextView
                 android:id="@+id/textViewMenuItemPrice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+                android:paddingTop="@dimen/dp16"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llpiù"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            >
+            <TextView
+                android:id="@+id/cv_tv_acount_piu"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/cv_iv_add"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/ContentDescription"
+                android:src="@drawable/ic_add_circle_outline_black_24dp"
+                android:visibility="visible"
+                />
+
+
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/cv_iv_add"
-            android:layout_width="@dimen/dp30"
-            android:layout_height="@dimen/dp30"
-            android:layout_below="@+id/linearLayoutOfferData"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:contentDescription="@string/ContentDescription"
-            android:src="@drawable/ic_add_circle_outline_black_24dp"
-            android:visibility="visible"
-            />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

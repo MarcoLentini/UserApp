@@ -62,25 +62,6 @@
             android:layout_height="1dp"
             android:background="@color/colorDivider" />
         <TextView
-            android:id="@+id/tvSettingChangePwd"
-            android:padding="@dimen/dp16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/change_password"
-            android:background="@drawable/text_view_border"
-            android:drawableStart="@drawable/ic_account_password"
-            android:drawableLeft="@drawable/ic_account_password"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            android:drawableRight="@drawable/ic_arrow_right"
-            android:layout_gravity="end"
-            android:textAlignment="viewEnd"
-            style="@style/TextAppearance.AppCompat.Body1"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorDivider" />
-        <TextView
             android:id="@+id/tvSettingPayment"
             android:padding="@dimen/dp16"
             android:layout_width="match_parent"
