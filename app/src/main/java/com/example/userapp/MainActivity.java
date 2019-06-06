@@ -11,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,12 +27,19 @@ import android.widget.Toast;
 
 import com.example.userapp.AddComments.CommentsDataModel;
 import com.example.userapp.Comments.MyCommentsModel;
+import com.example.userapp.CurrentOrder.ReservatedDish;
+import com.example.userapp.CurrentOrder.ReservationModelOrder;
 import com.example.userapp.Favorites.FavoritesModel;
+import com.example.userapp.HistoryOrder.HistoryOrderItemModel;
+import com.example.userapp.HistoryOrder.HistoryOrderModel;
 import com.example.userapp.Information.LoginActivity;
 import com.example.userapp.Restaurant.FilterRestaurantsActivity;
 import com.example.userapp.Restaurant.PopularRestaurantsListAdapter;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
+import com.example.userapp.ShoppingCart.OrderItemModel;
+import com.example.userapp.ShoppingCart.ReservationModel;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,6 +48,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -51,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int FILTER_RESTAURANTS_ACTIVITY = 1;
     private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
+    public static ArrayList<ReservationModelOrder> currentOrders;
     private RecyclerView.Adapter restaurantsAdapter;
     private RecyclerView.Adapter popularRestaurantsAdapter;
     private ArrayList<String> receivedFilters;
@@ -113,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         commentsData = new ArrayList<>();
         getDataAndUpdateArrayList();
         fillWithData();
+        currentOrders = new ArrayList<>();
+        getCurrentOrder();
 
         //recyclerView for the popular restaurant
         RecyclerView recyclerViewPopular = findViewById(R.id.recyclerViewTopRestaurants);
@@ -273,6 +285,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
+    }
+
+    public void getCurrentOrder(){
+        db.collection("reservations").whereEqualTo("cust_id", userKey).whereEqualTo("is_current_order", true).addSnapshotListener((document, e)->{
+            if (e != null) return;
+
+            for(DocumentChange dc : document.getDocumentChanges()) {
+                if (dc.getType() == DocumentChange.Type.ADDED) {
+                    QueryDocumentSnapshot doc = dc.getDocument();
+                    ArrayList<ReservatedDish> tmpArrayList = new ArrayList<>();
+                    for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) doc.get("dishes")) {
+                        tmpArrayList.add(new ReservatedDish(
+                                (String) dish.get("dish_name"),
+                                (Double) dish.get("dish_price"),
+                                (Long) dish.get("dish_qty")));
+                    }
+                    ReservationModelOrder tmpReservationModel = new ReservationModelOrder(
+                            doc.getId(),
+                            (Long) doc.get("rs_id"),
+                            (String) doc.get("cust_id"),
+                            (Timestamp) doc.get("delivery_time"),
+                            (String) doc.get("notes"),
+                            (String) doc.get("cust_phone"),
+                            (String) doc.get("cust_name"),
+                            tmpArrayList,
+                            (String) doc.get("rs_status"),
+                            (Double) doc.get("total_income"),
+                            (String) doc.get("rest_address"));
+                    currentOrders.add(tmpReservationModel);
+                } else if(dc.getType() == DocumentChange.Type.REMOVED){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("SALVATEMI!");
+                    builder.setMessage("AIUTOOOOOO! Mi hanno intrappolato qui dentro!!!");
+                    builder.show();
+                }
+            }
+        });
     }
 
     public void fillWithData(){
