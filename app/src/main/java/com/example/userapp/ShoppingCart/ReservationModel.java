@@ -28,6 +28,8 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
     private ArrayList<OrderItemModel> dishes;
     private Double total_income;
 
+    private Long confirmation_code;
+
 
 
     public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address,String delivery_notes) {
@@ -182,6 +184,14 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     public void setIs_current_order(Boolean is_current_order) {
         this.is_current_order = is_current_order;
+    }
+
+    public Long getConfirmation_code() {
+        return confirmation_code;
+    }
+
+    public void setConfirmation_code(Long confirmation_code) {
+        this.confirmation_code = confirmation_code;
     }
 
     public String getDelivery_notes() {

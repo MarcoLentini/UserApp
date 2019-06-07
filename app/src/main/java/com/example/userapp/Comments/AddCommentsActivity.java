@@ -1,18 +1,17 @@
-package com.example.userapp.AddComments;
+package com.example.userapp.Comments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.userapp.CommentsActivity;
-import com.example.userapp.HistoryOrder.HistoryOrderModel;
+import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.HistoryOrderActivity;
 import com.example.userapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +28,7 @@ public class AddCommentsActivity extends AppCompatActivity {
     private Button btnSubmitComments;
     private RatingBar ratingBarFoodQuality;
     private RatingBar ratingBarDeliveryService;
-    private HistoryOrderModel historyOrderModel;
+    private CurrentOrderModel historyOrderModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,21 +65,16 @@ public class AddCommentsActivity extends AppCompatActivity {
         });
         ratingBarDeliveryService = findViewById(R.id.ratingBarDeliveryService);
         ratingBarDeliveryService.setStepSize((float) 0.5);
-        ratingBarDeliveryService.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+        ratingBarDeliveryService.setOnRatingBarChangeListener((ratingBar, rating, fromUser) ->
                 Toast.makeText(AddCommentsActivity.this, "ratingBarDeliveryService rating:" + String.valueOf(rating),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+                Toast.LENGTH_SHORT).show()
+        );
 
 
-        btnSubmitComments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Float ratingFoodQuality = ratingBarDeliveryService.getRating();
-                Float ratingDeliveryService = ratingBarDeliveryService.getRating();
-                String myComments = textViewMsg.getText().toString();
+        btnSubmitComments.setOnClickListener(v -> {
+            Double ratingFoodQuality = Double.valueOf(ratingBarDeliveryService.getRating());
+            Double ratingDeliveryService = Double.valueOf(ratingBarDeliveryService.getRating());
+            String myComments = textViewMsg.getText().toString();
 
                   CommentsDataModel commentsDataModel = new CommentsDataModel(
                       historyOrderModel.getCust_name(),
@@ -96,7 +90,7 @@ public class AddCommentsActivity extends AppCompatActivity {
                       new Date()
               );
 
-            Log.d(TAG, "This is my comments "+commentsDataModel.toString());
+        Log.d(TAG, "This is my comments "+commentsDataModel.toString());
 
              db.collection("comments")
                         .document()
@@ -129,8 +123,7 @@ public class AddCommentsActivity extends AppCompatActivity {
                              Toast.makeText(v.getContext(),"Internet problem, retry!", Toast.LENGTH_LONG).show();
                     }
                 });
-            }
-        });
+            });
     }
 
     @Override

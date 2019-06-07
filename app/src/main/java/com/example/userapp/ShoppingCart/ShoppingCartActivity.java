@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
@@ -125,10 +126,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
                     deliverytime = "AS SOON AS POSSIBLE";
 
-                String  totalCount = textViewtotalCount.getText().toString();
-                int orderItemsCount = Integer.parseInt(totalCount);
+                // String  totalCount = textViewtotalCount.getText().toString();
+                // int orderItemsCount = Integer.parseInt(totalCount);
                 String totalMoney = textViewTotalMoney.getText().toString();
-                Double orderTotalCost = Double.parseDouble(totalMoney.replace("€", " ").replace(",", "."));
+                Double orderTotalCost = Double.parseDouble(totalMoney.replace("€", " ").replace(',','.').trim());
                 String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
                 String orderDeliveryNotes=  tvDeliveryNotes.getText().toString();
                 String orderNotes = tvNotes.getText().toString().replace(getString(R.string.str_please_leave_your_notes_here_if_needed),"");
@@ -150,6 +151,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
                        if(doc != null){
                            reservationModel.setCust_name((String) doc.get("username"));
                            reservationModel.setCust_phone((String) doc.get("phone"));
+
+                           Long confirm_code = new Long(getRandomNumberInRange(1000,9999));
+                           reservationModel.setConfirmation_code(confirm_code);
 
                            db.collection("reservations").document().set(reservationModel).addOnCompleteListener(task1 -> {
                                if(task1.isSuccessful()){
@@ -176,18 +180,18 @@ public class ShoppingCartActivity extends AppCompatActivity {
     }
 
     public boolean isValidOrder(){
-        String  totalCount = textViewtotalCount.getText().toString();
-        int orderItemsCount = Integer.parseInt(totalCount);
+        // String totalCount = textViewtotalCount.getText().toString();
+        // int orderItemsCount = Integer.parseInt(totalCount);
         String totalMoney = textViewTotalMoney.getText().toString();
-        Double orderCost = Double.parseDouble(totalMoney.replace('€',' ').replace(',','.'));
+        Double orderCost = Double.parseDouble(totalMoney.replace('€',' ').replace(',','.').trim());
         String orderRestaurantName = tvRestaurantName.getText().toString();
         String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
         String orderNotes = tvNotes.getText().toString();
 
-        if(orderCost == 0 && orderItemsCount == 0){
+/*        if(orderCost == 0 && orderItemsCount == 0){
             Toast.makeText(this,getString(R.string.empty_basket),Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
         if(orderRestaurantName.isEmpty()) {
             Toast.makeText(this,getString(R.string.rest_not_found),Toast.LENGTH_SHORT).show();
             return false;
@@ -326,5 +330,15 @@ public class ShoppingCartActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private static int getRandomNumberInRange(int min, int max) {
+
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 }

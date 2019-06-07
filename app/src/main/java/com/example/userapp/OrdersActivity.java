@@ -47,7 +47,6 @@ public class OrdersActivity extends AppCompatActivity
     private static  final  int  CURRENT_ORDER_DETAIL_INFO_CODE =1;
     private RecyclerView recyclerViewCurrentOrder;
     private CurrentOrderListAdapter currentOrderListAdapter;
-    public static ArrayList<CurrentOrderModel> currentOrders;
 
     private  FirebaseAuth auth;
     public FirebaseFirestore db;
@@ -90,10 +89,6 @@ public class OrdersActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-         currentOrders = new ArrayList<>();
-
-         fillWithData();
-
          Log.d("Tag", "RecycleView initialization ");
 
          //RecycleView show the list of current orders
@@ -101,7 +96,7 @@ public class OrdersActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewCurrentOrder.setLayoutManager(layoutManager);
         //specify an Adapter
-        currentOrderListAdapter = new CurrentOrderListAdapter(this, currentOrders);
+        currentOrderListAdapter = new CurrentOrderListAdapter(this, MainActivity.currentOrders);
         recyclerViewCurrentOrder.setAdapter(currentOrderListAdapter);
 
     }
@@ -144,31 +139,24 @@ public class OrdersActivity extends AppCompatActivity
         if (id == R.id.nav_home){
             Intent intent = new Intent(OrdersActivity.this, MainActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
          }
         else if (id == R.id.nav_setting){
             Intent intent = new Intent(OrdersActivity.this, SettingsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_help){
             Intent intent = new Intent(OrdersActivity.this, HelpActivity.class);
             startActivity(intent);
-                Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_orders){
 
-                Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_star){
             Intent intent = new Intent(OrdersActivity.this, FavoritesActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Favorite",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
             signOut();
         }else if (id == R.id.nav_comments){
             Intent intent = new Intent(OrdersActivity.this, CommentsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_history_order){
-            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(OrdersActivity.this, HistoryOrderActivity.class);
             startActivity(intent);
         }
@@ -181,6 +169,7 @@ public class OrdersActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        currentOrderListAdapter.notifyDataSetChanged();
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(OrdersActivity.this, LoginActivity.class));
             finish();
@@ -189,61 +178,9 @@ public class OrdersActivity extends AppCompatActivity
     }
     //TODO LAB5 problems left  CurrentOrder get from firebase
     // Maybe we do not need realtime query for current order because current order are all created bu current user we can add locally
-    public void fillWithData(){
-        Log.d("QueryCurrentOrder", "Start fill with data...");
-        progressBarCurrentOrder.setVisibility(View.VISIBLE);
 
 
-        Query request = db.collection("reservations").whereEqualTo("cust_id", userKey);
 
-        request.whereEqualTo("is_current_order", true).addSnapshotListener((EventListener<QuerySnapshot>) (document, e) -> {
-            if (e != null) {
-                  return;
-            }
-            for(DocumentChange dc : document.getDocumentChanges()) {
-                if (dc.getType() == DocumentChange.Type.ADDED) {
-                    ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
-                    if (dc.getDocument().get("dishes") != null) {
-                        Log.d("QueryCurrentOrder", "dishes not empty");
-
-                        for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) dc.getDocument().get("dishes")) {
-                            tmpArrayList.add(new CurrentOrderItemModel(
-                                    (String) dish.get("dish_name"),
-                                    (Double) dish.get("dish_price"),
-                                    (Long) dish.get("dish_qty")));
-                        }
-                        CurrentOrderModel tmpCurrentOrderModel = new CurrentOrderModel(
-                                (Long) dc.getDocument().get("confirmation_code"),
-                                (Boolean) dc.getDocument().get("is_current_order"),
-                                (String) dc.getDocument().get("cust_id"),//customer id
-                                (String) dc.getDocument().get("rs_status"), // order status
-                                (Long) dc.getDocument().get("rs_id"), //order id
-                                (Timestamp) dc.getDocument().get("timestamp"),     //order created time
-                                (String) dc.getDocument().get("rest_name"), // rest_name
-                                tmpArrayList,
-                                (Double) dc.getDocument().get("total_income"),
-                                (Timestamp) dc.getDocument().get("delivery_time"),
-                                (String) dc.getDocument().get("cust_address")
-                        );
-                        //add this current order into the arraylist
-                        Log.d("QueryCurrentOrder", "add  tmpCurrentOrderModel successful to arraylist!");
-                        currentOrders.add(tmpCurrentOrderModel);
-                        progressBarCurrentOrder.setVisibility(View.GONE);
-                        currentOrderListAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                if (dc.getType() == DocumentChange.Type.MODIFIED) {
-                    String docId = dc.getDocument().getId();
-                }
-
-            }
-            progressBarCurrentOrder.setVisibility(View.GONE);
-
-        });
-
-
-    }
     //sign out method
     public void signOut() {
         auth.signOut();

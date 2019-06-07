@@ -14,7 +14,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.userapp.AddComments.AddCommentsActivity;
+import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
+import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.HistoryOrderActivity;
 import com.example.userapp.R;
 
@@ -33,7 +34,7 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
         Intent receivedIntent = getIntent();
 
         Integer itemPosition = receivedIntent.getExtras().getInt("historyOrderData");
-        HistoryOrderModel rm = HistoryOrderActivity.historyOrders.get(itemPosition);
+        CurrentOrderModel rm = HistoryOrderActivity.historyOrders.get(itemPosition);
 
 
         TextView textViewStatusHistoryOrder = findViewById(R.id.tvStatusHistoryOrder);
@@ -42,7 +43,7 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
         textViewRestaurantName.setText(rm.getRest_name());
 
         TextView textViewTotalCost = findViewById(R.id.tv_history_order_total_cost);
-        textViewTotalCost.setText(String.valueOf(rm.getTotal_cost()));
+        textViewTotalCost.setText(String.valueOf(rm.getTotal_income()));
 
         TextView textViewAddress = findViewById(R.id.tvHistoryOrderDeliveryAddress);
         textViewAddress.setText(rm.getCust_address());
@@ -55,7 +56,7 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
         textViewOrderId.setText(String.valueOf(rm.getRs_id()));
 
         LinearLayout current_order_detail_info = findViewById(R.id.llHistoryOrderDetailInfo);
-        for (HistoryOrderItemModel rd : rm.getDishes()) {
+        for (CurrentOrderItemModel rd : rm.getDishes()) {
             LinearLayout ll = new LinearLayout(this);
             // 16dp
             float scale = getResources().getDisplayMetrics().density;
@@ -128,7 +129,7 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "btnLeaveComments is clicked,AddCommentsActivity is called.");
-                Intent intent = new Intent(HistoryOrderDetailInfoActivity.this, AddCommentsActivity.class);
+                Intent intent = new Intent(HistoryOrderDetailInfoActivity.this, com.example.userapp.Comments.AddCommentsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("HistoryOrder", rm);
                 intent.putExtras(bundle);

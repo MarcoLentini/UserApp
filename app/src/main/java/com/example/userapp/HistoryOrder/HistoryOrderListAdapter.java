@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.userapp.AddComments.AddCommentsActivity;
-import com.example.userapp.CurrentOrder.CurrentOrderDetailInfoActivity;
-import com.example.userapp.HistoryOrderActivity;
+import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.R;
 
 import java.util.ArrayList;
@@ -22,10 +20,10 @@ import java.util.ArrayList;
 public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "HistoryOrderListAdapter";
     private Context context;
-    private ArrayList<HistoryOrderModel> historyOrders;
+    private ArrayList<CurrentOrderModel> historyOrders;
     private LayoutInflater mInflater;
 
-    public HistoryOrderListAdapter(Context context,ArrayList<HistoryOrderModel> historyOrders){
+    public HistoryOrderListAdapter(Context context,ArrayList<CurrentOrderModel> historyOrders){
         this.context = context;
         this.historyOrders = historyOrders;
         this.mInflater = LayoutInflater.from(context);
@@ -58,10 +56,10 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
         TextView textViewHistoryOrderInfo = historyOrderViewHolder.textViewHistoryOrderInfo;
         Button  btnCommentForThisOrderFinish = historyOrderViewHolder.btnCommentForThisOrderFinish;
 
-        HistoryOrderModel historyOrder = historyOrders.get(pos);
+        CurrentOrderModel historyOrder = historyOrders.get(pos);
         textViewRestName.setText(historyOrder.getRest_name());
         textViewOrderStatus.setText(historyOrder.getRs_status());
-        textViewTotalCost.setText(""+historyOrder.getTotal_cost());
+        textViewTotalCost.setText(""+historyOrder.getTotal_income());
          String reservationOffer = "";
         int count = 0;
         for (int i = 0; i < historyOrder.getDishes().size(); i++) {
@@ -82,7 +80,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "btnCommentForThisOrderFinish is clicked,AddCommentsActivity is called.");
-                Intent intent = new Intent(view.getContext(), AddCommentsActivity.class);
+                Intent intent = new Intent(view.getContext(), com.example.userapp.Comments.AddCommentsActivity.class);
                 Bundle bn = new Bundle();
                 bn.putInt("historyOrderData", pos);
                 intent.putExtras(bn);

@@ -416,7 +416,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                                                                         doc.getId(), (String) doc.get("category_name"),
                                                                         doc1.getId(),
                                                                         (String) doc1.get("name"), (String) doc1.get("description"),
-                                                                        (Double) doc1.get("price"), (String) doc1.get("image")));
+                                                                        doc1.getDouble("price"), (String) doc1.get("image")));
                                                         restaurantMenuData.add(tmpMenuItem);
                                                     }
 

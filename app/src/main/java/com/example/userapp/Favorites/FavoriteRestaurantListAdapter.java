@@ -63,7 +63,7 @@ public class FavoriteRestaurantListAdapter extends RecyclerView.Adapter<Favorite
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
         textViewDistance.setText(restaurantModel.getAddress());
-        textViewDeliveryFee.setText(String.valueOf(restaurantModel.getDeliveryFee() + "€"));
+        textViewDeliveryFee.setText(restaurantModel.getDeliveryFee() + "€");
 
     }
 

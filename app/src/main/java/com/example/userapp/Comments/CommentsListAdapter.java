@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.userapp.AddComments.CommentsDataModel;
+import com.example.userapp.Comments.CommentsDataModel;
 import com.example.userapp.R;
 
 import java.util.ArrayList;
@@ -54,9 +54,9 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         textViewCommentsRestaurantName.setText(""+myComments.getRestName());
         //textViewCommentsCustID.setText(myComments.getUserId());
         showRatingDeliveryService.isIndicator();
-        showRatingDeliveryService.setRating(myComments.getVoteForBiker());
+        showRatingDeliveryService.setRating(myComments.getVoteForBiker().floatValue());
         showRatingFoodQuantity.isIndicator();
-        showRatingFoodQuantity.setRating(myComments.getVoteForRestaurant());
+        showRatingFoodQuantity.setRating(myComments.getVoteForRestaurant().floatValue());
         textViewCommentsCustNotes.setMaxLines(10);
         textViewCommentsCustNotes.setText(myComments.getNotes());
 

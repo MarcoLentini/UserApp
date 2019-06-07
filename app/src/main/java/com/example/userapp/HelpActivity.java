@@ -15,12 +15,7 @@ public class HelpActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.helpToolbar);
         toolbar.setTitle(R.string.menu_help);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
     @Override
     public void onBackPressed() {

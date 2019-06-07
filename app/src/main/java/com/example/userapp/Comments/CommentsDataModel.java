@@ -1,4 +1,4 @@
-package com.example.userapp.AddComments;
+package com.example.userapp.Comments;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -12,15 +12,15 @@ public class CommentsDataModel {
     private String restId;
     private String bikerId;
     private String userId;
-    private Float voteForRestaurant;
-    private Float voteForBiker;
+    private Double voteForRestaurant;
+    private Double voteForBiker;
     private String notes;
     private String restName;
     private Date date;
 
 
     public CommentsDataModel(String custName,String commentsId,Long reservationId, String restId, String restName,
-                             String bikerId, String userId, Float voteForRestaurant, Float voteForBiker, String notes,Date date) {
+                             String bikerId, String userId, Double voteForRestaurant, Double voteForBiker, String notes,Date date) {
         this.custName = custName;
         this.commentsId = commentsId;
         this.reservationId = reservationId;
@@ -89,19 +89,19 @@ public class CommentsDataModel {
         this.userId = userId;
     }
 
-    public Float getVoteForRestaurant() {
+    public Double getVoteForRestaurant() {
         return voteForRestaurant;
     }
 
-    public void setVoteForRestaurant(Float voteForRestaurant) {
+    public void setVoteForRestaurant(Double voteForRestaurant) {
         this.voteForRestaurant = voteForRestaurant;
     }
 
-    public Float getVoteForBiker() {
+    public Double getVoteForBiker() {
         return voteForBiker;
     }
 
-    public void setVoteForBiker(Float voteForBiker) {
+    public void setVoteForBiker(Double voteForBiker) {
         this.voteForBiker = voteForBiker;
     }
 

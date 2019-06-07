@@ -20,16 +20,13 @@ import android.view.Menu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 ;
-import com.example.userapp.HistoryOrder.HistoryOrderItemModel;
+import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
+import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.HistoryOrder.HistoryOrderListAdapter;
-import com.example.userapp.HistoryOrder.HistoryOrderModel;
 import com.example.userapp.Information.LoginActivity;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -41,7 +38,7 @@ public class HistoryOrderActivity extends AppCompatActivity
     private static final String TAG = "HistoryOrderActivity";
     private RecyclerView recyclerViewHistoryOrder;
     private HistoryOrderListAdapter historyOrderListAdapter;
-    public static ArrayList<HistoryOrderModel> historyOrders;
+    public static ArrayList<CurrentOrderModel> historyOrders;
     private FirebaseAuth auth;
     public FirebaseFirestore db;
     private static final String userDataFile = "UserDataFile";
@@ -147,32 +144,25 @@ public class HistoryOrderActivity extends AppCompatActivity
         if (id == R.id.nav_home){
             Intent intent = new Intent(HistoryOrderActivity.this, MainActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.nav_setting){
             Intent intent = new Intent(HistoryOrderActivity.this, SettingsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_help){
             Intent intent = new Intent(HistoryOrderActivity.this, HelpActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_orders){
             Intent intent = new Intent(HistoryOrderActivity.this, OrdersActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_star){
             Intent intent = new Intent(HistoryOrderActivity.this, FavoritesActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Favorite",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
             signOut();
         }else if (id == R.id.nav_comments){
             Intent intent = new Intent(HistoryOrderActivity.this, CommentsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_history_order){
-            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
 
         }
 
@@ -185,61 +175,61 @@ public class HistoryOrderActivity extends AppCompatActivity
     // (an idea related to comments) when there is a history order send a notification for user to make comments
     private void fillWithData(){
         Log.d("QueryHistoryOrder", "Start fill with data...");
-        //progressBarCurrentOrder.setVisibility(View.VISIBLE);
+        progressBarCurrentOrder.setVisibility(View.VISIBLE);
 
-        Query request = db.collection("reservations")
-                          .whereEqualTo("cust_id", userKey);
+        db.collection("reservations").whereEqualTo("cust_id", userKey)
+                .whereEqualTo("is_current_order", false).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                QuerySnapshot document = task.getResult();
+                if(!document.isEmpty()) {
+                    for(DocumentSnapshot doc : document) {
+                        ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
+                        if (doc.get("dishes") != null) {
+                            Log.d("QueryHistoryOrder", "dishes not empty");
 
-        request.whereEqualTo("is_current_order", false)
-                .addSnapshotListener((EventListener<QuerySnapshot>) (document, e) -> {
-            if (e != null) return;
+                            for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) doc.get("dishes")) {
+                                tmpArrayList.add(new CurrentOrderItemModel(
+                                        (String) dish.get("dish_name"),
+                                        (Double) dish.get("dish_price"),
+                                        (Long) dish.get("dish_qty")));
+                            }
+                            CurrentOrderModel tmpHistoryOrderModel = new CurrentOrderModel(
+                                    doc.getId(),
+                                    doc.getLong("rs_id"),
+                                    doc.getString("rs_status"),
+                                    doc.getTimestamp("timestamp"),
+                                    tmpArrayList,
+                                    doc.getBoolean("is_current_order"),
+                                    doc.getLong("confirmation_code"),
+                                    doc.getDouble("total_income"),
+                                    doc.getString("notes"),
 
-            for(DocumentChange dc : document.getDocumentChanges()) {
-                if (dc.getType() == DocumentChange.Type.ADDED) {
-                    ArrayList<HistoryOrderItemModel> tmpArrayList = new ArrayList<>();
-                    if (dc.getDocument().get("dishes") != null) {
-                        Log.d("QueryHistoryOrder", "dishes not empty");
+                                    doc.getString("cust_id"),
+                                    doc.getString("cust_name"),
+                                    doc.getString("cust_name"),
+                                    doc.getBoolean("is_commented"),
+                                    doc.getString("rest_id"),
+                                    doc.getString("rest_address"),
 
-                        for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) dc.getDocument().get("dishes")) {
-                            tmpArrayList.add(new HistoryOrderItemModel(
-                                    (String) dish.get("dish_name"),
-                                    (Double) dish.get("dish_price"),
-                                    (Long) dish.get("dish_qty")));
+                                    doc.getString("biker_id"),
+                                    doc.getTimestamp("delivery_time")
+                            );
+                            //add this current order into the arraylist
+                            Log.d("QueryHistoryOrder", "add  tmpHistoryOrderModel successful to arraylist!");
+                            historyOrders.add(tmpHistoryOrderModel);
+                            //progressBarCurrentOrder.setVisibility(View.GONE);
+                            historyOrderListAdapter.notifyDataSetChanged();
                         }
-                        HistoryOrderModel tmpHistoryOrderModel = new HistoryOrderModel(
-                                (String) dc.getDocument().get("cust_name"),//cust_name
-                                (Boolean) dc.getDocument().get("is_commented"),
-                                (Boolean) dc.getDocument().get("is_current_order"),
-                                (String) dc.getDocument().get("cust_id"),//customer id
-                                (String) dc.getDocument().get("rs_status"), // order status
-                                (Long) dc.getDocument().get("rs_id"), //order id
-                                (Timestamp) dc.getDocument().get("timestamp"),     //order created time
-                                (String) dc.getDocument().get("rest_name"), // rest_name
-                                tmpArrayList,
-                                (Double) dc.getDocument().get("total_income"),
-                                (Timestamp) dc.getDocument().get("delivery_time"),
-                                (String) dc.getDocument().get("cust_address"),
-                                (String) dc.getDocument().get("rest_id"),
-                                (String) dc.getDocument().get("biker_id")
-                                );
-                        //add this current order into the arraylist
-                        Log.d("QueryHistoryOrder", "add  tmpHistoryOrderModel successful to arraylist!");
-                        historyOrders.add(tmpHistoryOrderModel);
-                       //progressBarCurrentOrder.setVisibility(View.GONE);
-                        historyOrderListAdapter.notifyDataSetChanged();
+
                     }
-                }
 
-                //TODO LAB5 realtime change notified
-                if (dc.getType() == DocumentChange.Type.MODIFIED) {
-                    String docId = dc.getDocument().getId();
+
+                } else {
 
                 }
+                progressBarCurrentOrder.setVisibility(View.GONE);
             }
         });
-
-
-
     }
     //sign out method
     public void signOut() {

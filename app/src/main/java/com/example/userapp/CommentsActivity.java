@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
@@ -19,26 +16,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.Button;
-import android.widget.Toast;
 
-
-import com.example.userapp.AddComments.AddCommentsActivity;
-import com.example.userapp.AddComments.CommentsDataModel;
+import com.example.userapp.Comments.CommentsDataModel;
 import com.example.userapp.Comments.CommentsListAdapter;
 import com.example.userapp.Information.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import com.example.userapp.Information.LoginActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CommentsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -139,30 +126,23 @@ public class CommentsActivity extends AppCompatActivity
         if (id == R.id.nav_home){
             Intent intent = new Intent(CommentsActivity.this, MainActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Main",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_setting){
             Intent intent = new Intent(CommentsActivity.this, SettingsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_help){
             Intent intent = new Intent(CommentsActivity.this, HelpActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_orders){
             Intent intent = new Intent(CommentsActivity.this, OrdersActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_star){
             Intent intent = new Intent(CommentsActivity.this, FavoritesActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Star",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
             signOut();
         }else if (id == R.id.nav_comments){
 
-            Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_history_order){
-            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(CommentsActivity.this, HistoryOrderActivity.class);
             startActivity(intent);
         }
@@ -176,22 +156,23 @@ public class CommentsActivity extends AppCompatActivity
     private void fillWithData(){
          db.collection("comments")
                 .whereEqualTo("userId", userKey)
-                .addSnapshotListener((EventListener<QuerySnapshot>) (document, e) -> {
+                .addSnapshotListener((document, e) -> {
                     if (e != null) return;
 
                     for(DocumentChange dc : document.getDocumentChanges()) {
                         if (dc.getType() == DocumentChange.Type.ADDED) {
                             CommentsDataModel tmpComment = new CommentsDataModel(
-                                    (String)  dc.getDocument().get("custName"),
-                                    (String) dc.getDocument().getId(),  //commentsId
-                                    (Long) dc.getDocument().get("reservationId"),  //reservationId
-                                    (String) dc.getDocument().get("restId"),  //restId
-                                    (String)dc.getDocument().get("restName"),  //restName
-                                    (String)dc.getDocument().get("bikerId"),  //bikerId
-                                    (String)dc.getDocument().get("userId"),  //userId
-                                    (Float)((Double) dc.getDocument().get("voteForRestaurant")).floatValue(),  //voteForRestaurant
-                                    (Float)((Double) dc.getDocument().get("voteForBiker")).floatValue(),  //voteForBiker
-                                    (String)dc.getDocument().get("notes")//notes
+                                    dc.getDocument().getString("custName"),
+                                    dc.getDocument().getId(),  //commentsId
+                                    dc.getDocument().getLong("reservationId"),  //reservationId
+                                    dc.getDocument().getString("restId"),  //restId
+                                    dc.getDocument().getString("restName"),  //restName
+                                    dc.getDocument().getString("bikerId"),  //bikerId
+                                    dc.getDocument().getString("userId"),  //userId
+                                    dc.getDocument().getDouble("voteForRestaurant"),  //voteForRestaurant
+                                    dc.getDocument().getDouble("voteForBiker"),  //voteForBiker
+                                    dc.getDocument().getString("notes"),//notes,
+                                    dc.getDocument().getDate("date")
                             );
 
                             Log.d(TAG, "tmpComment"+tmpComment.getCommentsId());

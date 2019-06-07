@@ -15,8 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.userapp.MainActivity;
 import com.example.userapp.OrdersActivity;
 import com.example.userapp.R;
+
+import java.text.SimpleDateFormat;
 
 
 public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
@@ -35,8 +38,8 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
         Intent receivedIntent = getIntent();
         Integer itemPosition = receivedIntent.getExtras().getInt("currentOrderData");
         System.out.println("Received positiom"+itemPosition);
-        CurrentOrderModel rm = OrdersActivity.currentOrders.get(itemPosition);
-        System.out.println("Received currentOrders size "+ OrdersActivity.currentOrders.size() );
+        CurrentOrderModel rm = MainActivity.currentOrders.get(itemPosition);
+        System.out.println("Received currentOrders size "+ MainActivity.currentOrders.size() );
 
 
             TextView textViewStatus = findViewById(R.id.tvStatusCurrentOrder);
@@ -45,7 +48,7 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
             textViewRestName.setText(rm.getRest_name());
 
             TextView textViewTotalCost = findViewById(R.id.tvCurrentOrderTotalCostDetailInfo);
-            textViewTotalCost.setText(String.valueOf(rm.getTotal_cost()));
+            textViewTotalCost.setText(String.valueOf(rm.getTotal_income()));
 
             TextView textViewAddress = findViewById(R.id.tvCurrentOrderDeliveryAddress);
             textViewAddress.setText(rm.getCust_address());
@@ -116,18 +119,11 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
                 current_order_detail_info.addView(ll);
             }
 
-
-            Button btnOrderAccept = findViewById(R.id.btnOrderAcceptedInProgress);
-
-            btnOrderAccept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    returnVal(itemPosition, "Finish");
-                    Toast.makeText(v.getContext(), "Received Order", Toast.LENGTH_SHORT).show();
-                }
-            });
             TextView textViewCurrentOrderCreateTime = findViewById(R.id.tvCurrentOrderCreateTime);
-            textViewCurrentOrderCreateTime.setText(String.valueOf(rm.getTimestamp()));
+            SimpleDateFormat sdf = new SimpleDateFormat();
+            sdf.format(rm.getTimestamp().toDate());
+            sdf.applyPattern("dd MM YYYY - HH:mm");
+            textViewCurrentOrderCreateTime.setText(sdf.toString());
 
     }
 

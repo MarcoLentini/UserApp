@@ -65,20 +65,7 @@
                     android:layout_marginTop="@dimen/dp6"
                     android:layout_marginBottom="@dimen/dp6"
                     android:layout_below="@+id/tvConfirmationCodeDetail"
-                    >
-
-                    <Button
-                        android:id="@+id/btnOrderAcceptedInProgress"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:theme="@style/PrimaryFlatButton"
-                        android:textColor="@color/colorSecondaryText"
-                        android:layout_marginLeft="4dp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/btn_order_accepted"
-                        android:layout_marginStart="4dp" />
-                </LinearLayout>
+                    />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>

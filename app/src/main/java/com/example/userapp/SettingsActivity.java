@@ -27,12 +27,7 @@ private FirebaseAuth auth;
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.menu_setting);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
          //Get Firebase auth instance
          auth = FirebaseAuth.getInstance();
@@ -40,27 +35,15 @@ private FirebaseAuth auth;
             finish();
         }
         tvAccountInfo = findViewById(R.id.tvSettingAccountInfo);
-        tvAccountInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, UserInformationActivity.class);
-                startActivity(intent);
-            }
+        tvAccountInfo.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, UserInformationActivity.class);
+            startActivity(intent);
         });
         tvAddingAddress = findViewById(R.id.tvSettingAddress);
-        tvAddingAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            startActivity(new Intent(SettingsActivity.this, AddAddrActivity.class));            }
-        });
+        tvAddingAddress.setOnClickListener(v -> startActivity(new Intent(SettingsActivity.this, AddAddrActivity.class)));
 
         tvPaymentMethod =findViewById(R.id.tvSettingPayment);
-        tvPaymentMethod.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(SettingsActivity.this,"payment method activity ",Toast.LENGTH_SHORT).show();
-            }
-        });
+        tvPaymentMethod.setOnClickListener(v -> Toast.makeText(SettingsActivity.this,"payment method activity ",Toast.LENGTH_SHORT).show());
     }
 
     protected void onResume() {

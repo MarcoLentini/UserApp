@@ -108,31 +108,24 @@ public class FavoritesActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             Intent intent = new Intent(FavoritesActivity.this, MainActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_setting) {
             Intent intent = new Intent(FavoritesActivity.this, SettingsActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_help) {
             Intent intent = new Intent(FavoritesActivity.this, HelpActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_orders) {
             Intent intent = new Intent(FavoritesActivity.this, OrdersActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Orders", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_star) {
             Intent intent = new Intent(FavoritesActivity.this, FavoritesActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Star", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_logout) {
             signOut();
         } else if (id == R.id.nav_comments) {
             Intent intent = new Intent(FavoritesActivity.this, CommentsActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Comments", Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_history_order){
-            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(FavoritesActivity.this, HistoryOrderActivity.class);
             startActivity(intent);
         }

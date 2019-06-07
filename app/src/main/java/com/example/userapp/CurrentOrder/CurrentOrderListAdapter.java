@@ -71,7 +71,7 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         textViewRestName.setText(""+currentOrder.getRest_name());
         textViewOrderStatus.setText(""+currentOrder.getRs_status());
-        textViewTotalCost.setText(""+currentOrder.getTotal_cost());
+        textViewTotalCost.setText(""+currentOrder.getTotal_income());
         textViewConfirmationCode.setText(""+currentOrder.getConfirmation_code());
         String reservationOffer = "";
         int count = 0;
@@ -82,14 +82,6 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
         textViewTotalItems.setText(""+count);
         textViewCurrentOrderInfo.setText(reservationOffer);
-
-        //TODO click buttonOrderAccepted this order remove from current order
-        buttonOrderAccepted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(),"Received Order",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -114,7 +106,7 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
             this.textViewOrderStatus = itemView.findViewById(R.id.tvOrderStatusCurrentOrder);
             this.textViewTotalCost = itemView.findViewById(R.id.tvCurrentOrderTotalCost);
             this.textViewTotalItems = itemView.findViewById(R.id.tvCurrentOrderTotalCount);
-            this.buttonOrderAccepted = itemView.findViewById(R.id.btnCurrentOrderAccepted);
+            //this.buttonOrderAccepted = itemView.findViewById(R.id.btnCurrentOrderAccepted);
             this.textViewCurrentOrderInfo = itemView.findViewById(R.id.CurrentOrderInfo);
         }
 

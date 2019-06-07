@@ -3,6 +3,7 @@ package com.example.userapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,36 +22,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.userapp.AddComments.CommentsDataModel;
-import com.example.userapp.Comments.MyCommentsModel;
-import com.example.userapp.CurrentOrder.ReservatedDish;
-import com.example.userapp.CurrentOrder.ReservationModelOrder;
+import com.bumptech.glide.Glide;
+import com.example.userapp.Comments.CommentsDataModel;
+import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
+import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.Favorites.FavoritesModel;
-import com.example.userapp.HistoryOrder.HistoryOrderItemModel;
-import com.example.userapp.HistoryOrder.HistoryOrderModel;
 import com.example.userapp.Information.LoginActivity;
 import com.example.userapp.Restaurant.FilterRestaurantsActivity;
 import com.example.userapp.Restaurant.PopularRestaurantsListAdapter;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
-import com.example.userapp.ShoppingCart.OrderItemModel;
-import com.example.userapp.ShoppingCart.ReservationModel;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int FILTER_RESTAURANTS_ACTIVITY = 1;
     private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
-    public static ArrayList<ReservationModelOrder> currentOrders;
+    public static ArrayList<CurrentOrderModel> currentOrders;
     private RecyclerView.Adapter restaurantsAdapter;
     private RecyclerView.Adapter popularRestaurantsAdapter;
     private ArrayList<String> receivedFilters;
@@ -142,9 +135,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(restaurantsAdapter);
 
 
+        View hView =  navigationView.getHeaderView(0);
+        ImageView imageViewNavHeader = hView.findViewById(R.id.imageViewNavHeader);
+        db.collection("users").document(userKey).get().addOnCompleteListener(t -> {
+            if(t.isSuccessful()){
+                DocumentSnapshot doc = t.getResult();
+                Uri url = Uri.parse(doc.getString("image_url"));
+                Glide.with(this).load(url).placeholder(R.drawable.user_logo).into(imageViewNavHeader);
+            }
+        });
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -231,19 +231,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_setting){
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_help){
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Help",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_orders){
             Intent intent = new Intent(MainActivity.this, OrdersActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Orders",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_star){
             Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Favorite",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_logout){
             signOut();
         }else if (id == R.id.nav_home){
@@ -251,9 +247,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if (id == R.id.nav_comments){
             Intent intent = new Intent(MainActivity.this, CommentsActivity.class);
             startActivity(intent);
-            Toast.makeText(this,"Comments",Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_history_order){
-            Toast.makeText(this,"History Orders",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, HistoryOrderActivity.class);
             startActivity(intent);
         }
@@ -294,25 +288,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             for(DocumentChange dc : document.getDocumentChanges()) {
                 if (dc.getType() == DocumentChange.Type.ADDED) {
                     QueryDocumentSnapshot doc = dc.getDocument();
-                    ArrayList<ReservatedDish> tmpArrayList = new ArrayList<>();
+                    ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
                     for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) doc.get("dishes")) {
-                        tmpArrayList.add(new ReservatedDish(
+                        tmpArrayList.add(new CurrentOrderItemModel(
                                 (String) dish.get("dish_name"),
                                 (Double) dish.get("dish_price"),
                                 (Long) dish.get("dish_qty")));
                     }
-                    ReservationModelOrder tmpReservationModel = new ReservationModelOrder(
+                    CurrentOrderModel tmpReservationModel = new CurrentOrderModel(
                             doc.getId(),
-                            (Long) doc.get("rs_id"),
-                            (String) doc.get("cust_id"),
-                            (Timestamp) doc.get("delivery_time"),
-                            (String) doc.get("notes"),
-                            (String) doc.get("cust_phone"),
-                            (String) doc.get("cust_name"),
+                            doc.getLong("rs_id"),
+                            doc.getString("rs_status"),
+                            doc.getTimestamp("timestamp"),
                             tmpArrayList,
-                            (String) doc.get("rs_status"),
-                            (Double) doc.get("total_income"),
-                            (String) doc.get("rest_address"));
+                            doc.getBoolean("is_current_order"),
+                            doc.getLong("confirmation_code"),
+                            doc.getDouble("total_income"),
+                            doc.getString("notes"),
+
+                            doc.getString("cust_id"),
+                            doc.getString("cust_name"),
+                            doc.getString("cust_name"),
+                            doc.getBoolean("is_commented"),
+
+                            doc.getString("rest_id"),
+                            doc.getString("rest_name"),
+
+                            doc.getString("biker_id"),
+                            doc.getTimestamp("delivery_time")
+                    );
                     currentOrders.add(tmpReservationModel);
                 } else if(dc.getType() == DocumentChange.Type.REMOVED){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -348,8 +352,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                                 FavoritesModel favoritesModel = new FavoritesModel(
                                         doc.getId(),
-                                        (String)doc.get("userID"),
-                                        (String)doc.get("restaurantID"),
+                                        doc.getString("userID"),
+                                        doc.getString("restaurantID"),
                                         restaurantModel );
 
                                 Log.d(TAG, "favoritesModel"+favoritesModel.getId());
@@ -380,15 +384,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 }
                                 restaurantsData.add(new RestaurantModel(
                                         doc.getId(),
-                                        (String) doc.get("rest_name"),
-                                        (Double) doc.get("delivery_fee"),
-                                        (String) doc.get("rest_address"),
-                                        (String) doc.get("rest_descr"),
-                                        (String) doc.get("rest_image"),
+                                        doc.getString("rest_name"),
+                                        doc.getDouble("delivery_fee"),
+                                        doc.getString("rest_address"),
+                                        doc.getString("rest_descr"),
+                                        doc.getString("rest_image"),
                                         tags));
                             }
                             pbRestaurants.setVisibility(View.GONE);
-                            int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
+                            int count = restaurantsAdapter.getItemCount();
                             tvRestaurantsCountValue.setText(String.valueOf(count));
                             restaurantsAdapter.notifyDataSetChanged();
                             popularRestaurantsAdapter.notifyDataSetChanged();
