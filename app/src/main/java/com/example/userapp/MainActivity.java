@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ProgressBar pbRestaurants;
     private TextView tvRestaurantsCountValue;
     private TextView tvRestaurantsFiltersValue;
-
+private NavigationView navigationView;
     public static ArrayList<FavoritesModel> favoritesData;
     private FirebaseAuth auth;
     private static final String userDataFile = "UserDataFile";
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //adding drawerLayout and  navigationView
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+         navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -137,9 +137,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View hView =  navigationView.getHeaderView(0);
         ImageView imageViewNavHeader = hView.findViewById(R.id.imageViewNavHeader);
+        TextView name= hView.findViewById(R.id.textViewNavHeaderTitle);
+
         db.collection("users").document(userKey).get().addOnCompleteListener(t -> {
             if(t.isSuccessful()){
                 DocumentSnapshot doc = t.getResult();
+                name.setText(doc.getString("username"));
                 Uri url = Uri.parse(doc.getString("image_url"));
                 Glide.with(this).load(url).placeholder(R.drawable.user_logo).into(imageViewNavHeader);
             }
@@ -409,6 +412,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_home);
         getDataAndUpdateArrayList();
         if (auth.getCurrentUser() == null ) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
