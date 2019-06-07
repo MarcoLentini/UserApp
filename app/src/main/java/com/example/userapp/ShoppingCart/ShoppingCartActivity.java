@@ -272,7 +272,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             totalMoneyProducts += item.getDish_qty()*item.getDish_price();
         }
         DecimalFormat format = new DecimalFormat("0.00");
-        String formattedPriceProducts = format.format(totalMoney);
+        String formattedPriceProducts = format.format(totalMoneyProducts);
         textViewProductFee.setText("€ " +formattedPriceProducts);
 
         totalMoney = totalMoneyProducts + rm.getDeliveryFee();
