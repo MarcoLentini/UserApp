@@ -82,67 +82,151 @@
                     android:layout_marginTop="@dimen/dp4"
                     android:background="@color/colorDivider" />
 
-                <TextView
-                    android:layout_margin="@dimen/dp8"
-                    android:id="@+id/tv_totle_money"
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/llFee"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_below="@+id/divider2"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginTop="4dp"
-                    android:gravity="end"
-                    android:padding="@dimen/dp4"
-                    android:text="@string/title_total_cost"
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp" />
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:baselineAligned="false">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:padding="@dimen/dp4"
+                            android:text="Products"
+                            android:textAlignment="viewStart"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvProductFee"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:padding="@dimen/dp4"
+                            android:textAlignment="viewEnd"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:padding="@dimen/dp4"
+                            android:text="Delivery"
+                            android:textAlignment="viewStart"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvDeliveryFee"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:padding="@dimen/dp4"
+                            android:text="6"
+                            android:textAlignment="viewEnd"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:padding="@dimen/dp4"
+                            android:text="Total"
+                            android:textAlignment="viewStart"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvTotalFee"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:padding="@dimen/dp4"
+                            android:text="6"
+                            android:textAlignment="viewEnd"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                   <!--
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_totle_money"
+                        style="@style/TextAppearance.AppCompat.Headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-                <TextView
-                    android:layout_margin="@dimen/dp8"
-                    android:id="@+id/tv_order_total_cost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/divider2"
-                    android:layout_toEndOf="@+id/tv_totle_money"
-                    android:layout_toRightOf="@+id/tv_totle_money"
-                    android:gravity="end"
-                    android:padding="@dimen/dp4"
-                    android:text="@string/str_nnt_5"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_margin="@dimen/dp8"
-                    android:id="@+id/tv_total_count"
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_totle_money"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                     android:gravity="end"
-                    android:padding="@dimen/dp4"
-                    android:text="@string/title_total_items"
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp" />
+                        android:layout_marginTop="4dp"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/title_total_cost"
+                        android:textAlignment="viewEnd"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_margin="@dimen/dp8"
-                    android:id="@+id/tv_order_total_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_totle_money"
-                    android:layout_toEndOf="@+id/tv_total_count"
-                    android:layout_toRightOf="@+id/tv_total_count"
-                    android:gravity="end"
-                    android:padding="@dimen/dp4"
-                    android:text="@string/str_nnt_5"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_order_total_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/divider2"
+                        android:layout_toEndOf="@+id/tv_totle_money"
+                        android:layout_toRightOf="@+id/tv_totle_money"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/str_nnt_5"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_total_count"
+                        style="@style/TextAppearance.AppCompat.Headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_totle_money"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/title_total_items"
+                        android:textAlignment="viewEnd"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_order_total_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_totle_money"
+                        android:layout_toEndOf="@+id/tv_total_count"
+                        android:layout_toRightOf="@+id/tv_total_count"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/str_nnt_5"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" /> -->
+
+                </LinearLayout>
+
             </RelativeLayout>
 
 
@@ -202,7 +286,8 @@
                             android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:layout_gravity="start"
-                            android:src="@drawable/ic_account_address"/>
+                            android:src="@drawable/ic_account_address"
+                            android:contentDescription="@string/ContentDescription" />
 
                         <LinearLayout
 
@@ -242,7 +327,8 @@
                             android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
-                            android:src="@drawable/ic_arrow_right"/>
+                            android:src="@drawable/ic_arrow_right"
+                            android:contentDescription="@string/ContentDescription" />
 
                     </LinearLayout>
 
@@ -296,7 +382,8 @@
                              android:clickable="true"
                              android:focusable="true"
                              android:textSize="16sp"
-                             android:textColor="@color/colorPrimaryText"/>
+                             android:textColor="@color/colorPrimaryText"
+                             android:contentDescription="@string/ContentDescription" />
                      </RelativeLayout>
                  </android.support.v7.widget.CardView>
 

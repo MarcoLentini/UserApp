@@ -32,7 +32,7 @@ public class AddCommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comments_add_comments);
 
-        String title = getString(R.string.title_delivery_address);
+        String title = getString(R.string.title_activity_comments);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
@@ -102,10 +102,23 @@ public class AddCommentsActivity extends AppCompatActivity {
                                //TODO LAB 5
                                // after user maker comments for a order first should change the data in friebase is_commented to false
                                // also change locally
-                              historyOrderModel.setIs_commented(true);
-                              Log.e(TAG, "Going to Comments Activity");
-                              Intent intent = new Intent(AddCommentsActivity.this, CommentsActivity.class);
-                              startActivity(intent);
+
+                               FirebaseFirestore.getInstance()
+                                       .collection("reservations")
+                                       .document(historyOrderModel.getRs_id().toString())
+                                       .update("is_commented",true)
+                                       .addOnCompleteListener(task -> {
+
+                                   if(task.isSuccessful()){
+                                       Log.e(TAG, "Change is_commented of history to true");
+                                       historyOrderModel.setIs_commented(true);
+
+                                       Log.e(TAG, "Going to Comments Activity");
+                                       Intent intent = new Intent(AddCommentsActivity.this, CommentsActivity.class);
+                                       startActivity(intent);
+                                   }
+                               });
+
                            } else {
                              // Probably only on timeout, from test the request are stored offline
                              Toast.makeText(v.getContext(),"Internet problem, retry!", Toast.LENGTH_LONG).show();
