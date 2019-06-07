@@ -87,7 +87,7 @@ public class AddCommentsActivity extends AppCompatActivity {
                       ratingFoodQuality,
                       ratingDeliveryService,
                       myComments,
-                      new Date()
+                          new Date()
               );
 
         Log.d(TAG, "This is my comments "+commentsDataModel.toString());

@@ -15,13 +15,14 @@ public class HelpActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.helpToolbar);
         toolbar.setTitle(R.string.menu_help);
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     }
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(HelpActivity.this,MainActivity.class);
-        startActivity(intent);
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

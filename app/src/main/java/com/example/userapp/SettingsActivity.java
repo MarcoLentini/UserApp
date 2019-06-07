@@ -27,7 +27,9 @@ private FirebaseAuth auth;
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.menu_setting);
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
          //Get Firebase auth instance
          auth = FirebaseAuth.getInstance();
@@ -56,9 +58,8 @@ private FirebaseAuth auth;
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(SettingsActivity.this,MainActivity.class);
-        startActivity(intent);
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

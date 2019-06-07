@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HistoryOrderActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+         {
 
     private static final String TAG = "HistoryOrderActivity";
     private RecyclerView recyclerViewHistoryOrder;
@@ -54,6 +54,8 @@ public class HistoryOrderActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         String title=getString(R.string.menu_history_order);
         getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         progressBarCurrentOrder=findViewById(R.id.progress_bar_history_orders);
         viewEmpytHint = findViewById(R.id.viewHistoryOrdersEmptyHint);
@@ -76,15 +78,7 @@ public class HistoryOrderActivity extends AppCompatActivity
         userKey = sharedPref.getString("userKey","");
 
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        //data initialization
+          //data initialization
         historyOrders = new ArrayList<>();
         fillWithData();
 
@@ -108,68 +102,8 @@ public class HistoryOrderActivity extends AppCompatActivity
 
         }
     }
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if(id == android.R.id.home){
-            onBackPressed();
-            //getSupportFragmentManager().popBackStack();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home){
-            Intent intent = new Intent(HistoryOrderActivity.this, MainActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_setting){
-            Intent intent = new Intent(HistoryOrderActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_help){
-            Intent intent = new Intent(HistoryOrderActivity.this, HelpActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_orders){
-            Intent intent = new Intent(HistoryOrderActivity.this, OrdersActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_star){
-            Intent intent = new Intent(HistoryOrderActivity.this, FavoritesActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_logout){
-            signOut();
-        }else if (id == R.id.nav_comments){
-            Intent intent = new Intent(HistoryOrderActivity.this, CommentsActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_history_order){
-
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     //TODO LAB5 get history order data form firebase realtime
     // (an idea related to comments) when there is a history order send a notification for user to make comments
@@ -237,5 +171,11 @@ public class HistoryOrderActivity extends AppCompatActivity
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

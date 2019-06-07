@@ -41,7 +41,7 @@ import java.util.HashMap;
 import javax.annotation.Nullable;
 
 public class OrdersActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        {
 
     private static final String TAG = "OrderdActivity";
     private static  final  int  CURRENT_ORDER_DETAIL_INFO_CODE =1;
@@ -61,6 +61,8 @@ public class OrdersActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         String title=getString(R.string.menu_orders);
         getSupportActionBar().setTitle(title);
+         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         progressBarCurrentOrder=findViewById(R.id.progress_bar_current_orders);
         //Get Firebase auth instance
@@ -81,13 +83,6 @@ public class OrdersActivity extends AppCompatActivity
          }
          userKey = sharedPref.getString("userKey","");
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
 
          Log.d("Tag", "RecycleView initialization ");
 
@@ -111,61 +106,12 @@ public class OrdersActivity extends AppCompatActivity
         }
     }
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if(id == android.R.id.home){
-            onBackPressed();
-            //getSupportFragmentManager().popBackStack();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home){
-            Intent intent = new Intent(OrdersActivity.this, MainActivity.class);
-            startActivity(intent);
-         }
-        else if (id == R.id.nav_setting){
-            Intent intent = new Intent(OrdersActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_help){
-            Intent intent = new Intent(OrdersActivity.this, HelpActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_orders){
-
-        }else if (id == R.id.nav_star){
-            Intent intent = new Intent(OrdersActivity.this, FavoritesActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_logout){
-            signOut();
-        }else if (id == R.id.nav_comments){
-            Intent intent = new Intent(OrdersActivity.this, CommentsActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_history_order){
-            Intent intent = new Intent(OrdersActivity.this, HistoryOrderActivity.class);
-            startActivity(intent);
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     @Override
     protected void onResume() {
         super.onResume();

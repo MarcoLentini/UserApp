@@ -16,19 +16,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.userapp.Comments.CommentsDataModel;
 import com.example.userapp.Comments.CommentsListAdapter;
 import com.example.userapp.Information.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import com.example.userapp.Information.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class CommentsActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        {
 
     private FirebaseAuth auth;
     private final static String TAG = "CommentsActivity";
@@ -49,6 +58,7 @@ public class CommentsActivity extends AppCompatActivity
             finish();
         }
         //Get Firestore instance
+
         db = FirebaseFirestore.getInstance();
         SharedPreferences sharedPref = getSharedPreferences(userDataFile, Context.MODE_PRIVATE);
 
@@ -66,14 +76,9 @@ public class CommentsActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
 
         commentsData = new ArrayList<>();
         fillWithData();
@@ -87,71 +92,8 @@ public class CommentsActivity extends AppCompatActivity
 
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-         if(id == android.R.id.home){
-            onBackPressed();
-            //getSupportFragmentManager().popBackStack();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home){
-            Intent intent = new Intent(CommentsActivity.this, MainActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_setting){
-            Intent intent = new Intent(CommentsActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_help){
-            Intent intent = new Intent(CommentsActivity.this, HelpActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_orders){
-            Intent intent = new Intent(CommentsActivity.this, OrdersActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_star){
-            Intent intent = new Intent(CommentsActivity.this, FavoritesActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_logout){
-            signOut();
-        }else if (id == R.id.nav_comments){
-
-        }else if (id == R.id.nav_history_order){
-            Intent intent = new Intent(CommentsActivity.this, HistoryOrderActivity.class);
-            startActivity(intent);
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-
-    }
 
     private void fillWithData(){
          db.collection("comments")
@@ -202,4 +144,9 @@ public class CommentsActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
