@@ -21,15 +21,15 @@ public class CurrentOrderModel implements Comparable<CurrentOrderModel>, Seriali
 
     private Boolean is_current_order;
 
-    public long getConfirmation_code() {
+    public Long getConfirmation_code() {
         return confirmation_code;
     }
 
-    public void setConfirmation_code(long confirmation_code) {
+    public void setConfirmation_code(Long confirmation_code) {
         this.confirmation_code = confirmation_code;
     }
 
-    private long confirmation_code;
+    private Long confirmation_code;
     public CurrentOrderModel(Long confirmation_code,Boolean is_current_order,String cust_id, String rs_status, Long rs_id, Timestamp timestamp, String rest_name, ArrayList<CurrentOrderItemModel> dishes, Double total_cost,  Timestamp delivery_time, String cust_address) {
        this.confirmation_code = confirmation_code;
         this.is_current_order = is_current_order;

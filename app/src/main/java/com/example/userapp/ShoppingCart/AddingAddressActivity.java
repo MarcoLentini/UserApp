@@ -79,7 +79,12 @@ private FirebaseFirestore db;
         etDeliveryNumber=findViewById(R.id.edit_text_input_number);
         etDeliveryNotes= findViewById(R.id.edit_text_input_delivery_notes);
         tvPastAddr=findViewById(R.id.past_addr);
-
+        tvPastAddr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                usePastAddr();
+            }
+        });
         etDeliveryTown.setText(address.getTown());
         etDeliveryTown.setFocusable(true);
         etDeliveryTown.selectAll();
@@ -114,12 +119,7 @@ private FirebaseFirestore db;
                                 availableAddress.put(tmpAddr.toString(), tmpAddr);
 
                             }
-                            tvPastAddr.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                usePastAddr();
-                                }
-                            });
+
 /*
 
                             spinnerAdapter=new ArrayAdapter<String>(this, R.layout.address_spinner_row);
@@ -178,23 +178,27 @@ private FirebaseFirestore db;
     }
 
     private void usePastAddr(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select one address");
-        String[] pastAddress= availableAddress.keySet().toArray(new String[availableAddress.keySet().size()]);
-        builder.setMultiChoiceItems(pastAddress, null, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if(isChecked) {
-                    new_address=availableAddress.get(pastAddress[which]);
-                    fillEditText(new_address.toString());
-                    dialog.cancel();
+        if(availableAddress.isEmpty()){
+            tvPastAddr.setError(getString(R.string.no_past_addr));
+        }else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Select one address");
+            String[] pastAddress = availableAddress.keySet().toArray(new String[availableAddress.keySet().size()]);
+            builder.setMultiChoiceItems(pastAddress, null, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                    if (isChecked) {
+                        new_address = availableAddress.get(pastAddress[which]);
+                        fillEditText(new_address.toString());
+                        dialog.cancel();
+                    }
                 }
-            }
-        });
-        builder.setPositiveButton("Cancel", null);
+            });
+            builder.setPositiveButton("Cancel", null);
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     private class GeocoderHandler extends Handler {

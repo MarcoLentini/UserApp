@@ -120,8 +120,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 String  totalCount = textViewtotalCount.getText().toString();
                 int orderItemsCount = Integer.parseInt(totalCount);
                 String totalMoney = textViewTotalMoney.getText().toString();
-                Double orderTotalCost = Double.parseDouble(totalMoney.replace("€", " "));
+                Double orderTotalCost = Double.parseDouble(totalMoney.replace("€", " ").replace(",", "."));
                 String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
+                String orderDeliveryNotes=  tvDeliveryNotes.getText().toString();
                 String orderNotes = tvNotes.getText().toString().replace(getString(R.string.str_please_leave_your_notes_here_if_needed),"");
 
                 ReservationModel reservationModel = new ReservationModel(
@@ -130,9 +131,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         orderNotes, //notes,
                         orderItems,
                         orderTotalCost,
-                        rm.getId(), rm.getName(), rm.getAddress());
+                        rm.getId(), rm.getName(), rm.getAddress(),orderDeliveryNotes);
 
                 reservationModel.setCust_address(orderDeliveryAddress);
+
 
                 db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(task->{
                    if(task.isSuccessful()){
@@ -147,9 +149,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                    //TODO : Task finished successful them go the the current order page show the order information
                                    Toast.makeText(this,getString(R.string.order_sent), Toast.LENGTH_LONG).show();
 
-                                   Intent intent = new Intent(ShoppingCartActivity.this, OrdersActivity.class);
+                                   Intent intent = new Intent(ShoppingCartActivity.this, RestaurantMenuActivity.class);
 
-                                   startActivity(intent);
+                                   setResult(2,intent);
                                } else {
                                    // Probably only on timeout, from test the request are stored offline
                                    Toast.makeText(this,getString(R.string.internet_down), Toast.LENGTH_LONG).show();
@@ -169,7 +171,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         String  totalCount = textViewtotalCount.getText().toString();
         int orderItemsCount = Integer.parseInt(totalCount);
         String totalMoney = textViewTotalMoney.getText().toString();
-        Double orderCost = Double.parseDouble(totalMoney.replace('€',' '));
+        Double orderCost = Double.parseDouble(totalMoney.replace('€',' ').replace(',','.'));
         String orderRestaurantName = tvRestaurantName.getText().toString();
         String orderDeliveryAddress = tvDeliveryAddress.getText().toString();
         String orderNotes = tvNotes.getText().toString();
@@ -265,7 +267,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         }
         DecimalFormat format = new DecimalFormat("0.00");
         String formattedPrice = format.format(totalMoney);
-        textViewTotalMoney.setText("€ " +formattedPrice);
+        textViewTotalMoney.setText("€" +formattedPrice);
         totalMoney = 0.00;
 
 

@@ -1,5 +1,7 @@
 package com.example.userapp.Comments;
 
+import java.sql.Timestamp;
+
 public class MyCommentsModel {
     private String commentsID;
     private String rest_name;
@@ -7,14 +9,16 @@ public class MyCommentsModel {
     private Float ratingDeliveryService;
     private Float ratingFoodQuality;
     private String comments;
+    private Timestamp date;
 
-    public MyCommentsModel(String commentsID,String rest_name, String cust_name, Float ratingDeliveryService, Float ratingFoodQuality, String comments) {
+    public MyCommentsModel(String commentsID,String rest_name, String cust_name, Float ratingDeliveryService, Float ratingFoodQuality, String comments,Timestamp date) {
         this.commentsID = commentsID;
         this.rest_name = rest_name;
         this.cust_name = cust_name;
         this.ratingDeliveryService = ratingDeliveryService;
         this.ratingFoodQuality = ratingFoodQuality;
         this.comments = comments;
+        this.date=date;
     }
 
     public String getCommentsID() {
@@ -63,5 +67,13 @@ public class MyCommentsModel {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 }

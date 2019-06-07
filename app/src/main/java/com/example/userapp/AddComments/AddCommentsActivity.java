@@ -18,6 +18,10 @@ import com.example.userapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddCommentsActivity extends AppCompatActivity {
     private FirebaseFirestore db ;
     private final static String TAG = "AddCommentsActivity";
@@ -78,7 +82,7 @@ public class AddCommentsActivity extends AppCompatActivity {
                 Float ratingDeliveryService = ratingBarDeliveryService.getRating();
                 String myComments = textViewMsg.getText().toString();
 
-              CommentsDataModel commentsDataModel = new CommentsDataModel(
+                  CommentsDataModel commentsDataModel = new CommentsDataModel(
                       historyOrderModel.getCust_name(),
                       "0",//initialized with 0
                       historyOrderModel.getRs_id(),
@@ -88,7 +92,8 @@ public class AddCommentsActivity extends AppCompatActivity {
                       historyOrderModel.getCust_id(),
                       ratingFoodQuality,
                       ratingDeliveryService,
-                      myComments
+                      myComments,
+                      new Date()
               );
 
             Log.d(TAG, "This is my comments "+commentsDataModel.toString());

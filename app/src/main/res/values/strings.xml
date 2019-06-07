@@ -225,5 +225,6 @@
     <string name="title_leave_comments_for_order">LEAVE COMMENTS</string>
     <string name="title_btn_delete">DELETE</string>
     <string name="profile_created">Your profile is created!</string>
+    <string name="no_past_addr">No past address available</string>
 
 </resources>

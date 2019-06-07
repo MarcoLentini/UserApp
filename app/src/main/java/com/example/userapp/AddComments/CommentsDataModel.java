@@ -1,5 +1,10 @@
 package com.example.userapp.AddComments;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CommentsDataModel {
     private String custName;
     private String commentsId;
@@ -11,10 +16,11 @@ public class CommentsDataModel {
     private Float voteForBiker;
     private String notes;
     private String restName;
+    private Date date;
 
 
     public CommentsDataModel(String custName,String commentsId,Long reservationId, String restId, String restName,
-                             String bikerId, String userId, Float voteForRestaurant, Float voteForBiker, String notes) {
+                             String bikerId, String userId, Float voteForRestaurant, Float voteForBiker, String notes,Date date) {
         this.custName = custName;
         this.commentsId = commentsId;
         this.reservationId = reservationId;
@@ -25,6 +31,7 @@ public class CommentsDataModel {
         this.voteForRestaurant = voteForRestaurant;
         this.voteForBiker = voteForBiker;
         this.notes = notes;
+        this.date=date;
     }
 
     public String getCustName() {
@@ -106,9 +113,18 @@ public class CommentsDataModel {
         this.notes = notes;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
-        return "CommentsDataModel{" +
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+          return "CommentsDataModel{" +
                 "commentsId='" + commentsId + '\'' +
                 ", reservationId=" + reservationId +
                 ", restId='" + restId + '\'' +
@@ -118,6 +134,7 @@ public class CommentsDataModel {
                 ", voteForBiker=" + voteForBiker +
                 ", notes='" + notes + '\'' +
                 ", restName='" + restName + '\'' +
+                ", date='"+dateFormat.format(date)+'\''+
                 '}';
     }
 }

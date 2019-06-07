@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.FavoritesActivity;
 import com.example.userapp.MainActivity;
+import com.example.userapp.OrdersActivity;
 import com.example.userapp.R;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.ShoppingCart.OrderItemModel;
@@ -306,6 +307,9 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
             }
             //update the
             update(true);
+        }else if(resultCode==2&& requestCode == SHOP_CART_ACTIVITY ){
+            startActivity(new Intent(RestaurantMenuActivity.this, OrdersActivity.class));
+            finish();
         }
 
 

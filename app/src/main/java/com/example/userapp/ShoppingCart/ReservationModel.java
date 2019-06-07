@@ -15,6 +15,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
     private String cust_name;
     private String cust_phone;
     private String cust_address;
+    private String delivery_notes;
 
     private Timestamp timestamp;
     private Timestamp delivery_time;
@@ -29,7 +30,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
 
 
-    public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address) {
+    public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address,String delivery_notes) {
         this.is_commented = false;
         this.is_current_order = true;
         this.rs_id = Long.parseLong("55");
@@ -45,6 +46,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
         this.rest_id = rest_id;
         this.rest_address = rest_address;
         this.rest_name = rest_name;
+        this.delivery_notes=delivery_notes;
 
     }
 
@@ -180,5 +182,13 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     public void setIs_current_order(Boolean is_current_order) {
         this.is_current_order = is_current_order;
+    }
+
+    public String getDelivery_notes() {
+        return delivery_notes;
+    }
+
+    public void setDelivery_notes(String delivery_notes) {
+        this.delivery_notes = delivery_notes;
     }
 }
