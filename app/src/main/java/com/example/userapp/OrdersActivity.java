@@ -233,11 +233,13 @@ public class OrdersActivity extends AppCompatActivity
                     }
                 }
 
-
                 if (dc.getType() == DocumentChange.Type.MODIFIED) {
                     String docId = dc.getDocument().getId();
                 }
+
             }
+            progressBarCurrentOrder.setVisibility(View.GONE);
+
         });
 
 

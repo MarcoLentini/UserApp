@@ -15,9 +15,9 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolBarRestaurantDetails"
             android:layout_width="match_parent"
-            android:layout_height="156dp"
+            android:layout_height="200dp"
             app:title="@string/str_tvRestaurantName"
-            app:expandedTitleMarginBottom="94dp"
+            app:expandedTitleMarginBottom="90dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:expandedTitleTextAppearance="@style/CollapsingTextAppearance.Inverse"
             app:contentScrim="?colorPrimary"
@@ -32,15 +32,14 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_profile_2"
                  app:layout_collapseMode="parallax" />
-            
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbarRestaurantDetails"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@null"
-                app:layout_collapseMode="pin"
                 style="@style/ToolBarWithNavigationBack"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:background="@null"
+                app:layout_collapseMode="pin" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
