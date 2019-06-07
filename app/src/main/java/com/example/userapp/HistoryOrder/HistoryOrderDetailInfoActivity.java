@@ -115,9 +115,6 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
 
 
         Button btnLeaveComments = findViewById(R.id.btnCommentForThisOrder);
-        //TODO check whether this history order is already leaved a comment or not
-        // if not then this button is visible
-        // else this button is invisible
 
         if (!rm.getIs_commented()){ //this order is not left a comment
             btnLeaveComments.setVisibility(View.VISIBLE);
@@ -130,9 +127,9 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "btnLeaveComments is clicked,AddCommentsActivity is called.");
                 Intent intent = new Intent(HistoryOrderDetailInfoActivity.this, com.example.userapp.Comments.AddCommentsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("HistoryOrder", rm);
-                intent.putExtras(bundle);
+                Bundle bn = new Bundle();
+                bn.putInt("historyOrderData", itemPosition);
+                intent.putExtras(bn);
                 startActivity(intent);
             }
         });

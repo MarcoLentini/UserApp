@@ -98,13 +98,9 @@ public class AddCommentsActivity extends AppCompatActivity {
                         .addOnCompleteListener(task1 -> {
                            if(task1.isSuccessful()){
                               Log.e(TAG, "Comments send to firebase successfully");
-                               //TODO LAB 5
-                               // after user maker comments for a order first should change the data in friebase is_commented to false
-                               // also change locally
 
-                               FirebaseFirestore.getInstance()
-                                       .collection("reservations")
-                                       .document(historyOrderModel.getRs_id().toString())
+                                       db.collection("reservations")
+                                       .document(historyOrderModel.getOrderID())
                                        .update("is_commented",true)
                                        .addOnCompleteListener(task -> {
 
