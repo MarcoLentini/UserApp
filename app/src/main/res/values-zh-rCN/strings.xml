@@ -147,7 +147,7 @@
     <string name="str_nnt_product_name">商品名称</string>
     <string name="str_nnt_price">价格</string>
     <string name="str_nnt_5">5</string>
-    <string name="str_nnt_please_addding_your_delivery_address_here">Please addding your delivery address here *</string>
+    <string name="str_nnt_please_addding_your_delivery_address_here">请输入您的派送地址</string>
     <string name="str_total_pay">￥0.00</string>
     <string name="button_save">保存</string>
     <string name="action_filter">筛选</string>
@@ -177,12 +177,12 @@
     <string name="title_comments_food_quality">食品质量</string>
     <string name="title_comments_delivery_service">配送服务</string>
     <string name="title_comment_submit_comment">提交评论</string>
-    <string name="confirmation_code">验证码:(该验证码需要提供给骑手来完成pai\'song)</string>
+    <string name="confirmation_code">验证码:(该验证码需要提供给骑手来完成派送)</string>
     <string name="label_empty_data">还没有数据</string>
     <string name="btn_reload">重新加载</string>
     <string name="menu_history_order">历史订单</string>
     <string name="address_not_correct">地址不识别</string>
-    <string name="str_nnt_please_addding_your_delivery_notes_here">Please addding your delivery notes here</string>
+    <string name="str_nnt_please_addding_your_delivery_notes_here">请输入您的备注</string>
     <string name="title_activity_history_order">历史订单</string>
     <string name="title_delivery_city">城市</string>
     <string name="title_delivery_notes">详细信息</string>
