@@ -186,8 +186,8 @@
     <string name="title_activity_comments">Comments</string>
     <string name="sign_up">Sign Up</string>
     <string name="title_leave_your_comments">Please leave your comments here</string>
-    <string name="title_comments_food_quality">Food Quality</string>
-    <string name="title_comments_delivery_service">Delivery Service</string>
+    <string name="title_comments_food_quality">Quality</string>
+    <string name="title_comments_delivery_service">Service</string>
     <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
     <string name="confirmation_code">Your Confirmation code:\n(This code should be showed to the Biker when you are asked for the code .)</string>
     <string name="title_delivery_city">Town</string>

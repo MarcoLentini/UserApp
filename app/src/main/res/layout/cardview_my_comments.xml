@@ -30,117 +30,119 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/colorDivider"/>
-    <TextView
-        android:id="@+id/myCommentsCustID"
-        android:layout_marginStart="@dimen/dp8"
-        android:layout_marginLeft="@dimen/dp8"
-        android:layout_marginEnd="@dimen/dp8"
-        android:layout_marginRight="@dimen/dp8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="@string/account_title"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryText"
-        android:padding="@dimen/dp4"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp8"
-        android:layout_marginLeft="@dimen/dp8"
-        android:layout_marginEnd="@dimen/dp8"
-        android:layout_marginRight="@dimen/dp8"
-        android:padding="@dimen/dp4"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-             android:text="@string/title_comments_food_quality"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="12sp" />
-
-        <RatingBar
-            android:id="@+id/showRatingDeliveryService"
-            style="?android:attr/ratingBarStyleSmall"
-            android:theme="@style/RatingBar_CustomColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="5"
-            android:numStars="5"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"/>
-    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp4"
-        android:layout_marginStart="@dimen/dp8"
-        android:layout_marginLeft="@dimen/dp8"
-        android:layout_marginEnd="@dimen/dp8"
-        android:layout_marginRight="@dimen/dp8"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/title_comments_delivery_service"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="12sp"/>
-
-        <RatingBar
-            android:id="@+id/showRatingFoodQuality"
-            style="?android:attr/ratingBarStyleSmall"
-            android:theme="@style/RatingBar_CustomColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="5"
-            android:numStars="5"
             android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"/>
-     </LinearLayout>
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginBottom="@dimen/dp8"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+              android:padding="@dimen/dp4"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/title_comments_food_quality"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="12sp" />
+
+            <RatingBar
+                android:id="@+id/showRatingDeliveryService"
+                style="?android:attr/ratingBarStyleSmall"
+                android:theme="@style/RatingBar_CustomColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:max="5"
+                android:numStars="5"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp4"
+              android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/title_comments_delivery_service"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="12sp"/>
+
+            <RatingBar
+                android:id="@+id/showRatingFoodQuality"
+                style="?android:attr/ratingBarStyleSmall"
+                android:theme="@style/RatingBar_CustomColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:max="5"
+                android:numStars="5"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/date_of_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/input_register"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:padding="4dp"
+
+            />
+        </LinearLayout>
+
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3">
+
     <TextView
         android:id="@+id/myCommentsCustNotes"
-        android:layout_marginStart="@dimen/dp8"
-        android:layout_marginLeft="@dimen/dp8"
-        android:layout_marginEnd="@dimen/dp8"
-        android:layout_marginRight="@dimen/dp8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:text="@string/str_nnt_please_addding_your_delivery_notes_here"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryText"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:padding="@dimen/dp4"
-        android:layout_marginBottom="@dimen/dp8"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorDivider"
-        android:visibility="gone"/>
-    <TextView
-        android:id="@+id/btnDeleteComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp8"
-        android:drawableStart="@drawable/ic_delete"
-        android:drawableLeft="@drawable/ic_delete"
-        android:drawablePadding="@dimen/dp6"
-        android:gravity="center"
-        android:layout_gravity="end"
-        android:textAlignment="center"
-        android:text="@string/title_btn_delete"
-        android:textStyle="bold"
+        android:text="@string/send_password_reset_email"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="16sp"
-        android:visibility="gone"/>
+        android:textSize="14sp"
+        android:maxLines="10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorDivider"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </LinearLayout>
 
 

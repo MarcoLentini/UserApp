@@ -13,7 +13,10 @@ import android.widget.TextView;
 import com.example.userapp.Comments.CommentsDataModel;
 import com.example.userapp.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -41,7 +44,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         CommentsViewHolder commentsViewHolder = (CommentsViewHolder)viewHolder;
 
         TextView textViewCommentsRestaurantName = commentsViewHolder.textViewCommentsRestaruantName;
-        TextView textViewCommentsCustID = commentsViewHolder.textViewCommentsCustID;
+        TextView textViewCommentsDate = commentsViewHolder.textViewCommentsDate;
         RatingBar showRatingDeliveryService = commentsViewHolder.showRatingDeliveryService;
         RatingBar showRatingFoodQuantity = commentsViewHolder.showRatingFoodQuantity;
         TextView textViewCommentsCustNotes = commentsViewHolder.textViewCommentsCustNotes;
@@ -49,7 +52,10 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         CommentsDataModel myComments = commentsData.get(position);
         Log.d(TAG, commentsData.get(position).getRestName());
-        textViewCommentsCustID.setText(myComments.getCustName());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date=myComments.getDate();
+        textViewCommentsDate.setText( dateFormat.format(date));
+
 
         textViewCommentsRestaurantName.setText(""+myComments.getRestName());
         //textViewCommentsCustID.setText(myComments.getUserId());
@@ -69,7 +75,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private class CommentsViewHolder extends RecyclerView.ViewHolder {
         TextView textViewCommentsRestaruantName;
-        TextView textViewCommentsCustID;
+        TextView textViewCommentsDate;
         RatingBar showRatingDeliveryService;
         RatingBar showRatingFoodQuantity;
         TextView textViewCommentsCustNotes;
@@ -78,7 +84,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public CommentsViewHolder(View view) {
             super(view);
             this.textViewCommentsRestaruantName = view.findViewById(R.id.myCommentsRestaurantName);
-            this.textViewCommentsCustID =  view.findViewById(R.id.myCommentsCustID);
+            this.textViewCommentsDate =  view.findViewById(R.id.date_of_comment);
             this.showRatingDeliveryService =  view.findViewById(R.id.showRatingDeliveryService);
             this.showRatingFoodQuantity =  view.findViewById(R.id.showRatingFoodQuality);
             this.textViewCommentsCustNotes =  view.findViewById(R.id.myCommentsCustNotes);
