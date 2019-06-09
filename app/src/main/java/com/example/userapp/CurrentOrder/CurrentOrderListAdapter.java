@@ -71,7 +71,7 @@ public class CurrentOrderListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         textViewRestName.setText(""+currentOrder.getRest_name());
         textViewOrderStatus.setText(""+currentOrder.getRs_status());
-        textViewTotalCost.setText(""+currentOrder.getTotal_income());
+        textViewTotalCost.setText(String.format("%.2f",currentOrder.getTotal_income())+" €");
         textViewConfirmationCode.setText(""+currentOrder.getConfirmation_code());
         String reservationOffer = "";
         int count = 0;

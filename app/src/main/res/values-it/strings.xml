@@ -31,7 +31,7 @@
     <string name="select_photo">Seleziona una foto</string>
     <string name="perm_needed">Permesso Necessario</string>
     <string name="ok_string">Ok</string>
-    <string name="cancel_string">ANNULLA</string>
+    <string name="cancel_string">Annulla</string>
     <string name="perm_why_2">Questo permesso è necessario per scattare una foto</string>
     <string name="perm_why_1">Questo permesso è necessario per prendere una foto dalla Galleria</string>
     <string name="perm_denied">Permesso Negato</string>
@@ -40,8 +40,8 @@
 
     <!-- Menu title-->
     <string name="action_search">Cerca</string>
-    <string name="action_settings">Informazioni</string>
-    <string name="action_setting">Impostazioni</string>
+
+    <string name="action_setting">Informazioni</string>
     <!-- Navigation title -->
     <string name="home_title">Home</string>
     <string name="order_title">Ordine</string>
@@ -57,7 +57,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_login">Login</string>
-    <string name="menu_setting">Impostazioni</string>
+    <string name="menu_setting">Informazioni</string>
     <string name="menu_help">Aiuto</string>
 
     <!-- activity_signup-->

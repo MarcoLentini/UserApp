@@ -18,8 +18,12 @@ import android.widget.Toast;
 import com.example.userapp.MainActivity;
 import com.example.userapp.OrdersActivity;
 import com.example.userapp.R;
+import com.google.firebase.Timestamp;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
@@ -48,12 +52,18 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
             textViewRestName.setText(rm.getRest_name());
 
             TextView textViewTotalCost = findViewById(R.id.tvCurrentOrderTotalCostDetailInfo);
-            textViewTotalCost.setText(String.valueOf(rm.getTotal_income()));
+             DecimalFormat format = new DecimalFormat("0.00");
+             String formattedPrice = format.format(rm.getTotal_income());
+             textViewTotalCost.setText(formattedPrice+" €");
+
 
             TextView textViewAddress = findViewById(R.id.tvCurrentOrderDeliveryAddress);
             textViewAddress.setText(rm.getCust_address());
             TextView textViewTime = findViewById(R.id.tvCurrentOrderDeliveryTime);
-            textViewTime.setText(String.valueOf(rm.getDelivery_time()));
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+            Date date=rm.getDelivery_time().toDate();
+            textViewTime.setText( dateFormat.format(date));
+
 
 
             TextView textViewConfirmationCode = findViewById(R.id.tvConfirmationCodeDetail);
@@ -66,9 +76,9 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
                 LinearLayout ll = new LinearLayout(this);
                 // 16dp
                 float scale = getResources().getDisplayMetrics().density;
-                int _16dp = (int) (16 * scale + 0.5f);
+                int _4dp = (int) (4 * scale + 0.5f);
 
-                ll.setPadding(_16dp, 0, _16dp, 0);
+                ll.setPadding(_4dp, 0, _4dp, 0);
                 ll.setOrientation(LinearLayout.HORIZONTAL);
 
                 LinearLayout.LayoutParams params_ll = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -120,10 +130,9 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
             }
 
             TextView textViewCurrentOrderCreateTime = findViewById(R.id.tvCurrentOrderCreateTime);
-            SimpleDateFormat sdf = new SimpleDateFormat();
-            sdf.format(rm.getTimestamp().toDate());
-            sdf.applyPattern("dd MM YYYY - HH:mm");
-            textViewCurrentOrderCreateTime.setText(sdf.toString());
+            date=rm.getTimestamp().toDate();
+            textViewCurrentOrderCreateTime.setText( dateFormat.format(date));
+
 
     }
 

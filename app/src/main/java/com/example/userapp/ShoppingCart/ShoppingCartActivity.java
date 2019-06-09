@@ -164,6 +164,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                    Intent intent = new Intent(ShoppingCartActivity.this, RestaurantMenuActivity.class);
 
                                    setResult(2,intent);
+                                   finish();
                                } else {
                                    // Probably only on timeout, from test the request are stored offline
                                    Toast.makeText(this,getString(R.string.internet_down), Toast.LENGTH_LONG).show();
@@ -172,7 +173,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                        }
                    }
                 });
-                finish();
+
             }
         });
 

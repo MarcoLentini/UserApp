@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp16"
         android:orientation="vertical"
-         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+       >
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,22 +85,19 @@
                 android:maxLines="10"
                 android:nextFocusDown="@+id/btnSubmitComments" />
         </android.support.design.widget.TextInputLayout>
-
+        <Button
+            android:id="@+id/btnSubmitComments"
+            android:layout_margin="@dimen/dp8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_comment_submit_comment"
+            android:padding="@dimen/dp16"
+            android:textSize="16sp"
+            android:textColor="@color/colorSecondaryText"
+            style="@style/Button"/>
     </LinearLayout>
 
 
 
-    <Button
-        android:id="@+id/btnSubmitComments"
-        android:layout_margin="@dimen/dp8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_comment_submit_comment"
-        android:padding="@dimen/dp16"
-        android:textSize="16sp"
-        android:textColor="@color/colorSecondaryText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/Button"/>
-</android.support.constraint.ConstraintLayout>
+
+</ScrollView>

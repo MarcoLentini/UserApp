@@ -82,6 +82,7 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
                         selectedFilters.add(((CheckBox) v).getText().toString());
                 }
             }
+
             Intent retIntent = new Intent(getApplicationContext(), MainActivity.class);
             Bundle bn = new Bundle();
             bn.putStringArrayList("selectedFilters", selectedFilters);

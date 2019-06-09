@@ -19,6 +19,10 @@ import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.HistoryOrderActivity;
 import com.example.userapp.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
 
     private static final String TAG = "HistoryOrderDetailInfo";
@@ -43,12 +47,14 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
         textViewRestaurantName.setText(rm.getRest_name());
 
         TextView textViewTotalCost = findViewById(R.id.tv_history_order_total_cost);
-        textViewTotalCost.setText(String.valueOf(rm.getTotal_income()));
+        textViewTotalCost.setText(String.format("%.2f", rm.getTotal_income())+" €");
 
         TextView textViewAddress = findViewById(R.id.tvHistoryOrderDeliveryAddress);
         textViewAddress.setText(rm.getCust_address());
         TextView textViewTime = findViewById(R.id.tvHistoryOrderDeliveryTime);
-        textViewTime.setText(String.valueOf(rm.getDelivery_time()));
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        Date date=rm.getDelivery_time().toDate();
+        textViewTime.setText( dateFormat.format(date));
 
 
 
@@ -104,6 +110,10 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
             tv2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             LinearLayout.LayoutParams params_price = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
             params_price.gravity = Gravity.END;
+
+            TextView textViewCurrentOrderCreateTime = findViewById(R.id.tvHistoryOrderCreateTime);
+            date=rm.getTimestamp().toDate();
+            textViewCurrentOrderCreateTime.setText( dateFormat.format(date));
 
             tv2.setLayoutParams(params_price);
 

@@ -109,8 +109,7 @@ public class AddCommentsActivity extends AppCompatActivity {
                                        historyOrderModel.setIs_commented(true);
 
                                        Log.e(TAG, "Going to Comments Activity");
-                                       Intent intent = new Intent(AddCommentsActivity.this, CommentsActivity.class);
-                                       startActivity(intent);
+                                       finish();
                                    }
                                });
 

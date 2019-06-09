@@ -42,7 +42,7 @@
     <string name="select_photo">Select photo</string>
     <string name="take_a_picture">Take a picture</string>
     <string name="pick_from_gallery">Pick from gallery</string>
-    <string name="cancel_string">CANCEL</string>
+    <string name="cancel_string">Cancel</string>
     <string name="image_disappear">The selected image is no longer available</string>
 
     <!-- Permission -->
@@ -54,8 +54,7 @@
 
     <!-- Menu title-->
     <string name="action_search">Search</string>
-    <string name="action_settings">Information</string>
-    <string name="action_setting">setting</string>
+    <string name="action_setting">Information</string>
     <!-- Navigation title -->
     <string name="home_title">Home</string>
     <string name="order_title">Order</string>
@@ -190,7 +189,7 @@
     <string name="title_comments_food_quality">Food Quality</string>
     <string name="title_comments_delivery_service">Delivery Service</string>
     <string name="title_comment_submit_comment">SUBMIT COMMENT</string>
-    <string name="confirmation_code">Your Confirmation code:(This code should be showed to the Biker when you are asked for the code .)</string>
+    <string name="confirmation_code">Your Confirmation code:\n(This code should be showed to the Biker when you are asked for the code .)</string>
     <string name="title_delivery_city">Town</string>
     <string name="title_delivery_route">Street/Square</string>
     <string name="title_delivery_number">n°</string>
@@ -226,5 +225,10 @@
     <string name="title_btn_delete">DELETE</string>
     <string name="profile_created">Your profile is created!</string>
     <string name="no_past_addr">No past address available</string>
+    <string name="status">Status:</string>
+    <string name="leave_comment_title">Leave a comment!</string>
+    <string name="leave_comment">One order is completed. Leave a comment about it.</string>
+    <string name="later_btn">LATER</string>
+    <string name="confirmation_code_short">Confirmation code:  </string>
 
 </resources>

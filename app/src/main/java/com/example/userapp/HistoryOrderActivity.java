@@ -140,10 +140,10 @@ public class HistoryOrderActivity extends AppCompatActivity
 
                                     doc.getString("cust_id"),
                                     doc.getString("cust_name"),
-                                    doc.getString("cust_name"),
+                                    doc.getString("cust_address"),
                                     doc.getBoolean("is_commented"),
                                     doc.getString("rest_id"),
-                                    doc.getString("rest_address"),
+                                    doc.getString("rest_name"),
 
                                     doc.getString("biker_id"),
                                     doc.getTimestamp("delivery_time")

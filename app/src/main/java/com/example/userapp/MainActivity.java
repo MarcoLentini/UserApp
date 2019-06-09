@@ -268,12 +268,15 @@ private NavigationView navigationView;
                 receivedFilters = data.getStringArrayListExtra("selectedFilters");
                 if(receivedFilters != null) {
                     if(receivedFilters.isEmpty()) {
+
                         ((RestaurantsListAdapter) restaurantsAdapter).removeFilters();
                         tvRestaurantsFiltersValue.setText("0");
                         int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
                         tvRestaurantsCountValue.setText(String.valueOf(count));
                     }
                     else {
+
+
                         ((RestaurantsListAdapter) restaurantsAdapter).setFilters(receivedFilters);
                         int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
                         tvRestaurantsCountValue.setText(String.valueOf(count));
@@ -311,7 +314,7 @@ private NavigationView navigationView;
 
                             doc.getString("cust_id"),
                             doc.getString("cust_name"),
-                            doc.getString("cust_name"),
+                            doc.getString("cust_address"),
                             doc.getBoolean("is_commented"),
 
                             doc.getString("rest_id"),
@@ -322,10 +325,51 @@ private NavigationView navigationView;
                     );
                     currentOrders.add(tmpReservationModel);
                 } else if(dc.getType() == DocumentChange.Type.REMOVED){
+                    QueryDocumentSnapshot doc = dc.getDocument();
+                    ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
+                    for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) doc.get("dishes")) {
+                        tmpArrayList.add(new CurrentOrderItemModel(
+                                (String) dish.get("dish_name"),
+                                (Double) dish.get("dish_price"),
+                                (Long) dish.get("dish_qty")));
+                    }
+                    CurrentOrderModel tmpReservationModel = new CurrentOrderModel(
+                            doc.getId(),
+                            doc.getLong("rs_id"),
+                            doc.getString("rs_status"),
+                            doc.getTimestamp("timestamp"),
+                            tmpArrayList,
+                            doc.getBoolean("is_current_order"),
+                            doc.getLong("confirmation_code"),
+                            doc.getDouble("total_income"),
+                            doc.getString("notes"),
+
+                            doc.getString("cust_id"),
+                            doc.getString("cust_name"),
+                            doc.getString("cust_address"),
+                            doc.getBoolean("is_commented"),
+
+                            doc.getString("rest_id"),
+                            doc.getString("rest_name"),
+
+                            doc.getString("biker_id"),
+                            doc.getTimestamp("delivery_time")
+                    );
+                    currentOrders.remove(tmpReservationModel);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("SALVATEMI!");
-                    builder.setMessage("AIUTOOOOOO! Mi hanno intrappolato qui dentro!!!");
-                    builder.show();
+                    builder.setTitle(R.string.leave_comment_title);
+                    builder.setMessage(R.string.leave_comment);
+                    builder.setPositiveButton(getString(R.string.ok_button),(dialog, which) -> {
+                        Intent intent = new Intent(MainActivity.this, HistoryOrderActivity.class);
+                        startActivity(intent);
+                    })
+                            .setNegativeButton(getString(R.string.later_btn), (dialog, which) -> {
+                                signOut();
+                                dialog.dismiss();
+                            })
+                            .create().show();
+
+
                 }
             }
         });

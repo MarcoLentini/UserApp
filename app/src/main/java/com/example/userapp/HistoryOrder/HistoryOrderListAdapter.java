@@ -15,7 +15,10 @@ import android.widget.TextView;
 import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "HistoryOrderListAdapter";
@@ -50,7 +53,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int pos) {
         HistoryOrderViewHolder historyOrderViewHolder = (HistoryOrderViewHolder)viewHolder;
         TextView textViewRestName = historyOrderViewHolder.textViewRestName;
-        TextView textViewOrderStatus = historyOrderViewHolder.textViewOrderStatus;
+        TextView textViewOrderTime = historyOrderViewHolder.textViewOrderStatus;
         TextView textViewTotalCost =historyOrderViewHolder.textViewTotalCost;
         TextView textViewTotalItems = historyOrderViewHolder.textViewTotalItems;
         TextView textViewHistoryOrderInfo = historyOrderViewHolder.textViewHistoryOrderInfo;
@@ -58,8 +61,11 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
 
         CurrentOrderModel historyOrder = historyOrders.get(pos);
         textViewRestName.setText(historyOrder.getRest_name());
-        textViewOrderStatus.setText(historyOrder.getRs_status());
-        textViewTotalCost.setText(""+historyOrder.getTotal_income());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date=historyOrder.getDelivery_time().toDate();
+        textViewOrderTime.setText( dateFormat.format(date));
+
+        textViewTotalCost.setText(String.format("%.2f", historyOrder.getTotal_income())+" €");
          String reservationOffer = "";
         int count = 0;
         for (int i = 0; i < historyOrder.getDishes().size(); i++) {
@@ -84,7 +90,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
                 Bundle bn = new Bundle();
                 bn.putInt("historyOrderData", pos);
                 intent.putExtras(bn);
-                context.startActivity(intent);;
+                context.startActivity(intent);
             }
         });
     }
@@ -106,7 +112,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
         public HistoryOrderViewHolder(View itemView) {
             super(itemView);
             this.textViewRestName = itemView.findViewById(R.id.tvRestaurantNameHistoryOrderFinished);
-            this.textViewOrderStatus = itemView.findViewById(R.id.tvOrderStatusHistoryOrderFinished);
+            this.textViewOrderStatus = itemView.findViewById(R.id.tvOrderTimeHistoryOrderFinished);
             this.textViewTotalCost = itemView.findViewById(R.id.tvOrderTotalCostFinished);
             this.textViewTotalItems = itemView.findViewById(R.id.tvOrderTotalCountFinished);
             this.textViewHistoryOrderInfo = itemView.findViewById(R.id.OrderInfoFinished);

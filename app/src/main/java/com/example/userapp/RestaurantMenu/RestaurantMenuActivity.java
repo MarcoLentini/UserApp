@@ -308,7 +308,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
             }
             //update the
             update(true);
-        }else if(resultCode==2&& requestCode == SHOP_CART_ACTIVITY ){
+        }else if(resultCode==2){
             startActivity(new Intent(RestaurantMenuActivity.this, OrdersActivity.class));
             finish();
         }
@@ -393,7 +393,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                         QuerySnapshot document = task.getResult();
                         if (!document.isEmpty()) {
                             List<DocumentSnapshot> docu= document.getDocuments();
-                          Collections.sort(docu,CategoryComparator);
+                           Collections.sort(docu,CategoryComparator);
 
                             for(DocumentSnapshot doc : docu) {
 

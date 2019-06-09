@@ -82,7 +82,6 @@ public class UserInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_information_activity);
         String title=getString(R.string.InfoTitle);
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -99,6 +98,7 @@ public class UserInformationActivity extends AppCompatActivity {
         //Get Firestore instance
         db = FirebaseFirestore.getInstance();
 
+        setContentView(R.layout.waiting_view);
 
         db.collection("users").document(user.getUid()).get()
                 .addOnCompleteListener(task -> {
@@ -126,6 +126,8 @@ public class UserInformationActivity extends AppCompatActivity {
 
                                 );
                             }
+
+                            setContentView(R.layout.user_information_activity);
 
                             // Image Profile
 
