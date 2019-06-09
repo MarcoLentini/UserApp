@@ -299,7 +299,8 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                 //refresh the shop cart
                 selectedItemsHashMap = new HashMap<>();
                 for (OrderItemModel orderItem : selectedItemsList){
-                    selectedItemsHashMap.put(orderItem.getDish_name(),orderItem);
+                   // selectedItemsHashMap.put(orderItem.getDish_name(),orderItem);
+                    selectedItemsHashMap.put(orderItem.getDish_category()+"_"+orderItem.getDish_name(),orderItem);
                 }
             }else{
                 //clear all things in the shopcart
