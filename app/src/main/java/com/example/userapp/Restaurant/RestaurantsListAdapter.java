@@ -48,18 +48,15 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
     public RestaurantsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = mInflater.inflate(R.layout.cardview_restaurant,viewGroup,false);
         RestaurantsViewHolder holder = new RestaurantsViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, RestaurantMenuActivity.class);
-                int position = holder.getAdapterPosition();
-                RestaurantModel rm = dataSetFiltered.get(position);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("rest", rm);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-             }
-        });
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(context, RestaurantMenuActivity.class);
+            int position = holder.getAdapterPosition();
+            RestaurantModel rm = dataSetFiltered.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("rest", rm);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+         });
 
         return holder;
     }
@@ -87,10 +84,14 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
-        textViewDistance.setText(restaurantModel.getAddress());
+
+        textViewDistance.setText(restaurantModel.getAddress()); // TODO - fix me
+
         DecimalFormat format = new DecimalFormat("0.00");
         String formattedPrice = format.format(restaurantModel.getDeliveryFee());
+        // String formattedDistance = format.format(restaurantModel.getDistance());
         textViewDeliveryFee.setText("€ " +formattedPrice);
+        //textViewDistance.setText(formattedDistance + "KM");
 
     }
 
@@ -145,7 +146,6 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         dataSetActiveFilters = new ArrayList<>();
         for (RestaurantModel row : dataSet) {
             ArrayList<String> rowTags = row.getTags();
-            // TODO remove the code below when tags cannot be null
             if(rowTags != null) {
                 for (String filterString : filters)
                     if (rowTags.contains(filterString)) {

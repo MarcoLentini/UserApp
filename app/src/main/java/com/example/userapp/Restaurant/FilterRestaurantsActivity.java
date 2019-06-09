@@ -32,7 +32,7 @@ public class FilterRestaurantsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
         getSupportActionBar().setTitle(R.string.select_filters);
 
-//Get Firebase auth instance
+        //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();

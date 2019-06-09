@@ -38,7 +38,6 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
         this.rs_id = Long.parseLong("55");
         this.rs_status = "PENDING";
         this.cust_id = cust_id;
-        // Todo - change with booking time
         this.delivery_time = delivery_time;
         this.timestamp = Timestamp.now();
         this.notes = notes;
@@ -192,6 +191,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     public void setConfirmation_code(Long confirmation_code) {
         this.confirmation_code = confirmation_code;
+        this.rs_id = confirmation_code;
     }
 
     public String getDelivery_notes() {

@@ -132,16 +132,13 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
             btnLeaveComments.setVisibility(View.GONE);
         }
 
-        btnLeaveComments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "btnLeaveComments is clicked,AddCommentsActivity is called.");
-                Intent intent = new Intent(HistoryOrderDetailInfoActivity.this, com.example.userapp.Comments.AddCommentsActivity.class);
-                Bundle bn = new Bundle();
-                bn.putInt("historyOrderData", itemPosition);
-                intent.putExtras(bn);
-                startActivity(intent);
-            }
+        btnLeaveComments.setOnClickListener(v -> {
+            Log.d(TAG, "btnLeaveComments is clicked,AddCommentsActivity is called.");
+            Intent intent = new Intent(HistoryOrderDetailInfoActivity.this, com.example.userapp.Comments.AddCommentsActivity.class);
+            Bundle bn = new Bundle();
+            bn.putInt("historyOrderData", itemPosition);
+            intent.putExtras(bn);
+            startActivity(intent);
         });
 
     }

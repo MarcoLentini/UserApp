@@ -13,19 +13,22 @@ public class RestaurantModel implements Serializable {
     private String description;
     private String restaurantLogo;
     private ArrayList<String> tags;
+    private Double distance;
 
     private Boolean isLiked;
 
+    private Double rating;
 
-    public RestaurantModel(String id, String name, String address, String description, String restaurantLogo) {
+    public RestaurantModel(String id, String name, String address, String description, String restaurantLogo, Double rating) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.description = description;
         this.restaurantLogo = restaurantLogo;
+        this.rating = rating;
     }
     //this constructor for the restaurant that already liked by current user
-    public RestaurantModel(Boolean isLiked,String id, String name,double deliveryFee, String description, String restaurantLogo, String address) {
+    public RestaurantModel(Boolean isLiked, String id, String name, double deliveryFee, String description, String restaurantLogo, String address, Double rating) {
         this.isLiked = isLiked;
         this.id = id;
         this.name = name;
@@ -33,9 +36,11 @@ public class RestaurantModel implements Serializable {
         this.address = address;
         this.description = description;
         this.restaurantLogo = restaurantLogo;
+        this.rating = rating;
     }
     //this constructor for the all restaurants with isLiked = false(initial value)
-    public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo, ArrayList<String> tags) {
+    public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo, ArrayList<String> tags, Double rating) {
+        this.rating = rating;
         this.isLiked = false;
         this.id = id;
         this.name = name;
@@ -108,5 +113,21 @@ public class RestaurantModel implements Serializable {
 
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 }

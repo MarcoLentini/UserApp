@@ -17,6 +17,7 @@ import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.R;
 import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PopularRestaurantsListAdapter extends RecyclerView.Adapter<PopularRestaurantsListAdapter.PopularRestaurantsViewHolder>{
@@ -37,17 +38,14 @@ public class PopularRestaurantsListAdapter extends RecyclerView.Adapter<PopularR
     public PopularRestaurantsListAdapter.PopularRestaurantsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = mInflater.inflate(R.layout.cardview_restaurant_popular, viewGroup,false);
         PopularRestaurantsViewHolder holder = new PopularRestaurantsViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, RestaurantMenuActivity.class);
-                int position = holder.getAdapterPosition();
-                RestaurantModel rm = dataSet.get(position);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("rest", rm);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(context, RestaurantMenuActivity.class);
+            int position = holder.getAdapterPosition();
+            RestaurantModel rm = dataSet.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("rest", rm);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
         return holder;
     }
@@ -73,9 +71,16 @@ public class PopularRestaurantsListAdapter extends RecyclerView.Adapter<PopularR
         Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
-        textViewDistance.setText(restaurantModel.getAddress());
-        textViewDeliveryFee.setText(String.valueOf(restaurantModel.getDeliveryFee() + "€"));
-        textViewAverageVote.setText("5");
+
+        textViewDistance.setText(restaurantModel.getAddress()); // TODO - fix me
+
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedPrice = format.format(restaurantModel.getDeliveryFee());
+        // String formattedDistance = format.format(restaurantModel.getDistance());
+        textViewDeliveryFee.setText("€ " +formattedPrice);
+        // textViewDistance.setText(formattedDistance + "KM");
+
+        textViewAverageVote.setText(String.valueOf(restaurantModel.getRating()));
     }
 
     @Override

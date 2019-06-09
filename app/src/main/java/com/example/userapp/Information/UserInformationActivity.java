@@ -178,7 +178,6 @@ public class UserInformationActivity extends AppCompatActivity {
                             btnRemoveUser=findViewById(R.id.textViewRemoveUser);
                             btnRemoveUser.setOnClickListener(v -> {
                                 if (user != null) {
-                                    //TODO: function su firebase che elimini anche dall'auth
                                    if(userInfo.getRest_id()==null&&userInfo.getBiker_id()==null){
                                        db.collection("users").document(user.getUid()).delete()
                                                .addOnSuccessListener(succe->{
@@ -252,7 +251,6 @@ public class UserInformationActivity extends AppCompatActivity {
 
         if(resultCode == RESULT_OK) {
             if (requestCode == SECOND_ACTIVITY) {
-                //TODO: togliere shared preferences
                 switch (data.getExtras().getString("field")) {
                     case "user_name":
                         userName = data.getExtras().getString("value");
@@ -356,7 +354,6 @@ public class UserInformationActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //TODO: ricontrollare che la update venga eseguita(functions)
             Map<String, Object> user_im = new HashMap<>();
             user_im.put("image_url", user_image.toString());
             userInfo.setImage(user_image);

@@ -155,6 +155,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
                            Long confirm_code = new Long(getRandomNumberInRange(1000,9999));
                            reservationModel.setConfirmation_code(confirm_code);
 
+                           // TODO - add distance
+                           //reservationModel --> user_distance
+
                            db.collection("reservations").document().set(reservationModel).addOnCompleteListener(task1 -> {
                                if(task1.isSuccessful()){
 

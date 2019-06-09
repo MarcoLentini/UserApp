@@ -123,10 +123,6 @@ public class OrdersActivity extends AppCompatActivity
 
         }
     }
-    //TODO LAB5 problems left  CurrentOrder get from firebase
-    // Maybe we do not need realtime query for current order because current order are all created bu current user we can add locally
-
-
 
     //sign out method
     public void signOut() {

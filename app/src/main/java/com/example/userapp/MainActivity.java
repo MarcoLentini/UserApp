@@ -1,18 +1,26 @@
 package com.example.userapp;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,19 +39,24 @@ import com.example.userapp.Comments.CommentsDataModel;
 import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
 import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.Favorites.FavoritesModel;
+import com.example.userapp.Helper.Haversine;
 import com.example.userapp.Information.LoginActivity;
 import com.example.userapp.Restaurant.FilterRestaurantsActivity;
 import com.example.userapp.Restaurant.PopularRestaurantsListAdapter;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +64,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int FILTER_RESTAURANTS_ACTIVITY = 1;
+    private static final int PERMISSIONS_REQUEST = 100;
+
     private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
     public static ArrayList<CurrentOrderModel> currentOrders;
@@ -61,13 +76,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ProgressBar pbRestaurants;
     private TextView tvRestaurantsCountValue;
     private TextView tvRestaurantsFiltersValue;
-private NavigationView navigationView;
+    private NavigationView navigationView;
     public static ArrayList<FavoritesModel> favoritesData;
     private FirebaseAuth auth;
     private static final String userDataFile = "UserDataFile";
     private String userKey;
     //comments
     public static ArrayList<CommentsDataModel> commentsData;
+    public FusedLocationProviderClient fusedLocationClient;
+    public static ArrayList<RestaurantModel> top5Restaurant;
+
+    private Location location = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +94,7 @@ private NavigationView navigationView;
         setContentView(R.layout.activity_main);
 
         //Get Firebase auth instance
-         auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             finish();
         }
@@ -85,18 +104,23 @@ private NavigationView navigationView;
 
         if (auth.getCurrentUser() == null) {
             finish();
-        }else{
+        } else {
             //get the user id when user is validated
             String useID = auth.getCurrentUser().getUid();
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("userKey", useID);
             editor.commit();
         }
-        userKey = sharedPref.getString("userKey","");
+        userKey = sharedPref.getString("userKey", "");
 
         //adding toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Location
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        check_GPS();
+
 
         //adding drawerLayout and  navigationView
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -118,13 +142,16 @@ private NavigationView navigationView;
         fillWithData();
         currentOrders = new ArrayList<>();
         getCurrentOrder();
+        top5Restaurant = new ArrayList<>();
+        getRating();
+
 
         //recyclerView for the popular restaurant
         RecyclerView recyclerViewPopular = findViewById(R.id.recyclerViewTopRestaurants);
         RecyclerView.LayoutManager layoutManagerHorizential = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         recyclerViewPopular.setLayoutManager(layoutManagerHorizential);
         // specify an Adapter
-        popularRestaurantsAdapter = new PopularRestaurantsListAdapter(this, restaurantsData,favoritesData);
+        popularRestaurantsAdapter = new PopularRestaurantsListAdapter(this, top5Restaurant,favoritesData);
         recyclerViewPopular.setAdapter(popularRestaurantsAdapter);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
@@ -394,7 +421,9 @@ private NavigationView navigationView;
                                             (Double)  rest.get("deliveryFee"),
                                             (String) rest.get("description"),
                                             (String) rest.get("restaurantLogo"),
-                                            (String) rest.get("address"));
+                                            (String) rest.get("address"),
+                                            (Double) rest.get("rating")
+                                    );
                                 }
 
                                 FavoritesModel favoritesModel = new FavoritesModel(
@@ -410,6 +439,30 @@ private NavigationView navigationView;
                     }
           });
 
+    }
+
+    public void getRating(){
+        db.collection("restaurant").whereGreaterThan("rating", 0).orderBy("rating").limit(5).get().addOnCompleteListener(t->{
+            if(t.isSuccessful()){
+                QuerySnapshot documents = t.getResult();
+                if(!documents.isEmpty()){
+                    for(DocumentSnapshot doc : documents){
+                        RestaurantModel rm = new RestaurantModel(
+                                false,
+                                doc.getId(),
+                                doc.getString("rest_name"),
+                                doc.getDouble("delivery_fee"),
+                                doc.getString("rest_descr"),
+                                doc.getString("rest_image"),
+                                doc.getString("rest_address"),
+                                doc.getDouble("rating")
+                        );
+                        top5Restaurant.add(rm);
+                    }
+                    popularRestaurantsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
 
@@ -436,7 +489,8 @@ private NavigationView navigationView;
                                         doc.getString("rest_address"),
                                         doc.getString("rest_descr"),
                                         doc.getString("rest_image"),
-                                        tags));
+                                        tags,
+                                        doc.getDouble("rating")));
                             }
                             pbRestaurants.setVisibility(View.GONE);
                             int count = restaurantsAdapter.getItemCount();
@@ -473,4 +527,48 @@ private NavigationView navigationView;
 
     }
 
+    private int check_GPS(){
+        LocationManager lm = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Snackbar.make(findViewById(R.id.constraintLayoutRestaurants), "Please active GPS!", Snackbar.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), "Please active GPS!", Toast.LENGTH_LONG).show();
+            return 1;
+        }
+
+        //Check whether this app has access to the location permission//
+        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
+        //If the location permission has been granted, then start the TrackerService//
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            return 0;
+        } else {
+            //If the app doesn’t currently have access to the user’s location, then request access//
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST);
+            return 2;
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        //If the permission has been granted...//
+        if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, location -> {
+                        if (location != null) {
+                            this.location = location; // Logic to handle location object
+                        }
+                    });
+
+        } else {
+            //If the user denies the permission request, then display a snackBar with some more information//
+            Snackbar.make(findViewById(R.id.constraintLayoutRestaurants), "Please enable location services to allow GPS tracking",
+                    Snackbar.LENGTH_LONG).show();
+        }
+    }
 }

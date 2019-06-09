@@ -189,8 +189,6 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                         }
                     });
                 }else{//this click means user cancel like this restaurant
-                    //TODO Lab5 delete this favorite form firebase
-                    // get the id and delete
                     for (FavoritesModel favoritesModel : MainActivity.favoritesData){
                             if (favoritesModel.getRestaurantID().equals(rm.getId()) && favoritesModel.getUserID().equals(userId)){
 

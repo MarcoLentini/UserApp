@@ -103,10 +103,6 @@ public class HistoryOrderActivity extends AppCompatActivity
         }
     }
 
-
-
-    //TODO LAB5 get history order data form firebase realtime
-    // (an idea related to comments) when there is a history order send a notification for user to make comments
     private void fillWithData(){
         Log.d("QueryHistoryOrder", "Start fill with data...");
         progressBarCurrentOrder.setVisibility(View.VISIBLE);
