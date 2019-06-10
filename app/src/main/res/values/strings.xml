@@ -71,7 +71,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_login">Login</string>
-    <string name="menu_setting">Setting</string>
+    <string name="menu_setting">Account</string>
     <string name="menu_help">Help</string>
 
 
@@ -129,10 +129,10 @@
     <string name="cd_logoimageview">contentDescription logo ImageView</string>
     <string name="menu_home">Home</string>
     <string name="menu_account">Account Info</string>
-    <string name="menu_star">Favorite</string>
+    <string name="menu_star">Favourite</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_comments">Comments</string>
-    <string name="menu_orders">Orders</string>
+    <string name="menu_orders">Current orders</string>
     <string name="str_txt_content">起送 ￥25 配送费 ￥1 平均45分钟</string>
     <string name="str_txt_month_sales">月售23份</string>
     <string name="str_tvRestaurantName">必胜宅急送（锦秋店）</string>
@@ -200,7 +200,7 @@
     <string name="title_activity_history_order">HistoryOrder</string>
     <string name="label_empty_data">Nothing is here now</string>
     <string name="btn_reload">RELOAD</string>
-    <string name="menu_history_order">History Order</string>
+    <string name="menu_history_order">Completed orders</string>
     <string name="past_address_tv_title">Address already used</string>
     <string name="added_to_favorite">Added to favorite</string>
     <string name="internet_down">Internet problem, retry!</string>

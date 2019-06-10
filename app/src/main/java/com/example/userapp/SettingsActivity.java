@@ -17,9 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SettingsActivity extends AppCompatActivity {
 
     private TextView tvAccountInfo;
-    private TextView tvChangePwd;
     private TextView tvAddingAddress;
-    private TextView tvPaymentMethod;
+
 private FirebaseAuth auth;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,9 +43,6 @@ private FirebaseAuth auth;
         });
         tvAddingAddress = findViewById(R.id.tvSettingAddress);
         tvAddingAddress.setOnClickListener(v -> startActivity(new Intent(SettingsActivity.this, AddAddrActivity.class)));
-
-        tvPaymentMethod =findViewById(R.id.tvSettingPayment);
-        tvPaymentMethod.setOnClickListener(v -> Toast.makeText(SettingsActivity.this,"payment method activity ",Toast.LENGTH_SHORT).show());
     }
 
     protected void onResume() {

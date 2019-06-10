@@ -8,13 +8,13 @@
             android:icon="@drawable/ic_home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_orders"
-            android:icon="@drawable/ic_orders"
-            android:title="@string/menu_orders" />
-        <item
             android:id="@+id/nav_star"
             android:icon="@drawable/ic_menu_favorite"
             android:title="@string/menu_star" />
+        <item
+            android:id="@+id/nav_orders"
+            android:icon="@drawable/ic_orders"
+            android:title="@string/menu_orders" />
         <item
             android:id="@+id/nav_history_order"
             android:icon="@drawable/ic_menu_history_order"

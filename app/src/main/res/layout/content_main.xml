@@ -5,8 +5,6 @@
     android:id="@+id/constraintLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dp8"
-    android:layout_marginRight="@dimen/dp8"
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
@@ -70,17 +68,17 @@
 
         <TextView
             android:id="@+id/tvTitlePopularRestaurant"
-            android:layout_marginStart="@dimen/dp8"
-            android:layout_marginLeft="@dimen/dp8"
+            android:paddingBottom="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TOP RESTAURANTS"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutRestaurants" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutRestaurants"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewTopRestaurants"
             app:layout_scrollFlags="scroll"
@@ -88,10 +86,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitlePopularRestaurant"
-             >
-
-        </android.support.v7.widget.RecyclerView>
+            app:layout_constraintTop_toBottomOf="@+id/tvTitlePopularRestaurant" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewRestaurants"
             android:layout_marginTop="@dimen/dp24"
@@ -107,10 +102,9 @@
             android:id="@+id/progress_bar_restaurants"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitlePopularRestaurant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:visibility="gone"/>
 
 </android.support.constraint.ConstraintLayout>

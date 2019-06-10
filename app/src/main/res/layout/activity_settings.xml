@@ -61,25 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorDivider" />
-        <TextView
-            android:id="@+id/tvSettingPayment"
-            android:padding="@dimen/dp16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/str_payment_method"
-            android:background="@drawable/text_view_border"
-            android:drawableStart="@drawable/ic_credit_card"
-            android:drawableLeft="@drawable/ic_credit_card"
-            android:drawableEnd="@drawable/ic_arrow_right"
-            android:drawableRight="@drawable/ic_arrow_right"
-            android:layout_gravity="end"
-            android:textAlignment="viewEnd"
-            style="@style/TextAppearance.AppCompat.Body1"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorDivider" />
+
         <TextView
             android:id="@+id/tvSettingAddress"
             android:padding="@dimen/dp16"
