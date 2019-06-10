@@ -3,42 +3,26 @@ package com.example.userapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
 import com.example.userapp.CurrentOrder.CurrentOrderListAdapter;
-import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.Information.LoginActivity;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-
-import javax.annotation.Nullable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class OrdersActivity extends AppCompatActivity
         {
@@ -91,10 +75,10 @@ public class OrdersActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewCurrentOrder.setLayoutManager(layoutManager);
         //specify an Adapter
+
         currentOrderListAdapter = new CurrentOrderListAdapter(this, MainActivity.currentOrders);
         recyclerViewCurrentOrder.setAdapter(currentOrderListAdapter);
-
-    }
+     }
 
     @Override
     public void onBackPressed() {
@@ -132,3 +116,5 @@ public class OrdersActivity extends AppCompatActivity
 
     }
 }
+
+

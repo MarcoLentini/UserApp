@@ -155,13 +155,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
                            Long confirm_code = new Long(getRandomNumberInRange(1000,9999));
                            reservationModel.setConfirmation_code(confirm_code);
 
-                           // TODO - add distance
-                           //reservationModel --> user_distance
+                           reservationModel.setUser_distance(rm.getDistance());
 
                            db.collection("reservations").document().set(reservationModel).addOnCompleteListener(task1 -> {
                                if(task1.isSuccessful()){
-
-                                   //TODO : Task finished successful them go the the current order page show the order information
                                    Toast.makeText(this,getString(R.string.order_sent), Toast.LENGTH_LONG).show();
 
                                    Intent intent = new Intent(ShoppingCartActivity.this, RestaurantMenuActivity.class);

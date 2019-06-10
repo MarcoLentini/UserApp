@@ -358,6 +358,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             doc.getTimestamp("delivery_time")
                     );
                     currentOrders.add(tmpReservationModel);
+                } else if(dc.getType() == DocumentChange.Type.MODIFIED){
+                    QueryDocumentSnapshot doc = dc.getDocument();
+                    for(CurrentOrderModel com : currentOrders){
+                        if(com.getOrderID().equals(doc.getId())){
+                            com.setRs_status(doc.getString("rs_status"));
+                            break;
+                        }
+                    }
                 } else if(dc.getType() == DocumentChange.Type.REMOVED){
                     QueryDocumentSnapshot doc = dc.getDocument();
                     ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
@@ -430,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                             (String) rest.get("restaurantLogo"),
                                             (String) rest.get("address"),
                                             Haversine.getHaversineDistance(
-                                                    (GeoPoint) rest.get("restPosition"),
+                                                    (GeoPoint) rest.get("distance"),
                                                     geo_location
                                             ),
                                             (Double) rest.get("rating")
@@ -570,7 +578,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 

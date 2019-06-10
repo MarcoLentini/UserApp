@@ -30,7 +30,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     private Long confirmation_code;
 
-
+    private Double user_distance;
 
     public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address,String delivery_notes) {
         this.is_commented = false;
@@ -47,7 +47,7 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
         this.rest_id = rest_id;
         this.rest_address = rest_address;
         this.rest_name = rest_name;
-        this.delivery_notes=delivery_notes;
+        this.delivery_notes = delivery_notes;
 
     }
 
@@ -200,5 +200,13 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     public void setDelivery_notes(String delivery_notes) {
         this.delivery_notes = delivery_notes;
+    }
+
+    public Double getUser_distance() {
+        return user_distance;
+    }
+
+    public void setUser_distance(Double user_distance) {
+        this.user_distance = user_distance;
     }
 }
