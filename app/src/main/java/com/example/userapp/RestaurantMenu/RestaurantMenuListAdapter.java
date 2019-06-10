@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
 import com.bumptech.glide.Glide;
 import com.example.userapp.R;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class RestaurantMenuListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -99,40 +99,34 @@ public class RestaurantMenuListAdapter extends RecyclerView.Adapter<RecyclerView
 
 
 
-            imageViewItemAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int count = ((RestaurantMenuActivity)context).getSelectedItemCountById(menuItem.getCategoryId()+"_"+menuItem.getName());
-                    /*
+            imageViewItemAdd.setOnClickListener(v -> {
+                int count = ((RestaurantMenuActivity)context).getSelectedItemCountById(menuItem.getCategoryId()+"_"+menuItem.getName());
+                /*
+                imageViewItemRemove.setVisibility(View.VISIBLE);
+                textViewItemCount.setVisibility(View.VISIBLE);
+                textViewItemCount.setText(String.valueOf(count));
+               */
+                Log.i("TAG","Add one more for current item"+String.valueOf(count));
+                if (count < 1){
                     imageViewItemRemove.setVisibility(View.VISIBLE);
                     textViewItemCount.setVisibility(View.VISIBLE);
-                    textViewItemCount.setText(String.valueOf(count));
-                   */
-                    Log.i("TAG","Add one more for current item"+String.valueOf(count));
-                    if (count < 1){
-                        imageViewItemRemove.setVisibility(View.VISIBLE);
-                        textViewItemCount.setVisibility(View.VISIBLE);
-                        textViewItemCountPiù.setVisibility(View.VISIBLE);
-
-                    }
-
-                    ((RestaurantMenuActivity)context).handlerShoppingCarNum(1,menuItem,true);
+                    textViewItemCountPiù.setVisibility(View.VISIBLE);
 
                 }
+
+                ((RestaurantMenuActivity)context).handlerShoppingCarNum(1,menuItem,true);
+
             });
 
-            imageViewItemRemove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int count = ((RestaurantMenuActivity)context).getSelectedItemCountById(menuItem.getCategoryId()+"_"+menuItem.getName());
-                    Log.i("TAG","Remove one for current item "+String.valueOf(count));
-                    if (count < 2) {
-                        imageViewItemRemove.setVisibility(View.GONE);
-                        textViewItemCount.setVisibility(View.GONE);
-                        textViewItemCountPiù.setVisibility(View.GONE);
-                    }
-                    ((RestaurantMenuActivity)context).handlerShoppingCarNum(0,menuItem,true);
+            imageViewItemRemove.setOnClickListener(v -> {
+                int count = ((RestaurantMenuActivity)context).getSelectedItemCountById(menuItem.getCategoryId()+"_"+menuItem.getName());
+                Log.i("TAG","Remove one for current item "+String.valueOf(count));
+                if (count < 2) {
+                    imageViewItemRemove.setVisibility(View.GONE);
+                    textViewItemCount.setVisibility(View.GONE);
+                    textViewItemCountPiù.setVisibility(View.GONE);
                 }
+                ((RestaurantMenuActivity)context).handlerShoppingCarNum(0,menuItem,true);
             });
 
         }

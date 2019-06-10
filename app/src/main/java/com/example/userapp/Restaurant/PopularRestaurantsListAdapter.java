@@ -72,13 +72,11 @@ public class PopularRestaurantsListAdapter extends RecyclerView.Adapter<PopularR
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
 
-        textViewDistance.setText(restaurantModel.getAddress()); // TODO - fix me
-
         DecimalFormat format = new DecimalFormat("0.00");
         String formattedPrice = format.format(restaurantModel.getDeliveryFee());
-        // String formattedDistance = format.format(restaurantModel.getDistance());
+        String formattedDistance = format.format(restaurantModel.getDistance());
         textViewDeliveryFee.setText("€ " +formattedPrice);
-        // textViewDistance.setText(formattedDistance + "KM");
+        textViewDistance.setText(formattedDistance + "KM");
 
         textViewAverageVote.setText(String.valueOf(restaurantModel.getRating()));
     }

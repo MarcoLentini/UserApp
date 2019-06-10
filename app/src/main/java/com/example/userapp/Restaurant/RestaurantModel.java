@@ -4,7 +4,7 @@ package com.example.userapp.Restaurant;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RestaurantModel implements Serializable {
+public class RestaurantModel implements Comparable<RestaurantModel>, Serializable {
 
     private String id;
     private String name;
@@ -19,16 +19,9 @@ public class RestaurantModel implements Serializable {
 
     private Double rating;
 
-    public RestaurantModel(String id, String name, String address, String description, String restaurantLogo, Double rating) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.description = description;
-        this.restaurantLogo = restaurantLogo;
-        this.rating = rating;
-    }
+
     //this constructor for the restaurant that already liked by current user
-    public RestaurantModel(Boolean isLiked, String id, String name, double deliveryFee, String description, String restaurantLogo, String address, Double rating) {
+    public RestaurantModel(Boolean isLiked, String id, String name, double deliveryFee, String description, String restaurantLogo, String address, Double distance, Double rating) {
         this.isLiked = isLiked;
         this.id = id;
         this.name = name;
@@ -36,10 +29,12 @@ public class RestaurantModel implements Serializable {
         this.address = address;
         this.description = description;
         this.restaurantLogo = restaurantLogo;
+        this.distance = distance;
         this.rating = rating;
     }
     //this constructor for the all restaurants with isLiked = false(initial value)
-    public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo, ArrayList<String> tags, Double rating) {
+    public RestaurantModel(String id, String name, double deliveryFee, String address, String description, String restaurantLogo, ArrayList<String> tags, Double distance, Double rating) {
+        this.distance = distance;
         this.rating = rating;
         this.isLiked = false;
         this.id = id;
@@ -115,6 +110,14 @@ public class RestaurantModel implements Serializable {
         this.tags = tags;
     }
 
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
     public Double getDistance() {
         return distance;
     }
@@ -123,11 +126,8 @@ public class RestaurantModel implements Serializable {
         this.distance = distance;
     }
 
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
+    @Override
+    public int compareTo(RestaurantModel other) {
+        return this.distance.compareTo(other.getDistance());
     }
 }

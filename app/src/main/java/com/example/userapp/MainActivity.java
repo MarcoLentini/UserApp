@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -47,10 +46,8 @@ import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.Restaurant.RestaurantsListAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -58,6 +55,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,8 +84,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public FusedLocationProviderClient fusedLocationClient;
     public static ArrayList<RestaurantModel> top5Restaurant;
 
-    private Location location = null;
+    private GeoPoint geo_location;
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,11 +116,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        restaurantsData = new ArrayList<>();
+        favoritesData = new ArrayList<>();
+        currentOrders = new ArrayList<>();
+        top5Restaurant = new ArrayList<>();
+        commentsData = new ArrayList<>();
+
         // Location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        check_GPS();
-
-
+        int res = check_GPS();
+        if(res == 0){
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, location -> {
+                        if (location != null) {
+                            geo_location = new GeoPoint(location.getLatitude(), location.getLongitude()); // Logic to handle location object
+                            getDataAndUpdateArrayList();
+                            fillWithData();
+                            getCurrentOrder();
+                            getRating();
+                        }
+                    });
+        } else{
+            finish();
+        }
         //adding drawerLayout and  navigationView
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
          navigationView = findViewById(R.id.nav_view);
@@ -134,16 +151,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         pbRestaurants = findViewById(R.id.progress_bar_restaurants);
         tvRestaurantsCountValue = findViewById(R.id.textViewRestaurantsCountValue);
         tvRestaurantsFiltersValue = findViewById(R.id.textViewFiltersCountValue);
-
-        restaurantsData = new ArrayList<>();
-        favoritesData = new ArrayList<>();
-        commentsData = new ArrayList<>();
-        getDataAndUpdateArrayList();
-        fillWithData();
-        currentOrders = new ArrayList<>();
-        getCurrentOrder();
-        top5Restaurant = new ArrayList<>();
-        getRating();
 
 
         //recyclerView for the popular restaurant
@@ -422,6 +429,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                             (String) rest.get("description"),
                                             (String) rest.get("restaurantLogo"),
                                             (String) rest.get("address"),
+                                            Haversine.getHaversineDistance(
+                                                    (GeoPoint) rest.get("restPosition"),
+                                                    geo_location
+                                            ),
                                             (Double) rest.get("rating")
                                     );
                                 }
@@ -455,6 +466,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 doc.getString("rest_descr"),
                                 doc.getString("rest_image"),
                                 doc.getString("rest_address"),
+                                Haversine.getHaversineDistance(
+                                        doc.getGeoPoint("rest_position"),
+                                        geo_location
+                                ),
                                 doc.getDouble("rating")
                         );
                         top5Restaurant.add(rm);
@@ -490,8 +505,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         doc.getString("rest_descr"),
                                         doc.getString("rest_image"),
                                         tags,
+                                        Haversine.getHaversineDistance(
+                                                doc.getGeoPoint("rest_position"),
+                                                geo_location
+                                        ),
                                         doc.getDouble("rating")));
                             }
+                            Collections.sort(restaurantsData);
                             pbRestaurants.setVisibility(View.GONE);
                             int count = restaurantsAdapter.getItemCount();
                             tvRestaurantsCountValue.setText(String.valueOf(count));
@@ -558,12 +578,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, location -> {
-                        if (location != null) {
-                            this.location = location; // Logic to handle location object
-                        }
-                    });
+
 
         } else {
             //If the user denies the permission request, then display a snackBar with some more information//

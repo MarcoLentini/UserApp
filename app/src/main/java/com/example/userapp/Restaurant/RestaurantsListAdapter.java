@@ -22,7 +22,6 @@ import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.RestaurantsViewHolder>
     implements Filterable {
@@ -85,13 +84,11 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
 
-        textViewDistance.setText(restaurantModel.getAddress()); // TODO - fix me
-
         DecimalFormat format = new DecimalFormat("0.00");
         String formattedPrice = format.format(restaurantModel.getDeliveryFee());
-        // String formattedDistance = format.format(restaurantModel.getDistance());
+        String formattedDistance = format.format(restaurantModel.getDistance());
         textViewDeliveryFee.setText("€ " +formattedPrice);
-        //textViewDistance.setText(formattedDistance + "KM");
+        textViewDistance.setText(formattedDistance + "KM");
 
     }
 

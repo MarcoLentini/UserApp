@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+
+
 public class GeocodingLocation {
 
     private static final String TAG = "GeocodingLocation";

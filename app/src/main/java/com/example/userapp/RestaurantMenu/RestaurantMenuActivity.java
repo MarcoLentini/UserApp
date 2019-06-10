@@ -1,7 +1,6 @@
 package com.example.userapp.RestaurantMenu;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,9 +11,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -30,31 +27,24 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.userapp.Favorites.FavoritesModel;
-import com.example.userapp.FavoritesActivity;
 import com.example.userapp.MainActivity;
 import com.example.userapp.OrdersActivity;
 import com.example.userapp.R;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.ShoppingCart.OrderItemModel;
 import com.example.userapp.ShoppingCart.ShoppingCartActivity;
-import com.firebase.client.DataSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Serializable;
-import java.security.SignatureException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RestaurantMenuActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     private static final int SHOP_CART_ACTIVITY = 1;
@@ -103,7 +93,8 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         String formattedPrice = format.format(rm.getDeliveryFee());
         tvDeliveryFee.setText(" " +formattedPrice);
         TextView tvDistance = findViewById(R.id.tvDistanceRestaurant);
-        tvDistance.setText(rm.getAddress()); // TODO change with dinstance in lab4
+        String formattedDistance = format.format(rm.getDistance());
+        tvDistance.setText(formattedDistance + "KM");
 
         //Get Firestore instance
         db = FirebaseFirestore.getInstance();
@@ -447,21 +438,16 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         }
     }
 
-    public static Comparator<DocumentSnapshot> CategoryComparator
-            = new Comparator<DocumentSnapshot>() {
+    public static Comparator<DocumentSnapshot> CategoryComparator = (cat1, cat2) -> {
 
-        public int compare(DocumentSnapshot cat1, DocumentSnapshot cat2) {
+                Long catPosition1 = (Long)cat1.get("category_position");
+                Long catPosition2 = (Long)cat2.get("category_position");
 
-            Long catPosition1 = (Long)cat1.get("category_position");
-            Long catPosition2 = (Long)cat2.get("category_position");
-
-            //ascending order
-            return catPosition1.compareTo(catPosition2);
-            //descending order
-            //return fruitName2.compareTo(fruitName1);
-        }
-
-    };
+                //ascending order
+                return catPosition1.compareTo(catPosition2);
+                //descending order
+                //return fruitName2.compareTo(fruitName1);
+            };
 
 }
 
