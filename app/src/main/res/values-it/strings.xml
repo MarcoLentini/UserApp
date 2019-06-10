@@ -154,7 +154,7 @@
     <string name="str_nnt_order_status">Ordine completato</string>
     <string name="btn_order_accepted">Accetta ordine</string>
     <string name="history_order_delivery_detail_information">Informazioni di consegna</string>
-    <string name="history_order_welcome_next_time">Welcome next time !</string>
+    <string name="history_order_welcome_next_time">Torna ancora a trovarci!</string>
     <string name="history_order_detail_informantion">Dettaglio dell\'ordine</string>
     <string name="history_order_delivery_time">Orario di consegna</string>
     <string name="history_order_id">ID dell\'ordine</string>
@@ -186,13 +186,32 @@
     <string name="added_to_favorite">Aggiunto ai preferiti</string>
     <string name="removed_from_favorite">Tolto dai preferito</string>
     <string name="title_close_icon">X</string>
-    <string name="title_leave_this_store">Leave this Store ?</string>
-    <string name="title_leave_alert_msg">If you exit now, you will lose all the products you have already selected.Are you sure ?</string>
-    <string name="btn_yes_leave">YES,LEAVE</string>
+    <string name="title_leave_this_store">Lasciare questo acquisto?</string>
+    <string name="title_leave_alert_msg">Se esci ora, perderai tutti i prodotti già selezionati. Sei sicuro?</string>
+    <string name="btn_yes_leave">SI, ABBANDONA</string>
     <string name="btn_no_stay">NO,STAY</string>
-    <string name="title_leave_comments_for_order">LEAVE COMMENTS</string>
+    <string name="title_leave_comments_for_order">LASCIA UNA RECENSIONE</string>
     <string name="title_btn_delete">DELETE</string>
     <string name="no_past_addr">No past address available</string>
+    <string name="add_notes">Aggiungi note</string>
+    <string name="btn_order_rejected">Rifiuta ordine</string>
+    <string name="confirmation_code_short">Codice di conferma:</string>
+    <string name="delete_account">Il tuo profilo è stato cancellato.</string>
+    <string name="empty_basket">Controlla il tuo carrello, è vuoto!</string>
+    <string name="empty_field">Il campo non può essere vuoto</string>
+    <string name="enter_pwd">Inserisci una password</string>
+    <string name="failed_delete_account">Errore nel cancellare l\'account</string>
+    <string name="history_order_once_more">AGGIUNGI UN\'ALTRO</string>
+    <string name="history_order_payment_method">Metodo di pagamento</string>
+    <string name="insert_address">Inserisci il tuo indirizzo!</string>
+    <string name="internet_down">Problemi di connessione, riprova!</string>
+    <string name="later_btn">PIU\' TARDI</string>
+    <string name="leave_comment">Un ordine è stato completato. Lascia una recensione</string>
+    <string name="leave_comment_title">Lascia una recensione</string>
+    <string name="order_sent">Il tuo ordine è stato mandato al ristorante</string>
+    <string name="profile_created">Hai creato un nuovo profilo!</string>
+    <string name="select_filters">Seleziona un filtro</string>
+    <string name="status">Stato:</string>
 
 
 </resources>

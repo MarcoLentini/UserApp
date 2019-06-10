@@ -207,7 +207,7 @@
     <string name="removed_from_favorite">Removed from favorite</string>
     <string name="add_notes">Add notes</string>
     <string name="order_sent">Your order is sending to restaurant !</string>
-    <string name="empty_basket">Please check you basket ,it is empty !</string>
+    <string name="empty_basket">Please check your basket ,it is empty !</string>
     <string name="rest_not_found">Can not find this restaurant !</string>
     <string name="insert_address">Please insert your address !</string>
     <string name="empty_field">Field can\'t be empty</string>
