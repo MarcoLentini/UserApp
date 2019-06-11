@@ -211,6 +211,14 @@
     <string name="removed_from_favorite">取消收藏</string>
     <string name="rest_not_found">找不到此餐馆</string>
     <string name="select_filters">筛选</string>
+    <string name="btn_order_rejected">拒绝订单</string>
+    <string name="confirmation_code_short">验证码:</string>
+    <string name="later_btn">稍后</string>
+    <string name="leave_comment">订单已完成，请留提供您的建议</string>
+    <string name="leave_comment_title">评论</string>
+    <string name="no_past_addr">没有历史地址</string>
+    <string name="profile_created">您的个人主页已生成</string>
+    <string name="status">状态：</string>
 
 
 </resources>
