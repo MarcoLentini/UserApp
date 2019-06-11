@@ -53,7 +53,7 @@ public class AddCommentsActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         Intent receivedIntent = getIntent();
-        Integer itemPosition = receivedIntent.getExtras().getInt("HistoryOrder");
+        Integer itemPosition = receivedIntent.getExtras().getInt("historyOrderData");
         historyOrderModel = HistoryOrderActivity.historyOrders.get(itemPosition);
 
         textViewMsg = findViewById(R.id.edit_text_input_comments);
@@ -61,14 +61,8 @@ public class AddCommentsActivity extends AppCompatActivity {
         btnSubmitComments = findViewById(R.id.btnSubmitComments);
         ratingBarFoodQuality = findViewById(R.id.ratingBarFoodQuality);
         ratingBarFoodQuality.setStepSize((float) 0.5);
-        ratingBarFoodQuality.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> Toast.makeText(AddCommentsActivity.this, "ratingBarFoodQuality rating:" + String.valueOf(rating),
-                Toast.LENGTH_SHORT).show());
-        ratingBarDeliveryService = findViewById(R.id.ratingBarDeliveryService);
+         ratingBarDeliveryService = findViewById(R.id.ratingBarDeliveryService);
         ratingBarDeliveryService.setStepSize((float) 0.5);
-        ratingBarDeliveryService.setOnRatingBarChangeListener((ratingBar, rating, fromUser) ->
-                Toast.makeText(AddCommentsActivity.this, "ratingBarDeliveryService rating:" + String.valueOf(rating),
-                Toast.LENGTH_SHORT).show()
-        );
 
 
         btnSubmitComments.setOnClickListener(v -> {

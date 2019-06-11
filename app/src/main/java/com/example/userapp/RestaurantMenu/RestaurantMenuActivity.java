@@ -381,16 +381,13 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                     if (task.isSuccessful()) {
                         QuerySnapshot document = task.getResult();
                         if (!document.isEmpty()) {
-                            List<DocumentSnapshot> docu= document.getDocuments();
-                           Collections.sort(docu,CategoryComparator);
-
-                            for(DocumentSnapshot doc : docu) {
-
+                            for(DocumentSnapshot doc : document) {
+                                Long pos=(Long)doc.get("category_position");
                                 HeaderOrMenuItem tmpHeader = HeaderOrMenuItem.onCreateHeader(
                                                                 new RestaurantMenuHeaderModel(
                                                             (String) doc.getId(),
                                                             (String) doc.get("category_name")
-                                                                        ));
+                                                                        ),pos);
 
 
                                 doc.getReference().collection("dishes").whereEqualTo("state", true).get()
@@ -406,10 +403,10 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                                                                         doc.getId(), (String) doc.get("category_name"),
                                                                         doc1.getId(),
                                                                         (String) doc1.get("name"), (String) doc1.get("description"),
-                                                                        doc1.getDouble("price"), (String) doc1.get("image")));
+                                                                        doc1.getDouble("price"), (String) doc1.get("image")),pos);
                                                         restaurantMenuData.add(tmpMenuItem);
                                                     }
-
+                                                    Collections.sort(restaurantMenuData,CategoryComparator);
                                                     restaurantMenuListAdapter.notifyDataSetChanged();
                                                 } else {
                                                     Log.d("QueryRestaurantMenu", "No such document");
@@ -419,6 +416,9 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                                             }
                                         });
                             }
+
+
+
                         } else {
                             Log.d("QueryRestaurantMenu", "No such document");
                         }
@@ -426,6 +426,7 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
                         Log.d("QueryRestaurantMenu", "get failed with ", task.getException());
                     }
                 });
+
 
     }
 
@@ -438,10 +439,10 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         }
     }
 
-    public static Comparator<DocumentSnapshot> CategoryComparator = (cat1, cat2) -> {
+    public static Comparator<HeaderOrMenuItem> CategoryComparator = (el1, el2) -> {
 
-                Long catPosition1 = (Long)cat1.get("category_position");
-                Long catPosition2 = (Long)cat2.get("category_position");
+                Long catPosition1 = el1.getPositionCat();
+                Long catPosition2 = el2.getPositionCat();
 
                 //ascending order
                 return catPosition1.compareTo(catPosition2);

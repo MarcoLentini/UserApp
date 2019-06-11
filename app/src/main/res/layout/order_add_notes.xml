@@ -29,7 +29,7 @@
                 android:hint="@string/title_order_notes"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences|textMultiLine"
-                android:maxLines="20"
+                android:maxLines="10"
                 android:nextFocusDown="@+id/etNotesBtnSave" />
         </android.support.design.widget.TextInputLayout>
 

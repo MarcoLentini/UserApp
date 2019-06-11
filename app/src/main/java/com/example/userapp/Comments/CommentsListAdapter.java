@@ -60,6 +60,8 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         textViewCommentsRestaurantName.setText(""+myComments.getRestName());
         //textViewCommentsCustID.setText(myComments.getUserId());
         showRatingDeliveryService.isIndicator();
+        showRatingDeliveryService.setMax(5);
+        showRatingFoodQuantity.setMax(5);
         showRatingDeliveryService.setRating(myComments.getVoteForBiker().floatValue());
         showRatingFoodQuantity.isIndicator();
         showRatingFoodQuantity.setRating(myComments.getVoteForRestaurant().floatValue());

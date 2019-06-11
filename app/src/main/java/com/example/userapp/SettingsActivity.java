@@ -4,13 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.example.userapp.Information.AddAddrActivity;
-import com.example.userapp.Information.ResetPasswordActivity;
 import com.example.userapp.Information.UserInformationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 

@@ -406,7 +406,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         startActivity(intent);
                     })
                             .setNegativeButton(getString(R.string.later_btn), (dialog, which) -> {
-                                signOut();
                                 dialog.dismiss();
                             })
                             .create().show();
@@ -437,10 +436,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                             (String) rest.get("description"),
                                             (String) rest.get("restaurantLogo"),
                                             (String) rest.get("address"),
-                                            Haversine.getHaversineDistance(
-                                                    (GeoPoint) rest.get("distance"),
-                                                    geo_location
-                                            ),
+                                            (Double) rest.get("distance"),
                                             (Double) rest.get("rating")
                                     );
                                 }

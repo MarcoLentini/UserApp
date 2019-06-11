@@ -38,7 +38,6 @@ public class AddingNotesActivity extends AppCompatActivity {
         etNotes = findViewById(R.id.edit_text_input_notes);
         etNotes.setText(notes);
         etNotes.selectAll();
-        etNotes.setLines(12);
         btnCancel = findViewById(R.id.etNotesBtnCancel);
         btnCancel.setOnClickListener(v -> finish());
         btnSave = findViewById(R.id.etNotesBtnSave);

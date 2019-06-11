@@ -17,6 +17,7 @@ import com.example.userapp.R;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class FavoriteRestaurantListAdapter extends RecyclerView.Adapter<FavoriteRestaurantListAdapter.FavoriteRestaurantsViewHolder> {
@@ -62,8 +63,12 @@ public class FavoriteRestaurantListAdapter extends RecyclerView.Adapter<Favorite
         Uri tmpUri = Uri.parse(restaurantModel.getRestaurantLogo());
         Glide.with(context).load(tmpUri).placeholder(R.drawable.img_rest_1).into(imageViewLogo);
         textViewName.setText(restaurantModel.getName());
-        textViewDistance.setText(restaurantModel.getAddress());
-        textViewDeliveryFee.setText(restaurantModel.getDeliveryFee() + "€");
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedPriceDelivery = format.format(restaurantModel.getDeliveryFee());
+        textViewDeliveryFee.setText(formattedPriceDelivery+"€");
+
+        String formattedDistance =format.format(restaurantModel.getDistance());
+        textViewDistance.setText(formattedDistance+"Km");
 
     }
 

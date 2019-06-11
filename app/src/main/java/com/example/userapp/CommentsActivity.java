@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.userapp.Comments.CommentsDataModel;
 import com.example.userapp.Comments.CommentsListAdapter;
 import com.example.userapp.Information.LoginActivity;
+import com.example.userapp.RestaurantMenu.HeaderOrMenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,6 +35,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class CommentsActivity extends AppCompatActivity
@@ -119,6 +122,7 @@ public class CommentsActivity extends AppCompatActivity
 
                             Log.d(TAG, "tmpComment"+tmpComment.getCommentsId());
                             commentsData.add(tmpComment);
+                            Collections.sort(commentsData,CommentComparator);
                             commentsListAdapter.notifyDataSetChanged();
                         }
                     }
@@ -149,4 +153,15 @@ public class CommentsActivity extends AppCompatActivity
         onBackPressed();
         return true;
     }
+
+            public static Comparator<CommentsDataModel> CommentComparator = (com1, com2) -> {
+
+                Date date1 = com1.getDate();
+                Date date2 = com2.getDate();
+
+                //ascending order
+                //return catPosition1.compareTo(catPosition2);
+                //descending order
+                return date2.compareTo(date1);
+            };
 }

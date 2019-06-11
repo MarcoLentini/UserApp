@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -67,7 +68,9 @@ private FirebaseFirestore db;
         }
         db = FirebaseFirestore.getInstance();
         availableAddress=new HashMap<>();
-
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
         textInputDeliveryTown = findViewById(R.id.text_input_city);
         textInputDeliveryStreet = findViewById(R.id.text_input_route);
         textInputDeliveryNumber = findViewById(R.id.text_input_number);

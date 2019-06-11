@@ -99,7 +99,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Information.ResetPasswordActivity" />
         <activity android:name=".Information.SignupActivity" />
         <activity
             android:name=".RestaurantMenu.RestaurantMenuActivity"
