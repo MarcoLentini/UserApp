@@ -130,7 +130,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         orderNotes, //notes,
                         orderItems,
                         orderTotalCost,
-                        rm.getId(), rm.getName(), rm.getAddress(),orderDeliveryNotes);
+                        rm.getId(), rm.getName(), rm.getAddress(),orderDeliveryNotes,rm.getDeliveryFee());
 
                 reservationModel.setCust_address(orderDeliveryAddress);
 
