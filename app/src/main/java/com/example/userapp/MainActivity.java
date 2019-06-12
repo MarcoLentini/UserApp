@@ -41,6 +41,7 @@ import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.Helper.Haversine;
 import com.example.userapp.Information.LoginActivity;
+import com.example.userapp.Information.UserInformationActivity;
 import com.example.userapp.Restaurant.FilterRestaurantsActivity;
 import com.example.userapp.Restaurant.PopularRestaurantsListAdapter;
 import com.example.userapp.Restaurant.RestaurantModel;
@@ -268,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = menuItem.getItemId();
 
         if (id == R.id.nav_setting){
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(MainActivity.this, UserInformationActivity.class);
             startActivity(intent);
         }else if (id == R.id.nav_help){
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);

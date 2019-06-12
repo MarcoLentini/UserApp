@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">UserApp</string>
+    <string name="app_name">FoodEaTO</string>
     <string name="default_user_name">用户名</string>
     <string name="default_user_email">邮箱</string>
     <string name="default_user_description">个人简介</string>

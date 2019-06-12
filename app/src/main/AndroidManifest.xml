@@ -54,14 +54,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.userapp.MainActivity" />
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeCurrentInfo">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.userapp.MainActivity" />
-        </activity>
+
+
         <activity
             android:name=".HelpActivity"
             android:parentActivityName=".MainActivity"
