@@ -67,6 +67,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         TextView textViewName = restaurantsViewHolder.textViewName;
         TextView textViewDistance = restaurantsViewHolder.textViewDistance;
         TextView textViewDeliveryFee = restaurantsViewHolder.textViewDeliveryFee;
+        TextView textViewRating = restaurantsViewHolder.textViewRating;
 
         RestaurantModel restaurantModel = dataSetFiltered.get(position);
 
@@ -89,6 +90,8 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         String formattedDistance = format.format(restaurantModel.getDistance());
         textViewDeliveryFee.setText("€ " +formattedPrice);
         textViewDistance.setText(formattedDistance + "KM");
+        formattedPrice = format.format(restaurantModel.getRating());
+        textViewRating.setText(" " +formattedPrice);
 
     }
 
@@ -166,6 +169,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         TextView textViewName;
         TextView textViewDistance;
         TextView textViewDeliveryFee;
+        TextView textViewRating;
 
         RestaurantsViewHolder(View itemView) {
             super(itemView);
@@ -173,6 +177,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
             this.textViewName = itemView.findViewById(R.id.tvRestaurantName);
             this.textViewDistance = itemView.findViewById(R.id.tvDistanceRestaurant);
             this.textViewDeliveryFee = itemView.findViewById(R.id.tvDeliveryFeeRestaurant);
+            this.textViewRating = itemView.findViewById(R.id.tvRatingRestaurant);
         }
     }
 }
