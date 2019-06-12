@@ -103,11 +103,38 @@ private FirebaseFirestore db;
         btnCancel.setOnClickListener(v -> finish());
         btnSave = findViewById(R.id.etAddressBtnSave);
         btnSave.setOnClickListener(v -> {
-            address= new AddressModel(etDeliveryTown.getText().toString(),etDeliveryStreet.getText().toString(),Long.parseLong(etDeliveryNumber.getText().toString()));
-            GeocodingLocation locationAddress = new GeocodingLocation();
-            locationAddress.getAddressFromLocation(address.toString(),
-                    this, new GeocoderHandler());
+           // address= new AddressModel(etDeliveryTown.getText().toString(),etDeliveryStreet.getText().toString(),Long.parseLong(etDeliveryNumber.getText().toString()));
+           // GeocodingLocation locationAddress = new GeocodingLocation();
+            //locationAddress.getAddressFromLocation(address.toString(),
+                //    this, new GeocoderHandler());
             pb.setVisibility(View.VISIBLE);
+            Intent retIntent = new Intent(getApplicationContext(), ShoppingCartActivity.class);
+            Bundle bn = new Bundle();
+            town = etDeliveryTown.getText().toString();
+            street=etDeliveryStreet.getText().toString();
+            number=Long.parseLong(etDeliveryNumber.getText().toString());
+            notes=etDeliveryNotes.getText().toString();
+            AddressModel addr= new AddressModel(town,street,number,notes);
+            bn.putSerializable("address", addr);
+            bn.putString("notes",notes);
+            retIntent.putExtras(bn);
+            pb.setVisibility(View.GONE);
+            Toast.makeText(getApplicationContext(),getString(R.string.restaurants_filter_done),Toast.LENGTH_SHORT).show();
+
+            if(!availableAddress.containsValue(addr)) {
+                Map<String, Object> address_map = new HashMap<>();
+                address_map.put("user_id", auth.getCurrentUser().getUid());
+                address_map.put("address", addr);
+                db.collection("address").document().set(address_map)
+                        .addOnSuccessListener(task -> {
+                            Log.d("AddingAddress", "Address updated");
+                        })
+                        .addOnFailureListener(task -> {
+                            Log.d("AddingAddress", "Failed to upload address");
+                        });
+            }
+            setResult(RESULT_OK, retIntent);
+            finish();
         });
 
         db.collection("address").whereEqualTo("user_id",auth.getCurrentUser().getUid()).get()
