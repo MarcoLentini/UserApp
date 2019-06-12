@@ -2,37 +2,27 @@ package com.example.userapp.ShoppingCart;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.userapp.OrdersActivity;
 import com.example.userapp.R;
-import com.google.api.Distribution;
-import com.google.firebase.auth.FirebaseAuth;
 import com.example.userapp.Restaurant.RestaurantModel;
 import com.example.userapp.RestaurantMenu.RestaurantMenuActivity;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Random;
 
 public class ShoppingCartActivity extends AppCompatActivity {
@@ -154,6 +144,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
                            Long confirm_code = new Long(getRandomNumberInRange(1000,9999));
                            reservationModel.setConfirmation_code(confirm_code);
+                           Long rs_id = new Long(getRandomNumberInRange(10000,99999));
+                           reservationModel.setRs_id(rs_id);
 
                            reservationModel.setUser_distance(rm.getDistance());
 
