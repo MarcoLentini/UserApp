@@ -92,15 +92,7 @@ public class OrdersActivity extends AppCompatActivity
         recyclerViewCurrentOrder.setAdapter(currentOrderListAdapter);
      }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 
 
     @Override
@@ -173,9 +165,15 @@ public class OrdersActivity extends AppCompatActivity
                             for(CurrentOrderModel com : currentOrders){
                                 if(com.getOrderID().equals(doc.getId())){
                                     if(doc.getString("rs_status").equals("FINISHED"))
+                                    {
                                         com.setRs_status("IN DELIVERY");
-                                    else
+                                        currentOrderListAdapter.notifyDataSetChanged();
+                                    }
+                                    else {
+
                                         com.setRs_status(doc.getString("rs_status"));
+                                        currentOrderListAdapter.notifyDataSetChanged();
+                                    }
                                     break;
                                 }
                             }
