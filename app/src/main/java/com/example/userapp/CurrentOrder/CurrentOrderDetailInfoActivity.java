@@ -42,8 +42,8 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
         Intent receivedIntent = getIntent();
         Integer itemPosition = receivedIntent.getExtras().getInt("currentOrderData");
         System.out.println("Received positiom"+itemPosition);
-        CurrentOrderModel rm = MainActivity.currentOrders.get(itemPosition);
-        System.out.println("Received currentOrders size "+ MainActivity.currentOrders.size() );
+        CurrentOrderModel rm = OrdersActivity.currentOrders.get(itemPosition);
+        System.out.println("Received currentOrders size "+ OrdersActivity.currentOrders.size() );
 
 
             TextView textViewStatus = findViewById(R.id.tvStatusCurrentOrder);
@@ -61,7 +61,7 @@ public class CurrentOrderDetailInfoActivity  extends AppCompatActivity {
             textViewAddress.setText(rm.getCust_address());
             TextView textViewTime = findViewById(R.id.tvCurrentOrderDeliveryTime);
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-            Date date=rm.getDelivery_time().toDate();
+            Date date=rm.getDelivery_time();
             textViewTime.setText( dateFormat.format(date));
 
 

@@ -65,6 +65,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
+
         <TextView
             android:id="@+id/tvTitlePopularRestaurant"
             android:paddingBottom="16dp"

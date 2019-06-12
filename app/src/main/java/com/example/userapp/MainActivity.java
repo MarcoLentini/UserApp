@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static ArrayList<RestaurantModel> restaurantsData;
      private RecyclerView.Adapter restaurantsAdapter;
     private RecyclerView.Adapter popularRestaurantsAdapter;
+    private ConstraintLayout countRestAndFilter;
+    private RecyclerView recyclerViewPopular;
     private ArrayList<String> receivedFilters;
     private FirebaseFirestore db;
     private ProgressBar pbRestaurants;
@@ -145,14 +148,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
+         countRestAndFilter= findViewById(R.id.constraintLayoutRestaurants);
         pbRestaurants = findViewById(R.id.progress_bar_restaurants);
         tvRestaurantsCountValue = findViewById(R.id.textViewRestaurantsCountValue);
         tvRestaurantsFiltersValue = findViewById(R.id.textViewFiltersCountValue);
 
 
         //recyclerView for the popular restaurant
-        RecyclerView recyclerViewPopular = findViewById(R.id.recyclerViewTopRestaurants);
+         recyclerViewPopular = findViewById(R.id.recyclerViewTopRestaurants);
         RecyclerView.LayoutManager layoutManagerHorizential = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         recyclerViewPopular.setLayoutManager(layoutManagerHorizential);
         // specify an Adapter
@@ -300,7 +303,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 receivedFilters = data.getStringArrayListExtra("selectedFilters");
                 if(receivedFilters != null) {
                     if(receivedFilters.isEmpty()) {
-
+                        countRestAndFilter.setVisibility(View.GONE);
+                        TextView title_top= findViewById(R.id.tvTitlePopularRestaurant);
+                        title_top.setVisibility(View.VISIBLE);
+                        recyclerViewPopular.setVisibility(View.VISIBLE);
                         ((RestaurantsListAdapter) restaurantsAdapter).removeFilters();
                         tvRestaurantsFiltersValue.setText("0");
                         int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
@@ -308,7 +314,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     else {
 
-
+                        countRestAndFilter.setVisibility(View.VISIBLE);
+                        TextView title_top= findViewById(R.id.tvTitlePopularRestaurant);
+                        title_top.setVisibility(View.GONE);
+                        recyclerViewPopular.setVisibility(View.GONE);
                         ((RestaurantsListAdapter) restaurantsAdapter).setFilters(receivedFilters);
                         int count = ((RestaurantsListAdapter) restaurantsAdapter).getItemCount();
                         tvRestaurantsCountValue.setText(String.valueOf(count));

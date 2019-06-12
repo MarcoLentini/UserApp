@@ -53,7 +53,7 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
         textViewAddress.setText(rm.getCust_address());
         TextView textViewTime = findViewById(R.id.tvHistoryOrderDeliveryTime);
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-        Date date=rm.getDelivery_time().toDate();
+        Date date=rm.getDelivery_time();
         textViewTime.setText( dateFormat.format(date));
 
 
