@@ -1,8 +1,6 @@
 package com.example.userapp.Comments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,20 +8,15 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.userapp.CommentsActivity;
 import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.HistoryOrderActivity;
 import com.example.userapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddCommentsActivity extends AppCompatActivity {
@@ -108,6 +101,7 @@ public class AddCommentsActivity extends AppCompatActivity {
                             historyOrderModel.setIs_commented(true);
 
                             Log.e(TAG, "Going to Comments Activity");
+                            setResult(RESULT_OK);
                             finish();
                         } else {
                             Log.d("Comments", "Failed batch write");

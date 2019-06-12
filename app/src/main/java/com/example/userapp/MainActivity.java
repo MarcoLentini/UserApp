@@ -2,7 +2,6 @@ package com.example.userapp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,8 +35,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.userapp.Comments.CommentsDataModel;
-import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
-import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.Favorites.FavoritesModel;
 import com.example.userapp.Helper.Haversine;
 import com.example.userapp.Information.LoginActivity;
@@ -49,11 +46,10 @@ import com.example.userapp.Restaurant.RestaurantsListAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -373,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getRating(){
-        db.collection("restaurant").whereGreaterThan("rating", 0).orderBy("rating").limit(5).get().addOnCompleteListener(t->{
+        db.collection("restaurant").whereGreaterThan("rating", 0).orderBy("rating", Query.Direction.DESCENDING).limit(5).get().addOnCompleteListener(t->{
             if(t.isSuccessful()){
                 QuerySnapshot documents = t.getResult();
                 if(!documents.isEmpty()){
