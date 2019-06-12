@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
-
+    private static final int HISTORY_INTENT = 55;
     private static final String TAG = "HistoryOrderDetailInfo";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +138,7 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
             Bundle bn = new Bundle();
             bn.putInt("historyOrderData", itemPosition);
             intent.putExtras(bn);
-            startActivity(intent);
+            startActivityForResult(intent,HISTORY_INTENT);
         });
 
     }
@@ -158,4 +158,6 @@ public class HistoryOrderDetailInfoActivity  extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+
 }

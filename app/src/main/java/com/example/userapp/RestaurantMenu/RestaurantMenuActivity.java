@@ -88,14 +88,16 @@ public class RestaurantMenuActivity extends AppCompatActivity implements AppBarL
         Uri tmpUri = Uri.parse(rm.getRestaurantLogo());
         Glide.with(this).load(tmpUri).placeholder(R.drawable.img_rest_1).into(restaurantImageView);
         mFab = findViewById(R.id.restaurant_menu_cardView);
-        TextView tvDeliveryFee = findViewById(R.id.tvDeliveryFeeRestaurant);
+        TextView tvDeliveryFee = findViewById(R.id.tvDeliveryFeeRestaurantMenu);
         DecimalFormat format = new DecimalFormat("0.00");
         String formattedPrice = format.format(rm.getDeliveryFee());
         tvDeliveryFee.setText(" " +formattedPrice);
-        TextView tvDistance = findViewById(R.id.tvDistanceRestaurant);
+        TextView tvDistance = findViewById(R.id.tvDistanceRestaurantMenu);
         String formattedDistance = format.format(rm.getDistance());
         tvDistance.setText(formattedDistance + "KM");
-
+        TextView tvRatingRestaurant = findViewById(R.id.tvRatingRestaurantMenu);
+        formattedPrice = format.format(rm.getRating());
+        tvRatingRestaurant.setText(" " +formattedPrice);
         //Get Firestore instance
         db = FirebaseFirestore.getInstance();
         //toolbar

@@ -4,23 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-;
-import com.example.userapp.Comments.CommentsDataModel;
+
 import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
 import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.HistoryOrder.HistoryOrderListAdapter;
@@ -36,9 +29,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
-public class HistoryOrderActivity extends AppCompatActivity
-         {
+;
 
+public class HistoryOrderActivity extends AppCompatActivity {
+    private static final int HISTORY_INTENT = 55;
     private static final String TAG = "HistoryOrderActivity";
     private RecyclerView recyclerViewHistoryOrder;
     private HistoryOrderListAdapter historyOrderListAdapter;
@@ -176,6 +170,16 @@ public class HistoryOrderActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == HISTORY_INTENT){
+                Toast.makeText(this, "AAAAAAA", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+             @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;

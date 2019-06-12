@@ -1,5 +1,6 @@
 package com.example.userapp.HistoryOrder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int HISTORY_INTENT = 55;
+
     private static final String TAG = "HistoryOrderListAdapter";
     private Context context;
     private ArrayList<CurrentOrderModel> historyOrders;
@@ -43,7 +46,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
             Bundle bn = new Bundle();
             bn.putInt("historyOrderData", itemPosition);
             myIntent.putExtras(bn);
-            context.startActivity(myIntent);
+            ((Activity) context).startActivityForResult(myIntent,HISTORY_INTENT);
          });
 
         return holder;
@@ -82,16 +85,13 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
             btnCommentForThisOrderFinish.setVisibility(View.GONE);
         }
 
-        btnCommentForThisOrderFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "btnCommentForThisOrderFinish is clicked,AddCommentsActivity is called.");
-                Intent intent = new Intent(view.getContext(), com.example.userapp.Comments.AddCommentsActivity.class);
-                Bundle bn = new Bundle();
-                bn.putInt("historyOrderData", pos);
-                intent.putExtras(bn);
-                context.startActivity(intent);
-            }
+        btnCommentForThisOrderFinish.setOnClickListener(view -> {
+            Log.d(TAG, "btnCommentForThisOrderFinish is clicked,AddCommentsActivity is called.");
+            Intent intent = new Intent(view.getContext(), com.example.userapp.Comments.AddCommentsActivity.class);
+            Bundle bn = new Bundle();
+            bn.putInt("historyOrderData", pos);
+            intent.putExtras(bn);
+            context.startActivity(intent);
         });
     }
 
