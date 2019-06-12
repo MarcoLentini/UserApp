@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CurrentOrderModel implements Comparable<CurrentOrderModel>, Serializable {
 
@@ -30,14 +31,14 @@ public class CurrentOrderModel implements Comparable<CurrentOrderModel>, Seriali
 
     /** Biker */
     private String biker_id;
-    private Timestamp delivery_time;  //delivery time
+    private Date delivery_time;  //delivery time
 
 
     public CurrentOrderModel(String orderID, Long rs_id, String rs_status,
                              Timestamp timestamp, ArrayList<CurrentOrderItemModel> dishes,
                              Boolean is_current_order, long confirmation_code,
                              Double total_income, String notes, String cust_id, String cust_name, String cust_address,
-                             Boolean is_commented, String rest_id, String rest_name, String biker_id, Timestamp delivery_time) {
+                             Boolean is_commented, String rest_id, String rest_name, String biker_id, Date delivery_time) {
 
         this.orderID = orderID;
         this.rs_id = rs_id;
@@ -169,11 +170,11 @@ public class CurrentOrderModel implements Comparable<CurrentOrderModel>, Seriali
         this.rest_name = rest_name;
     }
 
-    public Timestamp getDelivery_time() {
+    public Date getDelivery_time() {
         return delivery_time;
     }
 
-    public void setDelivery_time(Timestamp delivery_time) {
+    public void setDelivery_time(Date delivery_time) {
         this.delivery_time = delivery_time;
     }
 

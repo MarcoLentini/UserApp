@@ -53,7 +53,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int pos) {
         HistoryOrderViewHolder historyOrderViewHolder = (HistoryOrderViewHolder)viewHolder;
         TextView textViewRestName = historyOrderViewHolder.textViewRestName;
-        TextView textViewOrderTime = historyOrderViewHolder.textViewOrderStatus;
+        TextView textViewOrderTime = historyOrderViewHolder.textViewOrderTime;
         TextView textViewTotalCost =historyOrderViewHolder.textViewTotalCost;
         TextView textViewTotalItems = historyOrderViewHolder.textViewTotalItems;
         TextView textViewHistoryOrderInfo = historyOrderViewHolder.textViewHistoryOrderInfo;
@@ -62,7 +62,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
         CurrentOrderModel historyOrder = historyOrders.get(pos);
         textViewRestName.setText(historyOrder.getRest_name());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date=historyOrder.getDelivery_time().toDate();
+        Date date=historyOrder.getDelivery_time();
         textViewOrderTime.setText( dateFormat.format(date));
 
         textViewTotalCost.setText(String.format("%.2f", historyOrder.getTotal_income())+" €");
@@ -103,7 +103,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
 
     public class HistoryOrderViewHolder extends RecyclerView.ViewHolder {
         TextView textViewRestName;
-        TextView textViewOrderStatus;
+        TextView textViewOrderTime;
         TextView textViewTotalCost;
         TextView textViewTotalItems;
         TextView textViewHistoryOrderInfo;
@@ -112,7 +112,7 @@ public class HistoryOrderListAdapter extends  RecyclerView.Adapter<RecyclerView.
         public HistoryOrderViewHolder(View itemView) {
             super(itemView);
             this.textViewRestName = itemView.findViewById(R.id.tvRestaurantNameHistoryOrderFinished);
-            this.textViewOrderStatus = itemView.findViewById(R.id.tvOrderTimeHistoryOrderFinished);
+            this.textViewOrderTime = itemView.findViewById(R.id.tvOrderTimeHistoryOrderFinished);
             this.textViewTotalCost = itemView.findViewById(R.id.tvOrderTotalCostFinished);
             this.textViewTotalItems = itemView.findViewById(R.id.tvOrderTotalCountFinished);
             this.textViewHistoryOrderInfo = itemView.findViewById(R.id.OrderInfoFinished);

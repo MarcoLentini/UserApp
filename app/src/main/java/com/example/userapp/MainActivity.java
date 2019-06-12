@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = "MainActivity";
     public static ArrayList<RestaurantModel> restaurantsData;
-    public static ArrayList<CurrentOrderModel> currentOrders;
-    private RecyclerView.Adapter restaurantsAdapter;
+     private RecyclerView.Adapter restaurantsAdapter;
     private RecyclerView.Adapter popularRestaurantsAdapter;
     private ArrayList<String> receivedFilters;
     private FirebaseFirestore db;
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         restaurantsData = new ArrayList<>();
         favoritesData = new ArrayList<>();
-        currentOrders = new ArrayList<>();
+
         top5Restaurant = new ArrayList<>();
         commentsData = new ArrayList<>();
 
@@ -132,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             geo_location = new GeoPoint(location.getLatitude(), location.getLongitude()); // Logic to handle location object
                             getDataAndUpdateArrayList();
                             fillWithData();
-                            getCurrentOrder();
                             getRating();
                         }
                     });
@@ -321,100 +319,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void getCurrentOrder(){
-        db.collection("reservations").whereEqualTo("cust_id", userKey).whereEqualTo("is_current_order", true).addSnapshotListener((document, e)->{
-            if (e != null) return;
 
-            for(DocumentChange dc : document.getDocumentChanges()) {
-                if (dc.getType() == DocumentChange.Type.ADDED) {
-                    QueryDocumentSnapshot doc = dc.getDocument();
-                    ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
-                    for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) doc.get("dishes")) {
-                        tmpArrayList.add(new CurrentOrderItemModel(
-                                (String) dish.get("dish_name"),
-                                (Double) dish.get("dish_price"),
-                                (Long) dish.get("dish_qty")));
-                    }
-                    CurrentOrderModel tmpReservationModel = new CurrentOrderModel(
-                            doc.getId(),
-                            doc.getLong("rs_id"),
-                            doc.getString("rs_status"),
-                            doc.getTimestamp("timestamp"),
-                            tmpArrayList,
-                            doc.getBoolean("is_current_order"),
-                            doc.getLong("confirmation_code"),
-                            doc.getDouble("total_income"),
-                            doc.getString("notes"),
-
-                            doc.getString("cust_id"),
-                            doc.getString("cust_name"),
-                            doc.getString("cust_address"),
-                            doc.getBoolean("is_commented"),
-
-                            doc.getString("rest_id"),
-                            doc.getString("rest_name"),
-
-                            doc.getString("biker_id"),
-                            doc.getTimestamp("delivery_time")
-                    );
-                    currentOrders.add(tmpReservationModel);
-                } else if(dc.getType() == DocumentChange.Type.MODIFIED){
-                    QueryDocumentSnapshot doc = dc.getDocument();
-                    for(CurrentOrderModel com : currentOrders){
-                        if(com.getOrderID().equals(doc.getId())){
-                            com.setRs_status(doc.getString("rs_status"));
-                            break;
-                        }
-                    }
-                } else if(dc.getType() == DocumentChange.Type.REMOVED){
-                    QueryDocumentSnapshot doc = dc.getDocument();
-                    ArrayList<CurrentOrderItemModel> tmpArrayList = new ArrayList<>();
-                    for (HashMap<String, Object> dish : (ArrayList<HashMap<String, Object>>) doc.get("dishes")) {
-                        tmpArrayList.add(new CurrentOrderItemModel(
-                                (String) dish.get("dish_name"),
-                                (Double) dish.get("dish_price"),
-                                (Long) dish.get("dish_qty")));
-                    }
-                    CurrentOrderModel tmpReservationModel = new CurrentOrderModel(
-                            doc.getId(),
-                            doc.getLong("rs_id"),
-                            doc.getString("rs_status"),
-                            doc.getTimestamp("timestamp"),
-                            tmpArrayList,
-                            doc.getBoolean("is_current_order"),
-                            doc.getLong("confirmation_code"),
-                            doc.getDouble("total_income"),
-                            doc.getString("notes"),
-
-                            doc.getString("cust_id"),
-                            doc.getString("cust_name"),
-                            doc.getString("cust_address"),
-                            doc.getBoolean("is_commented"),
-
-                            doc.getString("rest_id"),
-                            doc.getString("rest_name"),
-
-                            doc.getString("biker_id"),
-                            doc.getTimestamp("delivery_time")
-                    );
-                    currentOrders.remove(tmpReservationModel);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle(R.string.leave_comment_title);
-                    builder.setMessage(R.string.leave_comment);
-                    builder.setPositiveButton(getString(R.string.ok_button),(dialog, which) -> {
-                        Intent intent = new Intent(MainActivity.this, HistoryOrderActivity.class);
-                        startActivity(intent);
-                    })
-                            .setNegativeButton(getString(R.string.later_btn), (dialog, which) -> {
-                                dialog.dismiss();
-                            })
-                            .create().show();
-
-
-                }
-            }
-        });
-    }
 
     public void fillWithData(){
         db.collection("favorites")

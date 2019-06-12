@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 ;
+import com.example.userapp.Comments.CommentsDataModel;
 import com.example.userapp.CurrentOrder.CurrentOrderItemModel;
 import com.example.userapp.CurrentOrder.CurrentOrderModel;
 import com.example.userapp.HistoryOrder.HistoryOrderListAdapter;
@@ -30,6 +31,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 
 public class HistoryOrderActivity extends AppCompatActivity
@@ -96,6 +100,7 @@ public class HistoryOrderActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        historyOrderListAdapter.notifyDataSetChanged();
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(HistoryOrderActivity.this, LoginActivity.class));
             finish();
@@ -142,12 +147,13 @@ public class HistoryOrderActivity extends AppCompatActivity
                                     doc.getString("rest_name"),
 
                                     doc.getString("biker_id"),
-                                    doc.getTimestamp("delivery_time")
+                                    doc.getDate("delivery_time")
                             );
                             //add this current order into the arraylist
                             Log.d("QueryHistoryOrder", "add  tmpHistoryOrderModel successful to arraylist!");
                             historyOrders.add(tmpHistoryOrderModel);
                             //progressBarCurrentOrder.setVisibility(View.GONE);
+                            Collections.sort(historyOrders,OrdersComparator);
                             historyOrderListAdapter.notifyDataSetChanged();
                         }
 
@@ -174,4 +180,19 @@ public class HistoryOrderActivity extends AppCompatActivity
         onBackPressed();
         return true;
     }
+
+
+             public static Comparator<CurrentOrderModel> OrdersComparator = (com1, com2) -> {
+
+                 Date date1 = com1.getDelivery_time();
+                 Date date2 = com2.getDelivery_time();
+
+                 //ascending order
+                 //return catPosition1.compareTo(catPosition2);
+                 //descending order
+                 return date2.compareTo(date1);
+             };
+
+
 }
+
