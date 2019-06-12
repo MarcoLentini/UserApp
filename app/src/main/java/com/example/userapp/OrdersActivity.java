@@ -217,6 +217,8 @@ public class OrdersActivity extends AppCompatActivity
                             builder.setPositiveButton(getString(R.string.ok_button),(dialog, which) -> {
                                 Intent intent = new Intent(OrdersActivity.this, HistoryOrderActivity.class);
                                 startActivity(intent);
+                                dialog.dismiss();
+                                finish();
                             })
                                     .setNegativeButton(getString(R.string.later_btn), (dialog, which) -> {
                                         dialog.dismiss();
