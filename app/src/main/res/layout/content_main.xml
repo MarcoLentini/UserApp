@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            android:padding="16dp">
+            android:padding="8dp">
 
                 <TextView
                     android:id="@+id/textViewRestaurantsCountValue"
@@ -68,9 +68,7 @@
 
         <TextView
             android:id="@+id/tvTitlePopularRestaurant"
-            android:paddingBottom="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:padding="@dimen/dp8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TOP RESTAURANTS"
@@ -87,9 +85,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitlePopularRestaurant" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewRestaurants"
-            android:layout_marginTop="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
