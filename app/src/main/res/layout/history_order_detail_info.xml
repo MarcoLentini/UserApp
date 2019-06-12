@@ -306,10 +306,10 @@
                         android:layout_width="0dp"
                         android:layout_weight="2"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
+                        android:gravity="end"
                         android:padding="@dimen/dp4"
                         android:text=""
-                        android:textAlignment="viewStart"
+                        android:textAlignment="viewEnd"
                         android:textSize="12sp"
                         />
                 </LinearLayout>
@@ -335,10 +335,10 @@
                         android:layout_width="0dp"
                         android:layout_weight="2"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
+                        android:gravity="end"
                         android:padding="@dimen/dp4"
                         android:text=""
-                        android:textAlignment="viewStart"
+                        android:textAlignment="viewEnd"
                         android:textSize="12sp"
                         />
                 </LinearLayout>

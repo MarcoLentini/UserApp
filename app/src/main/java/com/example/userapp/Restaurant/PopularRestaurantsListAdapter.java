@@ -77,8 +77,11 @@ public class PopularRestaurantsListAdapter extends RecyclerView.Adapter<PopularR
         String formattedDistance = format.format(restaurantModel.getDistance());
         textViewDeliveryFee.setText("€ " +formattedPrice);
         textViewDistance.setText(formattedDistance + "KM");
+         format = new DecimalFormat("0.0");
+         formattedPrice = format.format(restaurantModel.getRating());
+        textViewAverageVote.setText(" " +formattedPrice);
 
-        textViewAverageVote.setText(String.valueOf(restaurantModel.getRating()));
+
     }
 
     @Override

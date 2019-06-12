@@ -172,7 +172,10 @@ public class OrdersActivity extends AppCompatActivity
                             QueryDocumentSnapshot doc = dc.getDocument();
                             for(CurrentOrderModel com : currentOrders){
                                 if(com.getOrderID().equals(doc.getId())){
-                                    com.setRs_status(doc.getString("rs_status"));
+                                    if(doc.getString("rs_status").equals("FINISHED"))
+                                        com.setRs_status("IN DELIVERY");
+                                    else
+                                        com.setRs_status(doc.getString("rs_status"));
                                     break;
                                 }
                             }
