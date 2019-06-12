@@ -27,12 +27,13 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
 
     private ArrayList<OrderItemModel> dishes;
     private Double total_income;
+    private Double delivery_fee;
 
     private Long confirmation_code;
 
     private Double user_distance;
 
-    public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address,String delivery_notes) {
+    public ReservationModel(String cust_id, Timestamp delivery_time, String notes, ArrayList<OrderItemModel> dishesArrayList, Double total_income, String rest_id, String rest_name, String rest_address,String delivery_notes,Double delivery_fee) {
         this.is_commented = false;
         this.is_current_order = true;
         this.rs_status = "PENDING";
@@ -47,7 +48,16 @@ public class ReservationModel implements Comparable<ReservationModel>, Serializa
         this.rest_address = rest_address;
         this.rest_name = rest_name;
         this.delivery_notes = delivery_notes;
+        this.delivery_fee = delivery_fee;
 
+    }
+
+    public Double getDelivery_fee() {
+        return delivery_fee;
+    }
+
+    public void setDelivery_fee(Double delivery_fee) {
+        this.delivery_fee = delivery_fee;
     }
 
     public Boolean getIs_commented() {
