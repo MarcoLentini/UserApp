@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_height="475dp"
+    android:background="@drawable/side_nav_bar"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+    <RelativeLayout
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/background_img"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/background"
+            app:civ_border_color="@android:color/white"
+            app:civ_border_width="2sp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="1" />
+
+
+        <TextView
+            android:id="@+id/tvCloseWindow"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:cropToPadding="false"
+            android:layout_alignStart="@+id/background_img"
+            android:layout_alignLeft="@+id/background_img"
+            android:layout_alignTop="@+id/background_img"
+            android:layout_alignEnd="@+id/background_img"
+            android:layout_alignRight="@+id/background_img"
+            android:layout_alignBottom="@+id/background_img"
+            android:textColor="@color/white"
+            android:text="@string/title_close_icon"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_margin="@dimen/dp16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_leave_this_store"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <ImageView
+            android:src="@drawable/ic_panda_stay"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp16"
+            android:contentDescription="@string/ContentDescription" />
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="@string/title_leave_alert_msg"
+            />
+
+        <Button
+            android:id="@+id/btnYesLeave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_yes_leave"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center_horizontal"
+            style="@style/ButtonOk"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/btnNoStay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_no_stay"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_gravity="center_horizontal"
+            style="@style/ButtonCancel"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

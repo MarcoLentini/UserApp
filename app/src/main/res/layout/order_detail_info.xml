@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_above="@+id/btnPayForOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutOffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp8"
+                android:background="#FFFFFF"
+                android:padding="@dimen/dp8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf= "@+id/cv_order_delivery_info">
+
+
+                <TextView
+                    android:layout_margin="@dimen/dp8"
+                    android:id="@+id/tvRestaurantName"
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    android:drawableRight="@drawable/ic_arrow_right"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp4"
+                    android:text="@string/str_nnt_burgerking"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_margin="@dimen/dp8"
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/tvRestaurantName"
+                    android:layout_marginTop="@dimen/dp4"
+                    android:background="@color/colorDivider" />
+
+                <RelativeLayout
+                    android:layout_margin="@dimen/dp8"
+                    android:id="@+id/rlOrders"
+                    android:layout_below="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rcOrderItemInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:gravity="center">
+                    </android.support.v7.widget.RecyclerView>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_margin="@dimen/dp8"
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/rlOrders"
+                    android:layout_marginTop="@dimen/dp4"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:id="@+id/llFee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/divider2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:baselineAligned="false">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:padding="@dimen/dp4"
+                            android:text="Products"
+                            android:textAlignment="viewStart"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvProductFee"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:padding="@dimen/dp4"
+                            android:textAlignment="viewEnd"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:padding="@dimen/dp4"
+                            android:text="Delivery"
+                            android:textAlignment="viewStart"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvDeliveryFee"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:padding="@dimen/dp4"
+                            android:text="6"
+                            android:textAlignment="viewEnd"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:padding="@dimen/dp4"
+                            android:text="Total"
+                            android:textAlignment="viewStart"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvTotalFee"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:padding="@dimen/dp4"
+                            android:text="6"
+                            android:textAlignment="viewEnd"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                   <!--
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_totle_money"
+                        style="@style/TextAppearance.AppCompat.Headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="4dp"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/title_total_cost"
+                        android:textAlignment="viewEnd"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_order_total_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/divider2"
+                        android:layout_toEndOf="@+id/tv_totle_money"
+                        android:layout_toRightOf="@+id/tv_totle_money"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/str_nnt_5"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_total_count"
+                        style="@style/TextAppearance.AppCompat.Headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_totle_money"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/title_total_items"
+                        android:textAlignment="viewEnd"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_margin="@dimen/dp8"
+                        android:id="@+id/tv_order_total_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_totle_money"
+                        android:layout_toEndOf="@+id/tv_total_count"
+                        android:layout_toRightOf="@+id/tv_total_count"
+                        android:gravity="end"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/str_nnt_5"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" /> -->
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_order_delivery_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp8"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp8"
+                    android:background="#FFFFFF"
+                    android:padding="@dimen/dp8"
+                    >
+
+                    <TextView
+                        android:id="@+id/tvIdDeliveryAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/dp4"
+                        android:text="@string/title_delivery_address"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textStyle="bold"
+                        />
+
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/tvIdDeliveryAddress"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:background="@color/colorDivider" />
+
+                    <LinearLayout
+                        android:id="@+id/deliveryInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_below="@+id/divider3"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start"
+                            android:src="@drawable/ic_account_address"
+                            android:contentDescription="@string/ContentDescription" />
+
+                        <LinearLayout
+
+                            android:layout_width="0dp"
+                            android:layout_weight="7"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/text_view_border"
+                            android:orientation="vertical"
+
+                            android:padding="@dimen/dp8"
+                            >
+                            <TextView
+
+                                android:id="@+id/tvDeliveryAddress"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                 android:layout_gravity="start"
+                                android:text="@string/str_nnt_please_addding_your_delivery_address_here"
+                                android:textAlignment="viewStart"
+                                />
+                            <TextView
+                                android:id="@+id/tvDeliveryNotes"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:text="@string/str_nnt_please_addding_your_delivery_notes_here"
+                                android:textAlignment="viewStart"
+                                />
+
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:src="@drawable/ic_arrow_right"
+                            android:contentDescription="@string/ContentDescription" />
+
+                    </LinearLayout>
+
+
+
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/deliveryInformation"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:background="@color/colorDivider" />
+
+
+                         <TextView
+                             android:id="@+id/tvIdLeaveANote"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_below="@+id/divider4"
+                             android:layout_marginTop="@dimen/dp4"
+                             android:gravity="center_vertical"
+                             android:padding="@dimen/dp4"
+                             android:text="@string/title_order_notes"
+                             android:textAlignment="center"
+                             android:textSize="16sp"
+                             android:textColor="@color/colorPrimaryText"
+                             android:textStyle="bold"/>
+                         <View
+                             android:id="@+id/divider7"
+                             android:layout_width="match_parent"
+                             android:layout_height="2dp"
+                             android:layout_below="@+id/tvIdLeaveANote"
+                             android:layout_marginTop="@dimen/dp4"
+                             android:background="@color/colorDivider" />
+                         <TextView
+                             android:layout_marginTop="@dimen/dp4"
+                             android:id="@+id/orderDetailInfoNotes"
+                             android:layout_below="@+id/divider7"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:padding="@dimen/dp8"
+                             android:layout_gravity="start"
+                             android:background="@drawable/text_view_border"
+                             android:drawableStart="@drawable/ic_notes"
+                             android:drawableLeft="@drawable/ic_notes"
+                             android:drawableEnd="@drawable/ic_arrow_right"
+                             android:drawableRight="@drawable/ic_arrow_right"
+                             android:drawablePadding="@dimen/dp6"
+                             android:text="@string/str_please_leave_your_notes_here_if_needed"
+                             android:textAlignment="viewStart"
+                             android:clickable="true"
+                             android:focusable="true"
+                             android:textSize="16sp"
+                             android:textColor="@color/colorPrimaryText"
+                             android:contentDescription="@string/ContentDescription" />
+                     </RelativeLayout>
+                 </android.support.v7.widget.CardView>
+
+
+             </android.support.constraint.ConstraintLayout>
+         </ScrollView>
+
+
+         <Button
+             android:id="@+id/btnPayForOrder"
+             android:layout_margin="@dimen/dp8"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/title_confirm_order"
+             android:padding="@dimen/dp16"
+             android:textSize="16sp"
+             android:textColor="@color/colorSecondaryText"
+             android:layout_alignParentBottom="true"
+             style="@style/Button"/>
+     </RelativeLayout>

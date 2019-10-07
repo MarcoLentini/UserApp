@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popular_restaurant_item_cardView"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/tvRestaurantLogoPopular"
+            android:layout_width="@dimen/dp96"
+            android:layout_height="@dimen/dp96"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/cd_logoimageview"
+            android:src="@drawable/img_rest_1" />
+
+        <TextView
+            android:id="@+id/tvRestaurantNamePopular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp6"
+            android:layout_marginStart="@dimen/dp6"
+            android:layout_toEndOf="@+id/tvRestaurantLogoPopular"
+            android:layout_toRightOf="@+id/tvRestaurantLogoPopular"
+            android:text="@string/app_name"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorPrimaryText"
+            android:padding="@dimen/dp4"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="@dimen/dp24"
+            android:layout_height="@dimen/dp24"
+            android:layout_below="@+id/tvRestaurantNamePopular"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_toEndOf="@+id/tvRestaurantLogoPopular"
+            android:layout_toRightOf="@+id/tvRestaurantLogoPopular"
+            android:contentDescription="@string/ContentDescription"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_star_select" />
+
+        <TextView
+            android:id="@+id/tvAverageVoteRestaurantPopular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRestaurantNamePopular"
+            android:layout_toEndOf="@+id/star"
+            android:layout_toRightOf="@+id/star"
+            android:gravity="center"
+            android:text="@string/str_nnt_5"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+
+        <LinearLayout
+            android:layout_below="@+id/star"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_toEndOf="@+id/tvRestaurantLogoPopular"
+            android:layout_toRightOf="@+id/tvRestaurantLogoPopular"
+            >
+            <TextView
+                android:id="@+id/tvDeliveryFeeRestaurantPopular"
+                android:drawableLeft="@drawable/ic_baseline_motorcycle"
+                android:drawableStart="@drawable/ic_baseline_motorcycle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:layout_gravity="start"
+                android:textAlignment="viewStart"
+                android:drawablePadding="2dp"
+                android:padding="@dimen/dp4"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tvDistanceRestaurantPopular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_account_address"
+                android:drawableStart="@drawable/ic_account_address"
+                android:text="@string/str_nnt_please_addding_your_delivery_address_here"
+                android:layout_gravity="start"
+                android:textAlignment="viewStart"
+                android:drawablePadding="2dp"
+                android:padding="@dimen/dp4"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

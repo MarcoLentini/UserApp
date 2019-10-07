@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:id="@+id/cvHistoryOrderInProgress"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardUseCompatPadding="true"
+
+    >
+    <RelativeLayout
+        android:id="@+id/relativeLayoutHistoryOrderInProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8"
+        android:background="#FFFFFF"
+        android:padding="@dimen/dp8"
+        >
+
+
+        <TextView
+            android:id="@+id/tvRestaurantNameCurrentOrder"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp4"
+            android:text="@string/str_nnt_burgerking"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvOrderStatusCurrentOrder"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tvRestaurantNameCurrentOrder"
+            android:layout_toRightOf="@+id/tvRestaurantNameCurrentOrder"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:gravity="end"
+            android:padding="@dimen/dp4"
+            android:text="@string/str_nnt_order_status"
+            android:textAlignment="viewEnd"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/tvOrderStatusCurrentOrder"
+            android:layout_marginTop="@dimen/dp4"
+            android:background="@color/colorDivider" />
+
+        <TextView
+            android:id="@+id/CurrentOrderInfo"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="4dp"
+            android:padding="@dimen/dp4"
+            android:text=""
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_total_count"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/CurrentOrderInfo"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="end"
+            android:padding="@dimen/dp4"
+            android:text="@string/title_total_items"
+            android:textAlignment="viewEnd"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvCurrentOrderTotalCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/CurrentOrderInfo"
+            android:layout_toEndOf="@+id/tv_total_count"
+            android:layout_toRightOf="@+id/tv_total_count"
+            android:gravity="end"
+            android:padding="@dimen/dp4"
+            android:text="@string/str_nnt_5"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_totle_money"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_count"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="end"
+            android:padding="@dimen/dp4"
+            android:text="@string/title_total_cost"
+            android:textAlignment="viewEnd"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvCurrentOrderTotalCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_count"
+            android:layout_toEndOf="@+id/tv_totle_money"
+            android:layout_toRightOf="@+id/tv_totle_money"
+            android:gravity="end"
+            android:padding="@dimen/dp4"
+            android:text="@string/str_nnt_5"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/tv_totle_money"
+            android:layout_marginTop="@dimen/dp4"
+            android:background="@color/colorDivider" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp4"
+            android:padding="@dimen/dp4"
+            android:id="@+id/tvConfirmationCodeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider2"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold"
+            android:text="@string/confirmation_code_short"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/dp4"
+            android:padding="@dimen/dp4"
+            android:id="@+id/tvConfirmationCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider2"
+            android:layout_toEndOf="@id/tvConfirmationCodeInfo"
+            android:layout_toRightOf="@id/tvConfirmationCodeInfo"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginStart="@dimen/dp8"
+            android:text="1010"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold"/>
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

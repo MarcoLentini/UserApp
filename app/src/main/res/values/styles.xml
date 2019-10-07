@@ -1,11 +1,83 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/colorDivider</item>
+    </style>
+
+    <style name="ButtonOk">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+
+    </style>
+
+    <style name="ButtonCancel">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+
+    <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
+        <item name="android:buttonStyle">
+            @style/Widget.AppCompat.Button.Borderless.Colored
+        </item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppThemeCurrentInfo" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="ToolBarWithNavigationBack">
+        <item name="navigationIcon">@drawable/abc_ic_ab_back_material</item>
+    </style>
+
+    <style name="CollapsingTextAppearance" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title" />
+
+    <style name="CollapsingTextAppearance.Inverse">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <!--self_define RatingBar Color-->
+    <style name="RatingBar_CustomColorRating" parent="@android:style/Widget.Holo.RatingBar">
+        <!--Background Color-->
+        <item name="colorControlNormal">#D7D7D7</item>
+        <!--Progress Color-->
+        <item name="colorControlActivated">#FF5722</item>
+    </style>
+    <!--self_define RatingBar Color-->
+    <style name="RatingBar_CustomColor" parent="@android:style/Widget.Holo.RatingBar.Indicator">
+        <!--Background Color-->
+        <item name="colorControlNormal">#D7D7D7</item>
+        <!--Progress Color-->
+        <item name="colorControlActivated">#FFEB3B</item>
+    </style>
 </resources>
